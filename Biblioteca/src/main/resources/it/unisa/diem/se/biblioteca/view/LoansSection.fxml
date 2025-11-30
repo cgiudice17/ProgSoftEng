@@ -44,7 +44,8 @@
                         <TableColumn fx:id="LoanNameClm" prefWidth="69.59990234375073" text="Nome" />
                         <TableColumn fx:id="LoanSurnameClm" prefWidth="83.20001220703125" text="Cognome" />
                         <TableColumn fx:id="LoanCodeClm" prefWidth="100.00004577636719" text="Matricola" />
-                        <TableColumn fx:id="LoanBookClm" prefWidth="131.199951171875" text="Libro" />
+                        <TableColumn fx:id="LoanBookTitleClm" prefWidth="131.199951171875" text="Titolo libro" />
+                        <TableColumn fx:id="LoanBookCodeClm" prefWidth="131.199951171875" text="ISBN libro" />
                         <TableColumn fx:id="LoanDateClm" prefWidth="96.0" text="Data scadenza" />
                      </columns>
                      <columnResizePolicy>

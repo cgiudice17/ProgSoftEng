@@ -40,7 +40,7 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <TextField fx:id="BookSearchLabel" onAction="#BookSearch" promptText="Cerca per titolo, autore o codice ISBN...">
+                  <TextField fx:id="BookSearchLabel" onAction="#BookSearch" promptText="Cerca per titolo, anno, autore o codic ISBN...">
                      <VBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                      </VBox.margin>
