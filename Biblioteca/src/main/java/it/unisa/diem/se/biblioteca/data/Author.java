@@ -1,4 +1,4 @@
-package it.unisa.diem.se.biblioteca.prova;
+package it.unisa.diem.se.biblioteca.data;
 
 /**
  *

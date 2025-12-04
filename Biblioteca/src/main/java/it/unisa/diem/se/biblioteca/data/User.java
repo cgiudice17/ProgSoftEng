@@ -1,4 +1,4 @@
-package it.unisa.diem.se.biblioteca.prova;
+package it.unisa.diem.se.biblioteca.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,12 +110,22 @@ public class User implements Comparable<User>{
        loans.add(l);
        return 0;
     }
+    
+    /**
+     * @brief Override del metodo compareTo che confronta gli user
+     *        in base al cognome e, nel caso fosse uguale, in base al nome.
+     * 
+     * 
+     * @param[in] u L'ogetto user da comparare
+     * @return Un intero negativo se l'ogetto chiamate viene prima lessigograficamente dell'argomento,
+     *         0 se sono uguali0 e un intero positivo se viene dopo.
+     */
 
     @Override
-    public int compareTo(User o) {
-        if(this.surname.equals(o.surname)) return this.name.compareTo(o.name);
+    public int compareTo(User u) {
+        if(this.surname.equals(u.surname)) return this.name.compareTo(u.name);
         
-        return this.surname.compareTo(o.surname);
+        return this.surname.compareTo(u.surname);
     }
 
 

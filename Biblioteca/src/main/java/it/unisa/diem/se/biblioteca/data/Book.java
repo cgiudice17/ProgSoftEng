@@ -1,4 +1,4 @@
-package it.unisa.diem.se.biblioteca.prova;
+package it.unisa.diem.se.biblioteca.data;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author danilocarratu
  */
-public class Book {
+public class Book implements Comparable<Book>{
     private String title;
     private List<Author> authors;
     private String ISBN;
@@ -66,6 +66,28 @@ public class Book {
     }
     
     
+    /**
+     * @brief Override del metodo compareTo che confronta i libri
+     *        in base al titolo
+     * 
+     * 
+     * @param[in] b L'ogetto book da comparare
+     * @return Un intero negativo se l'ogetto chiamate viene prima lessigograficamente dell'argomento,
+     *         0 se sono uguali e un intero positivo se viene dopo.
+     */
+    
+    @Override
+    public int compareTo(Book b){
+        return this.title.compareTo(b.title);
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if(o == null || !this.getClass().equals(o.getClass())) return false;
+        if(this == o ) return true;
+        Book b = (Book) o;
+        return this.ISBN.equals(b.ISBN);
+    }
     
     
 }
