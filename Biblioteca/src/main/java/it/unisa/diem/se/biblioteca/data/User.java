@@ -19,13 +19,9 @@ public class User implements Comparable<User>{
     private String surname;
     private String code;
     private String email;
-    private List<Loan> loans;
+    private int loanCount;
     
 
-    /**
-     * @brief Costante usata per definire il numero massimo di possibili prestiti attivi
-     */
-    private final static int maxLoans = 3; 
     
     
     
@@ -46,8 +42,7 @@ public class User implements Comparable<User>{
         this.surname = surname;
         this.code = code;
         this.email = email;
-        
-        this.loans = new ArrayList();
+        this.loanCount=0;
     }
 
     public String getName() {
@@ -65,10 +60,16 @@ public class User implements Comparable<User>{
     public String getEmail() {
         return email;
     }
-    
-    public List<Loan> getLoans(){
-        return loans;
+
+    public int getLoanCount() {
+        return loanCount;
     }
+
+    public void setLoanCount(int loanCount) {
+        this.loanCount = loanCount;
+    }
+    
+    
 
     public void setName(String name) {
         this.name = name;
@@ -88,28 +89,6 @@ public class User implements Comparable<User>{
     
     
     
-    /* DA SPOSTARE DENTRO LOANS */
-    
-    /**
-     * @brief Aggiunge un prestito alla lista dei prestiti dell'utente
-     * 
-     * @pre Il numero di prestiti attivi deve essere minore di maxLoans
-     * @post Il prestito è stato inserito alla lista 
-     * 
-     * @param[in] l Un prestito valido 
-     * @return 
-     */
-    public int addLoan(Loan l){
-       if (l==null){
-           return 1;
-       }
-       if(loans.size() >= maxLoans){
-           return 2;
-       }
-       
-       loans.add(l);
-       return 0;
-    }
     
     /**
      * @brief Override del metodo compareTo che confronta gli user

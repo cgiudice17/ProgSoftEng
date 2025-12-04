@@ -5,6 +5,8 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.checkers.ValidBook;
+import it.unisa.diem.se.biblioteca.data.Book;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -20,7 +22,7 @@ import javafx.scene.control.TextField;
  *
  * @author lucon
  */
-public class BookSectionController implements Initializable {
+public class BookSectionController implements Initializable, ValidBook {
 
     @FXML
     private TextField TitleLabel;
@@ -95,6 +97,11 @@ public class BookSectionController implements Initializable {
 
     @FXML
     private void updateCopies(TableColumn.CellEditEvent<S, T> event) {
+    }
+
+    @Override
+    public boolean checkBook(Book b) {
+        
     }
     
 }

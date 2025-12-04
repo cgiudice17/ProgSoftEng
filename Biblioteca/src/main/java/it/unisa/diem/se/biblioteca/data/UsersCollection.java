@@ -28,6 +28,12 @@ public class UsersCollection {
         this.users = new TreeSet();
     }
     
+    /**
+     * @brief Aggiunge un utente alla mappa degli utenti.
+     * @param u L'utente da aggingere
+     * @pre L'utente è valido
+     */
+    
     public void addUser(User u){
         
         users.add(u);

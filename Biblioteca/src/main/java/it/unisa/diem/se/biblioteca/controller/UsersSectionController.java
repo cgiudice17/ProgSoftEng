@@ -5,6 +5,8 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.data.User;
+import it.unisa.diem.se.biblioteca.checkers.ValidUser;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -20,7 +22,7 @@ import javafx.scene.control.TextField;
  *
  * @author lucon
  */
-public class UsersSectionController implements Initializable {
+public class UsersSectionController implements Initializable, ValidUser {
 
     @FXML
     private TextField NameLabel;
@@ -89,6 +91,11 @@ public class UsersSectionController implements Initializable {
 
     @FXML
     private void updateEmail(TableColumn.CellEditEvent<S, T> event) {
+    }
+
+    @Override
+    public boolean checkUser(User u) {
+        return false;
     }
     
 }
