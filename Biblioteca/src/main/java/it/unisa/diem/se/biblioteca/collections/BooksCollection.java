@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -19,7 +20,7 @@ import java.util.TreeSet;
  */
 public class BooksCollection {
     
-    private static Set<Book> books;
+    private static Map<Book, Integer> books;
     private static Map<Author, List<Book>> authorBooks;
     private static Map<String, Book> ISBNBooks;
     private static Map<String, List<Book>> titleBooks;
@@ -30,7 +31,7 @@ public class BooksCollection {
      * @post Collezione inizializzata correttamente.
      */
     public BooksCollection() {
-        this.books = new TreeSet();
+        this.books = new TreeMap();
     }
     
     
@@ -42,9 +43,9 @@ public class BooksCollection {
      * @post Il libro è aggiunto correttamente a tutte le collezioni 
      * 
      */
-    public void addBook(Book b){
+    public void addBook(Book b, int copies){
         
-        books.add(b);
+        books.put(b, copies);
         for(Author aut: b.getAuthors()){
             addAuthorBooksHelper(aut, b);
         } 
