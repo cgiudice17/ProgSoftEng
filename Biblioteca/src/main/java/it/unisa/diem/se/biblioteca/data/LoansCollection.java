@@ -127,5 +127,12 @@ public class LoansCollection {
     } 
     
             
-    
+    /**
+     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * 
+     */
+    @Override
+    public String toString(){
+        return null;
+    }
 }

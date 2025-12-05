@@ -133,4 +133,13 @@ public class BooksCollection {
         titleBooks.get(t).add(b);
     }
     
+    /**
+     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * 
+     */
+    @Override
+    public String toString(){
+        return null;
+    }
+    
 }

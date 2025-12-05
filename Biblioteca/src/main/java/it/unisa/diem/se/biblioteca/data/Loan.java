@@ -69,5 +69,12 @@ public class Loan implements Comparable<Loan>{
     }
     
     
-
+    /**
+     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * 
+     */
+    @Override
+    public String toString(){
+        return null;
+    }
 }

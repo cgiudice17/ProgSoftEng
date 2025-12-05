@@ -21,4 +21,14 @@ public class Author {
         this.name = name;
         this.surname = surname;
     }   
+    
+    
+    /**
+     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * 
+     */
+    @Override
+    public String toString(){
+        return null;
+    }
 }

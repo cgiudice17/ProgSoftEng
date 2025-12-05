@@ -108,7 +108,14 @@ public class User implements Comparable<User>{
     }
 
 
-    
+    /**
+     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * 
+     */
+    @Override
+    public String toString(){
+        return null;
+    }
     
     
     

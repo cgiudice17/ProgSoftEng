@@ -89,5 +89,12 @@ public class Book implements Comparable<Book>{
         return this.ISBN.equals(b.ISBN);
     }
     
-    
+    /**
+     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * 
+     */
+    @Override
+    public String toString(){
+        return null;
+    }
 }

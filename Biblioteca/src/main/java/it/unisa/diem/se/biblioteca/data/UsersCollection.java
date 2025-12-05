@@ -101,5 +101,12 @@ public class UsersCollection {
         surnameUsers.get(s).add(u);
     }
     
-    
+    /**
+     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * 
+     */
+    @Override
+    public String toString(){
+        return null;
+    }
 }
