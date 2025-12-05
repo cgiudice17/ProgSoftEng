@@ -8,7 +8,7 @@ public class Book implements Comparable<Book>{
     private String title;
     private List<Author> authors;
     private String ISBN;
-    private LocalDate publishDate;
+    private int publishYear;
     
     
     
@@ -18,16 +18,16 @@ public class Book implements Comparable<Book>{
      * @param[in] title Titolo del libro
      * @param[in] authors Autori
      * @param[in] ISBN ISBN
-     * @param[in] publishDate Data di pubblicazione 
+     * @param[in] publishYear Anno di pubblicazione 
      * 
      * @post Libro inizializzato correttamente
      */
 
-    public Book(String title, List<Author> authors, String ISBN, LocalDate publishDate) {
+    public Book(String title, List<Author> authors, String ISBN, int publishYear) {
         this.title = title;
         this.authors = authors;
         this.ISBN = ISBN;
-        this.publishDate = publishDate;
+        this.publishYear = publishYear;
     }
 
     public String getTitle() {
@@ -54,12 +54,12 @@ public class Book implements Comparable<Book>{
         this.ISBN = ISBN;
     }
 
-    public LocalDate getPublishDate() {
-        return publishDate;
+    public int getPublishYear() {
+        return publishYear;
     }
 
-    public void setPublishDate(LocalDate publishDate) {
-        this.publishDate = publishDate;
+    public void setPublishDate(int publishYear) {
+        this.publishYear = publishYear;
     }
     
     

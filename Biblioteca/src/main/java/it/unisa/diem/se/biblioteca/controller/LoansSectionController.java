@@ -50,25 +50,52 @@ public class LoansSectionController implements Initializable {
     private TableColumn<?, ?> LoanDateClm;
 
     /**
-     * Initializes the controller class.
+     * @brief Inizializza il controllore.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
 
+    /**
+     * @brief Gestisce la selezione di una data tramite il DatePicker.
+     * * Invocato quando l'utente sceglie una data dal calendario. 
+     * Questo metodo salva la data selezionata in una variabile locale o aggiorna 
+     * la vista per mostrare i prestiti/scadenze relativi a quel giorno specifico.
+     * * @param event L'evento ActionEvent generato dalla selezione della data.
+     */
     @FXML
     private void SelectDate(ActionEvent event) {
     }
 
+    /**
+     * @brief Esegue l'operazione di prestito di un libro.
+     * * Invocato dal click sul pulsante "Presta" (Loan).
+     * Il metodo verifica che ci siano copie disponibili, che l'utente sia abilitato 
+     * e registra il nuovo prestito nel sistema con la data corrente o quella selezionata.
+     * * @param event L'evento ActionEvent generato dal click sul pulsante.
+     */
     @FXML
     private void LoanBook(ActionEvent event) {
     }
 
+    /**
+     * @brief Esegue l'operazione di restituzione di un libro.
+     * * Invocato dal click sul pulsante "Restituisci" (Return).
+     * Il metodo aggiorna lo stato del prestito selezionato come "concluso", 
+     * incrementa le copie disponibili del libro e calcola eventuali sanzioni per ritardo.
+     * * @param event L'evento ActionEvent generato dal click sul pulsante.
+     */
     @FXML
     private void ReturnBook(ActionEvent event) {
     }
 
+    /**
+     * @brief Gestisce la navigazione verso la schermata precedente.
+     * * Invocato dal click sul pulsante "Indietro". Chiude la vista corrente 
+     * di gestione prestiti e riporta l'utente al menu principale o alla lista dei libri.
+     * * @param event L'evento ActionEvent generato dal click sul pulsante.
+     */
     @FXML
     private void GoBack(ActionEvent event) {
     }

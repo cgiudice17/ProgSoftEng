@@ -10,6 +10,11 @@ import it.unisa.diem.se.biblioteca.data.User;
 
 public interface ValidUser {
     
+    /**
+     * @brief Controlla se un utente è valido, ovvero se la sua matricola è di 13 cifre.
+     * @param u l'utente da controllare.
+     * @return True se l'utente è valido, false altrimenti.
+     */
     public boolean checkUser(User u);
     
 }
