@@ -11,6 +11,5 @@ package it.unisa.diem.se.biblioteca.data;
  */
 public class Library {
     
-    public 
-    
+   
 }

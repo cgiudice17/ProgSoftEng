@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unisa.diem.se.biblioteca.data;
+package it.unisa.diem.se.biblioteca.collections;
 
+import it.unisa.diem.se.biblioteca.data.Author;
+import it.unisa.diem.se.biblioteca.data.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +19,10 @@ import java.util.TreeSet;
  */
 public class BooksCollection {
     
-    private Set<Book> books;
-    private Map<Author, List<Book>> authorBooks;
-    private Map<String, Book> ISBNBooks;
-    private Map<String, List<Book>> titleBooks;
+    private static Set<Book> books;
+    private static Map<Author, List<Book>> authorBooks;
+    private static Map<String, Book> ISBNBooks;
+    private static Map<String, List<Book>> titleBooks;
     
     /**
      * @brief Costruttore di default
@@ -134,11 +136,11 @@ public class BooksCollection {
     }
     
     /**
-     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * @brief Restituisce una stringa contenente tutti i libri
      * 
+     * @return String tutti i libri
      */
-    @Override
-    public String toString(){
+    public static String printAll(){
         return null;
     }
     

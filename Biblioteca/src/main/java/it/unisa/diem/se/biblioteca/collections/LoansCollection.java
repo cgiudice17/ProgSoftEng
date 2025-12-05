@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unisa.diem.se.biblioteca.data;
+package it.unisa.diem.se.biblioteca.collections;
 
+import it.unisa.diem.se.biblioteca.data.Book;
+import it.unisa.diem.se.biblioteca.data.Loan;
+import it.unisa.diem.se.biblioteca.data.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +24,8 @@ public class LoansCollection {
      */
     private final static int maxLoans = 3; 
     
-    private Map<User, List<Loan>> userLoans; 
-    private Map<Book, List<Loan>> bookLoans;
+    private static Map<User, List<Loan>> userLoans; 
+    private static Map<Book, List<Loan>> bookLoans;
     
     /**
      * @brief Costruttore di default
@@ -128,11 +131,11 @@ public class LoansCollection {
     
             
     /**
-     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * @brief Restituisce una stringa contenente tutti i prestiti
      * 
+     * @return String tutti i presititi
      */
-    @Override
-    public String toString(){
+    public static String printAll(){
         return null;
     }
 }

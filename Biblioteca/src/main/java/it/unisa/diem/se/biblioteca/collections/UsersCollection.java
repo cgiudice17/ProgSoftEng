@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unisa.diem.se.biblioteca.data;
+package it.unisa.diem.se.biblioteca.collections;
 
+import it.unisa.diem.se.biblioteca.data.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,9 +19,9 @@ import java.util.TreeSet;
  */
 public class UsersCollection {
     
-    private Set<User> users;
-    private Map<String, User> codeUsers;
-    private Map<String, List<User>> surnameUsers;
+    private static Set<User> users;
+    private static Map<String, User> codeUsers;
+    private static Map<String, List<User>> surnameUsers;
     
     
 
@@ -102,11 +103,11 @@ public class UsersCollection {
     }
     
     /**
-     * @brief Override del metotdo toString per sstampare la classe corrente.
+     * @brief Restituisce una stringa contenente tutti gli utenti 
      * 
+     * @return String tutti gli utenti
      */
-    @Override
-    public String toString(){
+    public static String printAll(){
         return null;
     }
 }
