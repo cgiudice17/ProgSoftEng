@@ -55,7 +55,7 @@ public class BooksCollection {
      * @brief Rimuove un libro da tutte le collezioni
      * 
      * @param[in] b 
-     * @pre Il libro da rimuovere sia valido 
+     * @pre Il libro da rimuovere sia valido e si trovi nelle collezioni
      * @post Il libro è rimosso correttamente a tutte le collezioni 
      * 
      */
@@ -70,9 +70,6 @@ public class BooksCollection {
         for(Author aut: b.getAuthors()){
             authorBooks.get(aut).remove(b);
         } 
-        
-        
-        
     }
     
     /**

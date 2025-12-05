@@ -5,7 +5,10 @@
  */
 package it.unisa.diem.se.biblioteca.data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,6 +19,9 @@ import java.util.TreeSet;
 public class UsersCollection {
     
     private Set<User> users;
+    private Map<String, User> codeUsers;
+    private Map<String, List<User>> surnameUsers;
+    
     
 
     
@@ -26,6 +32,8 @@ public class UsersCollection {
      */
     public UsersCollection() {
         this.users = new TreeSet();
+        this.codeUsers = new HashMap();
+        this.surnameUsers = new HashMap();
     }
     
     /**
@@ -37,22 +45,61 @@ public class UsersCollection {
     public void addUser(User u){
         
         users.add(u);
+        codeUsers.put(u.getCode(), u);
+        this.addSurnameUsersHelper(u.getSurname(), u);
         
     }
     
+    /**
+     * 
+     * @brief Rimuove un utente da tutte le collezioni
+     * 
+     * @param[in] u 
+     * @pre L'utente da rimuovere sia valido e si trovi nelle collezioni
+     * @post L'utente è stato rimosso correttamente da tutte le collezioni
+     */
+    
     public void removeUser(User u){
         users.remove(u);
+        codeUsers.remove(u.getCode());
+        surnameUsers.get(u.getSurname()).remove(u); 
     }
     
-    public User getUserByCode(String matricola){
-        return null;
+    /**
+     * 
+     * @brief Restituisce l'utente associato alla matricola
+     * 
+     * @param[in] matricola
+     * @return L'utente associato alla matricola
+     * @pre  La matricola sia valida
+     * @post L'utente è stato restituito 
+     */
+    
+    public User getUserByCode(String code){
+        return this.codeUsers.get(code);
     }
+    
+    /**
+     * 
+     * @brief Restituisce gli utenti col cognome passato
+     * 
+     * @param[in] surname
+     * @return La lista degli utenti con quel cognome
+     * @pre  Il cognome sia valido
+     * @post Gli utenti sono stati restituiti 
+     */
     
     public List<User> getUserbySurname(String surname){
-        return null;
+        return this.surnameUsers.get(surname);
     }
     
-    
+    private void addSurnameUsersHelper(String s, User u){
+        if(!surnameUsers.containsKey(s)){
+            surnameUsers.put(s, new ArrayList());
+        }
+        
+        surnameUsers.get(s).add(u);
+    }
     
     
 }
