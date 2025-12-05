@@ -1,9 +1,6 @@
 package it.unisa.diem.se.biblioteca.data;
 
-/**
- *
- * @author danilocarratu
- */
+
 public class Author {
     private String name;
     private String surname;

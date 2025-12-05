@@ -3,10 +3,7 @@ package it.unisa.diem.se.biblioteca.data;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- *
- * @author danilocarratu
- */
+
 public class Book implements Comparable<Book>{
     private String title;
     private List<Author> authors;

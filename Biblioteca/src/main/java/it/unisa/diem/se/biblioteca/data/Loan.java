@@ -2,10 +2,7 @@ package it.unisa.diem.se.biblioteca.data;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author danilocarratu
- */
+
 public class Loan implements Comparable<Loan>{
     
     private User user;

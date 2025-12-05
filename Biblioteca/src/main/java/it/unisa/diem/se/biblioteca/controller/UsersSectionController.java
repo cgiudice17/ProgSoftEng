@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 /**
  * FXML Controller class
  *
- * @author lucon
+ * 
  */
 public class UsersSectionController implements Initializable, ValidUser {
 

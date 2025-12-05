@@ -7,10 +7,7 @@ package it.unisa.diem.se.biblioteca.checkers;
 
 import it.unisa.diem.se.biblioteca.data.User;
 
-/**
- *
- * @author lucon
- */
+
 public interface ValidUser {
     
     public boolean checkUser(User u);

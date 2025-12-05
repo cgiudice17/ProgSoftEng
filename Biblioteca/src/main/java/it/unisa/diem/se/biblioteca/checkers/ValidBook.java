@@ -7,10 +7,7 @@ package it.unisa.diem.se.biblioteca.checkers;
 
 import it.unisa.diem.se.biblioteca.data.Book;
 
-/**
- *
- * @author lucon
- */
+
 public interface ValidBook {
     public boolean checkBook(Book b);
 }

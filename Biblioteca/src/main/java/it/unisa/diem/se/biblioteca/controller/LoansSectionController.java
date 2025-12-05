@@ -19,7 +19,6 @@ import javafx.scene.control.TextField;
 /**
  * FXML Controller class
  *
- * @author lucon
  */
 public class LoansSectionController implements Initializable {
 
