@@ -11,10 +11,24 @@ import it.unisa.diem.se.biblioteca.data.User;
 public interface ValidUser {
     
     /**
-     * @brief Controlla se un utente è valido, ovvero se la sua matricola è di 13 cifre.
-     * @param u l'utente da controllare.
-     * @return True se l'utente è valido, false altrimenti.
+     * @brief Controlla se la matricola è valida (10 interi)
+     * 
+     * Viene utilizzato dal controller quando si inserisce/cerca un utente
+     * 
+     * @param code La matricola da controllare
+     * @return true se la matricola è valida, false altrimenti
      */
-    public boolean checkUser(User u);
+    public boolean validCode(String code);
+    
+    
+    /**
+     * @brief Controlla se il cognome è valido (solo caratteri)
+     * 
+     * Viene utilizzato dal controller quando si inserisce/cerca un utente
+     * 
+     * @param surname Il cognome da controllare
+     * @return true se il cognome è valido, false altrimenti
+     */
+    public boolean validSurname(String surname);
     
 }

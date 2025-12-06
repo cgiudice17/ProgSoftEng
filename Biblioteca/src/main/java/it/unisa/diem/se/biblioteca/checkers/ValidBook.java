@@ -5,15 +5,42 @@
  */
 package it.unisa.diem.se.biblioteca.checkers;
 
+import it.unisa.diem.se.biblioteca.data.Author;
 import it.unisa.diem.se.biblioteca.data.Book;
 
 
 public interface ValidBook {
     
+    
     /**
-     * @brief Controlla se un libro è valido, ovvero se il suo ISBN è di 13 cifre.
-     * @param b il libro da controllare.
-     * @return True se il libro è valido, false altrimenti.
+     * @brief Controlla se l'ISBN è valido (13 interi).
+     * 
+     * Viene utilizzato dal controller quando si inserisce/cerca un libro
+     * 
+     * @param ISBN L'ISBN da controllare
+     * @return true se l'ISBN è valido, false altrimenti
      */
-    public boolean checkBook(Book b);
+    public boolean validISBN(String ISBN);
+    
+    
+    /**
+     * @brief Controlla se l'autore è valido (controlla se è un nome o un cognome valido)s.
+     * 
+     * Viene utilizzato dal controller quando si inserisce/cerca un libro
+     * 
+     * @param author Il nome o cogome dell'autore da controllare
+     * @return true se l'autore è valido, false altrimenti
+     */
+    public boolean validAuthor(String author);
+    
+    
+    /**
+     * @brief Controlla se l'anno è valido (minore o uguale dell'anno odierno).
+     * 
+     * Viene utilizzato dal controller quando si inserisce/cerca un libro
+     * 
+     * @param year l'anno da controllare
+     * @return true se l'anno è valido, false altrimenti
+     */
+    public boolean validYear(int year);
 }

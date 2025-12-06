@@ -22,6 +22,7 @@ public class BooksCollection {
     private static Map<Author, List<Book>> authorBooks;
     private static Map<String, Book> ISBNBooks;
     private static Map<String, List<Book>> titleBooks;
+    private static Map<Integer, List<Book>> yearBooks;
     
     /**
      * @brief Costruttore di default
@@ -96,12 +97,23 @@ public class BooksCollection {
     
     
     /**
-     * @brief Recupera un libro dato un suo autore
+     * @brief Restituisce una lista di libri scritti dall'autore passato
      * @param[in] author L'autore del libro da recuperare
      * 
-     * @return il libro dell'autore specificato
+     * @return Lista di libri
      */
     public List<Book> getBookbyAuthor(Author author){
+        return null;
+    }
+    
+    /**
+     * @brief Restituisce una lista di libri con l'anno di pubblicazione passato
+     * 
+     * @param year Anno di pubblicazione scelto
+     * @return Lista di libri 
+     */
+    
+    public List<Book> getBookbyYear(int year){
         return null;
     }
     
