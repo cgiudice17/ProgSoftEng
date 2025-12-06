@@ -97,11 +97,9 @@ public class BookSectionController implements Initializable, ValidBook {
     }
 
     /**
-     * @brief Esegue la ricerca di libri in base all'input del BookSearchLabel.
-     * * Invocato dall'edit del campo di testo "BookSearchLabel". Filtra la lista dei libri 
-     * visibili nella TableView utilizzando i parametri inseriti dall'utente 
-     * (es. titolo, autore, codice ISBN).
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @brief Esegue la ricerca di libri in base all'input del "BookSearchLabel".
+     * * Invocato dall'edit del campo di testo "BookSearchLabel". Filtra la lista dei libri visibili all'utente.
+     * * @param[in] event L'evento generato dalla scrittura sul campo di testo.
      */
     @FXML
     private void BookSearch(ActionEvent event) {
@@ -110,7 +108,7 @@ public class BookSectionController implements Initializable, ValidBook {
     /**
      * @brief Aggiorna il titolo del libro in seguito alla modifica nella tabella.
      * * Invocato quando l'utente conferma la modifica (premendo Invio) nella colonna "Titolo".
-     * Aggiorna la proprietà corrispondente nell'oggetto del modello dati con il nuovo valore inserito.
+     * Aggiorna la proprietà corrispondente all'oggetto con il nuovo valore inserito.
      * * @param[in] event L'evento contenente il nuovo valore e l'oggetto modificato.
      */
     @FXML
@@ -119,17 +117,17 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Aggiorna l'elenco degli autori del libro.
-     * * Invocato al termine della modifica della cella relativa agli autori.
+     * * Invocato al termine della modifica della cella nella colonna "Autori".
      * Sincronizza il cambiamento visivo con il modello dati sottostante.
-     * * @param[in] event L'evento di modifica della cella (CellEditEvent).
+     * * @param[in] event L'evento contenente il nuovo valore e l'oggetto modificato.
      */
     @FXML
     private void updateAuthors(TableColumn.CellEditEvent<Book, List<Author>> event) {
     }
 
     /**
-     * @brief Aggiorna il codice identificativo (ISBN/ID) del libro.
-     * * Gestisce il commit della modifica sulla colonna del codice libro.
+     * @brief Aggiorna il codice ISBN del libro.
+     * * Invocato al termine della modifica della cella nella colonna "ISBN".
      * * @param[in] event L'evento di modifica della cella contenente il nuovo codice.
      */
     @FXML
@@ -138,7 +136,7 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Aggiorna l'anno di pubblicazione del libro.
-     * * Viene chiamato quando l'utente modifica l'anno nella TableView.
+     * * Invocato al termine della modifica della cella nella colonna "Anno di pubblicazione".
      * * @param[in] event L'evento di modifica della cella contenente il nuovo anno.
      */
     @FXML
@@ -147,8 +145,7 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Aggiorna il numero di copie disponibili.
-     * * Gestisce l'aggiornamento della quantità di copie in seguito a una modifica diretta 
-     * sulla riga della tabella.
+     * * Invocato al termine della modifica della cella nella colonna " Numero copie".
      * * @param[in] event L'evento di modifica della cella contenente il nuovo numero di copie.
      */
     @FXML

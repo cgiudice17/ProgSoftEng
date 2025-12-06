@@ -83,10 +83,9 @@ public class UsersSectionController implements Initializable, ValidUser {
     }
 
     /**
-     * @brief Gestisce la navigazione verso il menu principale.
-     * * Invocato dal click sul pulsante "Torna indietro". Chiude la gestione utenti 
-     * e torna al menu principale.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @brief Gestisce la navigazione verso la schermata precedente.
+     * * Invocato dal click sul pulsante "Torna indietro". Torna al menu principale dell'applicazione.
+     * * @param[in] event L'evento  generato dal click sul pulsante.
      */
     @FXML
     private void GoBack(ActionEvent event) {

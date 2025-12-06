@@ -55,25 +55,45 @@ public class LoansSectionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }   
+    
+    
+    /**
+     * @brief Gestisce la selezione di uno studente per il prestito.
+     * * Invocato quando l'utente scrive nel "LoanStudentLabel". 
+     * Questo metodo aggiorna la vista per mostrare lo studente di un dato prestito.
+     * * @param[in] event L'evento generato dalla scrittura nel campo di testo.
+     */
+    @FXML
+    private void selectStudent(ActionEvent event) {
+    }
+    
+    
+    /**
+     * @brief Gestisce la selezione di libro per il prestito.
+     * * Invocato quando l'utente scrive nel "LoanBookLabel". 
+     * Questo metodo aggiorna la vista per mostrare il libro di un dato prestito.
+     * * @param[in] event L'evento generato dalla scrittura nel campo di testo.
+     */
+    @FXML
+    private void selectBook(ActionEvent event) {
+    }
 
     /**
-     * @brief Gestisce la selezione di una data tramite il DatePicker.
+     * @brief Gestisce la selezione di una data di restituzione tramite il DatePicker.
      * * Invocato quando l'utente sceglie una data dal calendario. 
-     * Questo metodo salva la data selezionata in una variabile locale o aggiorna 
-     * la vista per mostrare i prestiti/scadenze relativi a quel giorno specifico.
-     * * @param event L'evento ActionEvent generato dalla selezione della data.
+     * Questo metodo aggiorna la vista per mostrare la scedenza di un dato prestito.
+     * * @param[in] event L'evento generato dalla selezione della data.
      */
     @FXML
     private void SelectDate(ActionEvent event) {
     }
 
     /**
-     * @brief Esegue l'operazione di prestito di un libro.
-     * * Invocato dal click sul pulsante "Presta" (Loan).
-     * Il metodo verifica che ci siano copie disponibili, che l'utente sia abilitato 
-     * e registra il nuovo prestito nel sistema con la data corrente o quella selezionata.
-     * * @param event L'evento ActionEvent generato dal click sul pulsante.
+     * @brief Esegue l'operazione di registrazione del prestito.
+     * * Invocato dal click sul pulsante "Registra prestito".
+     * Il metodo verifica che ci siano copie disponibili, registra il nuovo prestito nel sistema.
+     * * @param[in] event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void LoanBook(ActionEvent event) {
@@ -81,10 +101,9 @@ public class LoansSectionController implements Initializable {
 
     /**
      * @brief Esegue l'operazione di restituzione di un libro.
-     * * Invocato dal click sul pulsante "Restituisci" (Return).
-     * Il metodo aggiorna lo stato del prestito selezionato come "concluso", 
-     * incrementa le copie disponibili del libro e calcola eventuali sanzioni per ritardo.
-     * * @param event L'evento ActionEvent generato dal click sul pulsante.
+     * * Invocato dal click sul pulsante "Registra restituzione".
+     * Il metodo aggiorna la lista dei  prestiti rimuovendo il prestito e aggiornando il numero di copie dei libri.
+     * * @param[in] event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void ReturnBook(ActionEvent event) {
@@ -92,9 +111,8 @@ public class LoansSectionController implements Initializable {
 
     /**
      * @brief Gestisce la navigazione verso la schermata precedente.
-     * * Invocato dal click sul pulsante "Indietro". Chiude la vista corrente 
-     * di gestione prestiti e riporta l'utente al menu principale o alla lista dei libri.
-     * * @param event L'evento ActionEvent generato dal click sul pulsante.
+     * * Invocato dal click sul pulsante "Torna indietro". Torna al menu principale dell'applicazione.
+     * * @param[in] event L'evento  generato dal click sul pulsante.
      */
     @FXML
     private void GoBack(ActionEvent event) {

@@ -18,8 +18,8 @@
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                <children>
                   <Label text="Gestione prestiti e restituzioni " />
-                  <TextField fx:id="LoanStudentLabel" promptText="Studente..." />
-                  <TextField fx:id="LoanBookLabel" promptText="Libro..." />
+                  <TextField fx:id="LoanStudentLabel" onAction="#selectStudent" promptText="Matricola o cognome studente..." />
+                  <TextField fx:id="LoanBookLabel" onAction="#selectBook" promptText="Libro..." />
                   <DatePicker fx:id="DatePicker" onAction="#SelectDate" promptText="Data di restituzione..." />
                   <Button fx:id="LoanButton" mnemonicParsing="false" onAction="#LoanBook" text="Regista prestito" />
                   <Button fx:id="ReturnButton" mnemonicParsing="false" onAction="#ReturnBook" text="Regista restituzione">
@@ -39,7 +39,10 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <TextField promptText="Cerca per studente o libro..." />
+                  <TextField promptText="Cerca per matricola studente o ISBN libro...">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin></TextField>
                   <TableView fx:id="BookTable" prefHeight="478.0" prefWidth="302.0">
                      <columns>
                         <TableColumn fx:id="LoanNameClm" prefWidth="69.59990234375073" text="Nome" />
