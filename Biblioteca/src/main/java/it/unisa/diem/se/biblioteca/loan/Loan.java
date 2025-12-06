@@ -1,5 +1,7 @@
-package it.unisa.diem.se.biblioteca.data;
+package it.unisa.diem.se.biblioteca.loan;
 
+import it.unisa.diem.se.biblioteca.user.User;
+import it.unisa.diem.se.biblioteca.book.Book;
 import java.time.LocalDate;
 
 

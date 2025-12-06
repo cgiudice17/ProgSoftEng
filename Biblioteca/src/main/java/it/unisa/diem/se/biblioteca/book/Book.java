@@ -1,5 +1,6 @@
-package it.unisa.diem.se.biblioteca.data;
+package it.unisa.diem.se.biblioteca.book;
 
+import it.unisa.diem.se.biblioteca.author.Author;
 import java.time.LocalDate;
 import java.util.List;
 

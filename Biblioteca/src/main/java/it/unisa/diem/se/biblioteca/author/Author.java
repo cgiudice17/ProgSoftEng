@@ -1,4 +1,4 @@
-package it.unisa.diem.se.biblioteca.data;
+package it.unisa.diem.se.biblioteca.author;
 
 
 public class Author {

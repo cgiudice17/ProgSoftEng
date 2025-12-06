@@ -1,6 +1,6 @@
-package it.unisa.diem.se.biblioteca.collections;
+package it.unisa.diem.se.biblioteca.author;
 
-import it.unisa.diem.se.biblioteca.data.Author;
+import it.unisa.diem.se.biblioteca.author.Author;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

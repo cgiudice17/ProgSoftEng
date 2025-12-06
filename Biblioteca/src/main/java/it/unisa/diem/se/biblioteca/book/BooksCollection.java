@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unisa.diem.se.biblioteca.collections;
+package it.unisa.diem.se.biblioteca.book;
 
-import it.unisa.diem.se.biblioteca.data.Author;
-import it.unisa.diem.se.biblioteca.data.Book;
+import it.unisa.diem.se.biblioteca.author.Author;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

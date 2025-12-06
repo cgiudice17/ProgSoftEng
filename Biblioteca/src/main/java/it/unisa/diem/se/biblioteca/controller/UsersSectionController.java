@@ -5,8 +5,8 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
-import it.unisa.diem.se.biblioteca.data.User;
-import it.unisa.diem.se.biblioteca.checkers.ValidUser;
+import it.unisa.diem.se.biblioteca.user.User;
+import it.unisa.diem.se.biblioteca.user.ValidUser;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -140,16 +140,18 @@ public class UsersSectionController implements Initializable, ValidUser {
     @FXML
     private void updateEmail(TableColumn.CellEditEvent<User, String> event) {
     }
-    
-    /**
-     * @brief Override del metodo checkUser().
-     * @param u l'utente da controllare.
-     * @return True se l'utente è valido, false altrimenti.
-     */
+
     @Override
-    public boolean checkUser(User u) {
-        return false;
+    public boolean validCode(String code) {
+        return true;
     }
+
+    @Override
+    public boolean validSurname(String surname) {
+        return true;
+    }
+    
+    
     
 }
 

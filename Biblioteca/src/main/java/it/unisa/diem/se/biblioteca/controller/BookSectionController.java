@@ -5,9 +5,9 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
-import it.unisa.diem.se.biblioteca.checkers.ValidBook;
-import it.unisa.diem.se.biblioteca.data.Author;
-import it.unisa.diem.se.biblioteca.data.Book;
+import it.unisa.diem.se.biblioteca.book.ValidBook;
+import it.unisa.diem.se.biblioteca.author.Author;
+import it.unisa.diem.se.biblioteca.book.Book;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -151,14 +151,19 @@ public class BookSectionController implements Initializable, ValidBook {
     @FXML
     private void updateCopies(TableColumn.CellEditEvent<Map<Book, Integer>, Integer> event) {
     }
-    
-    /**
-     * @brief Override del metodo checkBook().
-     * @param[in] b il libro da controllare.
-     * @return True se il libro è valido, false altrimenti.
-     */
+
     @Override
-    public boolean checkBook(Book b) {
+    public boolean validISBN(String ISBN) {
+        return true;
+    }
+
+    @Override
+    public boolean validAuthor(String author) {
+        return true;
+    }
+
+    @Override
+    public boolean validYear(int year) {
         return true;
     }
     

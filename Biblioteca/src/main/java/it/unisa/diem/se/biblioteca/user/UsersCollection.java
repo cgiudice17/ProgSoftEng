@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unisa.diem.se.biblioteca.collections;
+package it.unisa.diem.se.biblioteca.user;
 
-import it.unisa.diem.se.biblioteca.data.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
