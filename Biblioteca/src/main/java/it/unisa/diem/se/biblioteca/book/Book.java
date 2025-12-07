@@ -80,6 +80,11 @@ public class Book implements Comparable<Book>{
     }
     
     @Override
+    public int hashCode(){
+        return 0;
+    }
+    
+    @Override
     public boolean equals(Object o){
         if(o == null || !this.getClass().equals(o.getClass())) return false;
         if(this == o ) return true;

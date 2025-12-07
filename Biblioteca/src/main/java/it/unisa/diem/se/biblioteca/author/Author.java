@@ -28,4 +28,14 @@ public class Author {
     public String toString(){
         return null;
     }
+    
+    @Override
+    public int hashCode(){
+        return 0;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        return false;
+    }
 }
