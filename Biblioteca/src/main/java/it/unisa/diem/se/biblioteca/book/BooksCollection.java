@@ -56,7 +56,7 @@ public class BooksCollection {
     /**
      * @brief Rimuove un libro da tutte le collezioni
      * 
-     * @param[in] b 
+     * @param[in] b Il libro da rimuovere.
      * @pre Il libro da rimuovere sia valido e si trovi nelle collezioni
      * @post Il libro è rimosso correttamente a tutte le collezioni 
      * 
