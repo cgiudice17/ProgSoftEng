@@ -10,47 +10,53 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.se.biblioteca.UsersSectionController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.se.biblioteca.controller.UsersSectionController">
    <children>
-      <SplitPane dividerPositions="0.3" prefHeight="480.0" prefWidth="689.0">
+      <SplitPane dividerPositions="0.3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <VBox alignment="CENTER" prefHeight="478.0" prefWidth="258.0" spacing="20.0">
+            <VBox alignment="CENTER" spacing="20.0">
                <children>
-                  <Label text="Gestione utenti" />
+                  <Label style="-fx-font-weight: bold; -fx-font-size: 14;" text="Gestione utenti" />
+                  
                   <TextField fx:id="NameLabel" promptText="Nome..." />
                   <TextField fx:id="SurnameLabel" promptText="Cognome..." />
                   <TextField fx:id="StudentCodeLabel" promptText="Matricola..." />
                   <TextField fx:id="EmailLabel" promptText="E-mail istituzionale..." />
-                  <Button fx:id="AddUserButton" mnemonicParsing="false" onAction="#AddUser" text="Aggiungi utente" />
-                  <Button fx:id="RemoveUserButton" mnemonicParsing="false" onAction="#RemoveUser" text="Rimuovi utente">
+                  
+                  <Button fx:id="AddUserButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#AddUser" text="Aggiungi utente" />
+                  
+                  <Button fx:id="RemoveUserButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#RemoveUser" text="Rimuovi utente">
                      <VBox.margin>
-                        <Insets top="30.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBack" text="Torna indietro">
+                  
+                  <Button fx:id="GoBackButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#GoBack" text="Torna indietro">
                      <VBox.margin>
-                        <Insets top="30.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
                   </Button>
                </children>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            
+            <VBox spacing="10.0">
                <children>
-                  <TextField fx:id="UserSearchLabel" onAction="#userSearch" prefHeight="26.0" prefWidth="325.0" promptText="Cerca per cognome o matricola...">
+                  <TextField fx:id="UserSearchLabel" onAction="#userSearch" promptText="Cerca per cognome o matricola...">
                      <VBox.margin>
-                        <Insets left="50.0" right="50.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <TableView fx:id="UsersTable" prefHeight="463.0" prefWidth="457.0">
+                  
+                  <TableView fx:id="UsersTable" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="NameClm" onEditCommit="#updateName" prefWidth="69.59990234375073" text="Nome" />
-                        <TableColumn fx:id="SurnameClm" onEditCommit="#updateSurname" prefWidth="83.20001220703125" text="Cognome" />
-                        <TableColumn fx:id="NumberClm" onEditCommit="#updateCode" prefWidth="100.00004577636719" text="Matricola" />
-                        <TableColumn fx:id="EmailClm" onEditCommit="#updateEmail" prefWidth="131.199951171875" text="E-mail istituzionale" />
-                        <TableColumn fx:id="LoanClm" prefWidth="131.199951171875" text="Lista Prestiti" />
+                        <TableColumn fx:id="NameClm" onEditCommit="#updateName" text="Nome" />
+                        <TableColumn fx:id="SurnameClm" onEditCommit="#updateSurname" text="Cognome" />
+                        <TableColumn fx:id="NumberClm" onEditCommit="#updateCode" text="Matricola" />
+                        <TableColumn fx:id="EmailClm" onEditCommit="#updateEmail" text="E-mail" />
+                        <TableColumn fx:id="LoanClm" text="Prestiti Attivi" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
