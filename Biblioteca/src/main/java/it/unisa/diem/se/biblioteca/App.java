@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * @brief JavaFX: classe principale dell'applicazione. Questa classe estende Application e gestisce il ciclo di vita dell'interfaccia grafica, l'inizializzazione dello stage
- * e il caricamente dei file FXML
+ * @brief JavaFX: classe principale dell'applicazione. 
+ * Questa classe estende Application e gestisce il ciclo di vita dell'interfaccia grafica, l'inizializzazione dello stage e il caricamente dei file FXML
  */
 public class App extends Application {
 
