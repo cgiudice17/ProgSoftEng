@@ -25,7 +25,7 @@ public class AuthorsCollection {
      * @psot L'autore è aggiunto correttamente.
      */
     public void addAuthor(Author a){
-        
+        authors.add(a);
     }
     
     
@@ -59,4 +59,12 @@ public class AuthorsCollection {
     public Set<Author> getAuthorbySurname(String s){
         return null;
     }
+    
+  
+    private void addAuthorNameHelper(Author a){
+        
+        
+    }
+    
+    private void addAuthorSurnameHelper();
 }
