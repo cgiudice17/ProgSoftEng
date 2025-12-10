@@ -23,8 +23,8 @@ public class LoansCollection {
      */
     private final static int maxLoans = 3; 
     
-    private static Map<User, List<Loan>> userLoans; 
-    private static Map<Book, List<Loan>> bookLoans;
+    private Map<User, List<Loan>> userLoans; 
+    private Map<Book, List<Loan>> bookLoans;
     
     /**
      * @brief Costruttore di default

@@ -10,6 +10,7 @@ import it.unisa.diem.se.biblioteca.author.Author;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -18,11 +19,11 @@ import java.util.TreeMap;
  */
 public class BooksCollection {
     
-    private static Map<Book, Integer> books;
-    private static Map<Author, List<Book>> authorBooks;
-    private static Map<String, Book> ISBNBooks;
-    private static Map<String, List<Book>> titleBooks;
-    private static Map<Integer, List<Book>> yearBooks;
+    private Map<Book, Integer> books;
+    private Map<Author, Set<Book>> authorBooks;
+    private Map<String, Book> ISBNBooks;
+    private Map<String, Set<Book>> titleBooks;
+    private Map<Integer, Set<Book>> yearBooks;
     
     /**
      * @brief Costruttore di default

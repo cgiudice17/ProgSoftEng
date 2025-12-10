@@ -18,9 +18,9 @@ import java.util.TreeSet;
  */
 public class UsersCollection {
     
-    private static Set<User> users;
-    private static Map<String, User> codeUsers;
-    private static Map<String, List<User>> surnameUsers;
+    private Set<User> users;
+    private Map<String, User> codeUsers;
+    private Map<String, List<User>> surnameUsers;
     
     
 

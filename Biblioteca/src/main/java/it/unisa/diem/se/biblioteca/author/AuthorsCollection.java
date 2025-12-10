@@ -7,9 +7,9 @@ import java.util.Set;
 
 
 public class AuthorsCollection {
-    private static Set<Author> authors;
-    private static Map<String, Set<Author>> nameAuthors;
-    private static Map<String, Set<Author>> surnameAuthors; 
+    private Set<Author> authors;
+    private Map<String, Set<Author>> nameAuthors;
+    private Map<String, Set<Author>> surnameAuthors; 
     
     public AuthorsCollection(){
         this.authors = new HashSet<Author>();
