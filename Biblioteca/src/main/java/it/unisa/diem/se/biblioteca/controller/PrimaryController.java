@@ -63,18 +63,18 @@ public class PrimaryController {
     
     private void changeScene(String nomeFileFXML, ActionEvent event) throws IOException {
     
-        // Costruisce il percorso completo: /it/unisa/.../nomeFileFXML
         String percorsoCompleto = PERCORSO_BASE + nomeFileFXML;
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource(percorsoCompleto));
         Parent root = loader.load();
 
-        // Cambia la scena
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        
+        Stage stage = (Stage) BookButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setWidth(800);  // Larghezza in pixel
-        stage.setHeight(550); // Altezza in pixel
+        stage.setWidth(800);  
+        stage.setHeight(550); 
         stage.show();
 
     

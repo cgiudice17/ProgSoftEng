@@ -118,6 +118,16 @@ public class BooksCollection {
         return null;
     }
     
+    /**
+    * @brief Restituisce il numero di copie disponibili per un determinato libro
+    * @param b Il libro di cui si vuole conoscere il numero di copie
+    * @return Il numero di copie (0 se il libro non esiste)
+    */
+    public int getCopies(Book b) {
+        
+        return books.getOrDefault(b, 0);
+    }
+    
     
     /**
      * @brief Metodo helper per aggiungere un libro alla lista dei libri dell'autore.

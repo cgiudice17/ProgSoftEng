@@ -8,17 +8,26 @@ package it.unisa.diem.se.biblioteca.controller;
 import it.unisa.diem.se.biblioteca.book.ValidBook;
 import it.unisa.diem.se.biblioteca.author.Author;
 import it.unisa.diem.se.biblioteca.book.Book;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -46,24 +55,33 @@ public class BookSectionController implements Initializable, ValidBook {
     @FXML
     private TextField BookSearchLabel;
     @FXML
-    private TableView<?> BookTable;
+    private TableView<Book> BookTable;
     @FXML
-    private TableColumn<?, ?> TitleClm;
+    private TableColumn<Book, String> TitleClm;
     @FXML
-    private TableColumn<?, ?> AuthorsClm;
+    private TableColumn<Book, String> AuthorsClm;
     @FXML
-    private TableColumn<?, ?> CodeClm;
+    private TableColumn<Book, String> CodeClm;
     @FXML
-    private TableColumn<?, ?> YearClm;
+    private TableColumn<Book, Integer> YearClm;
     @FXML
-    private TableColumn<?, ?> CopiesClm;
+    private TableColumn<Book, Integer> CopiesClm;
+    
+    private ObservableList<Book> bookList;
 
     /**
      *  @brief Inizializza la classe del controllore
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        bookList = FXCollections.observableArrayList();
+        
+        BookTable.setItems(bookList);
+        TitleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getTitle()));
+        AuthorsClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getAuthors().toString()));
+        CodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getISBN()));
+        YearClm.setCellValueFactory(r -> new SimpleIntegerProperty(r.getValue().getPublishYear()).asObject());
+        CopiesClm.setCellValueFactory(r -> new SimpleIntegerProperty(r.getValue());
     }    
 
     /**
@@ -93,7 +111,16 @@ public class BookSectionController implements Initializable, ValidBook {
      * * @param[in] event L'evento  generato dal click sul pulsante.
      */
     @FXML
-    private void GoBack(ActionEvent event) {
+    private void GoBack(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unisa/diem/se/biblioteca/primary.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = (Stage) GoBackButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setWidth(800);  
+        stage.setHeight(550); 
+        stage.show();
     }
 
     /**

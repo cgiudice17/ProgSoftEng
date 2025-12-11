@@ -69,6 +69,7 @@ public class Author {
         Author a = (Author) o;
         return (this.name == a.name) && (this.surname == a.surname); 
     }
+}
 
 
 

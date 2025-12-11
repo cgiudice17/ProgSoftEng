@@ -5,16 +5,21 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -115,7 +120,16 @@ public class LoansSectionController implements Initializable {
      * * @param[in] event L'evento  generato dal click sul pulsante.
      */
     @FXML
-    private void GoBack(ActionEvent event) {
+    private void GoBack(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unisa/diem/se/biblioteca/primary.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = (Stage) GoBackButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setWidth(800);  
+        stage.setHeight(550); 
+        stage.show();
     }
     
 }
