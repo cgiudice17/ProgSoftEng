@@ -8,12 +8,14 @@ package it.unisa.diem.se.biblioteca.controller;
 import it.unisa.diem.se.biblioteca.book.ValidBook;
 import it.unisa.diem.se.biblioteca.author.Author;
 import it.unisa.diem.se.biblioteca.book.Book;
+import it.unisa.diem.se.biblioteca.book.BooksCollection;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +29,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 /**
  * FXML Controller class
@@ -68,6 +72,8 @@ public class BookSectionController implements Initializable, ValidBook {
     private TableColumn<Book, Integer> CopiesClm;
     
     private ObservableList<Book> bookList;
+    
+    private BooksCollection books = new BooksCollection();
 
     /**
      *  @brief Inizializza la classe del controllore
@@ -81,7 +87,14 @@ public class BookSectionController implements Initializable, ValidBook {
         AuthorsClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getAuthors().toString()));
         CodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getISBN()));
         YearClm.setCellValueFactory(r -> new SimpleIntegerProperty(r.getValue().getPublishYear()).asObject());
-        CopiesClm.setCellValueFactory(r -> new SimpleIntegerProperty(r.getValue());
+        CopiesClm.setCellValueFactory(r -> new SimpleObjectProperty<>(books.getCopies(r.getValue())));
+        
+        TitleClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        AuthorsClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        CodeClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        YearClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        CopiesClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        
     }    
 
     /**
@@ -140,6 +153,8 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @FXML
     private void updateTitle(TableColumn.CellEditEvent<Book, String> event) {
+        Book b = event.getRowValue();
+        b.setTitle(event.getNewValue());
     }
 
     /**
@@ -150,6 +165,8 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @FXML
     private void updateAuthors(TableColumn.CellEditEvent<Book, List<Author>> event) {
+        Book b = event.getRowValue();
+        b.setAuthors(event.getNewValue());
     }
 
     /**
@@ -159,6 +176,8 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @FXML
     private void updateBookCode(TableColumn.CellEditEvent<Book, String> event) {
+        Book b = event.getRowValue();
+        b.setISBN(event.getNewValue());
     }
 
     /**
@@ -168,6 +187,8 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @FXML
     private void updateYear(TableColumn.CellEditEvent<Book, Integer> event) {
+        Book b = event.getRowValue();
+        b.setPublishYear(event.getNewValue());
     }
 
     /**
@@ -176,7 +197,9 @@ public class BookSectionController implements Initializable, ValidBook {
      * * @param[in] event L'evento di modifica della cella contenente il nuovo numero di copie.
      */
     @FXML
-    private void updateCopies(TableColumn.CellEditEvent<Map<Book, Integer>, Integer> event) {
+    private void updateCopies(TableColumn.CellEditEvent<Book, Integer> event) {
+        Book b = event.getRowValue();
+        books.setCopies(b, event.getNewValue());
     }
 
     @Override

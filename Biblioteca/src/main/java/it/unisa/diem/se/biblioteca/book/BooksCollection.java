@@ -118,11 +118,9 @@ public class BooksCollection {
         return null;
     }
     
-    /**
-    * @brief Restituisce il numero di copie disponibili per un determinato libro
-    * @param b Il libro di cui si vuole conoscere il numero di copie
-    * @return Il numero di copie (0 se il libro non esiste)
-    */
+    public void setCopies(Book b,int copies){
+        books.replace(b, books.get(b), copies);
+    }
     public int getCopies(Book b) {
         
         return books.getOrDefault(b, 0);

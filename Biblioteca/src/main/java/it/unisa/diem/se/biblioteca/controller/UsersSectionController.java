@@ -5,11 +5,16 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.loan.LoansCollection;
 import it.unisa.diem.se.biblioteca.user.User;
 import it.unisa.diem.se.biblioteca.user.ValidUser;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +25,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 /**
  * FXML Controller class
@@ -46,24 +53,40 @@ public class UsersSectionController implements Initializable, ValidUser {
     @FXML
     private TextField UserSearchLabel;
     @FXML
-    private TableView<?> UsersTable;
+    private TableView<User> UsersTable;
     @FXML
-    private TableColumn<?, ?> NameClm;
+    private TableColumn<User, String> NameClm;
     @FXML
-    private TableColumn<?, ?> SurnameClm;
+    private TableColumn<User, String> SurnameClm;
     @FXML
-    private TableColumn<?, ?> NumberClm;
+    private TableColumn<User, String> NumberClm;
     @FXML
-    private TableColumn<?, ?> EmailClm;
+    private TableColumn<User, String> EmailClm;
     @FXML
-    private TableColumn<?, ?> LoanClm;
+    private TableColumn<User, String> LoanClm;
+    
+    private ObservableList<User> userList;
+    private LoansCollection loans = new LoansCollection();
 
     /**
      * @brief Inizialliza la classe del controller.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        userList = FXCollections.observableArrayList();
+        
+        UsersTable.setItems(userList);
+        NameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getName()));
+        SurnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getSurname()));
+        NumberClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getCode()));
+        EmailClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getEmail()));
+        LoanClm.setCellValueFactory(r -> new SimpleObjectProperty<>(loans));
+        
+        TitleClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        AuthorsClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        CodeClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        YearClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        CopiesClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     }    
 
     /**

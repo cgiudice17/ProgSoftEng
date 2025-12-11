@@ -59,7 +59,7 @@ public class Book implements Comparable<Book>{
         return publishYear;
     }
 
-    public void setPublishDate(int publishYear) {
+    public void setPublishYear(int publishYear) {
         this.publishYear = publishYear;
     }
     
