@@ -15,8 +15,8 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    /** @brief Metodo di avvio dell'applicazione JavaFX. Inizializza lo stage primario 
-     *  @param stage fornito dall piattaforma JavaFX
+    /**@brief Metodo di avvio dell'applicazione JavaFX. Inizializza lo stage primario 
+     *  @param stage fornito dalla piattaforma JavaFX
     */
     @Override
     public void start(Stage stage) throws IOException {
@@ -25,16 +25,18 @@ public class App extends Application {
         stage.show();
     }
     
-    /**@brief Sostituisce il contenuto della scena attuale caricando un nuovo file FXML.
+    /**
+     * @brief Sostituisce il contenuto della scena attuale caricando un nuovo file FXML.
      * Questo permette di passare facilmente da una sezione all'altra all'interno dell'applicazione.
      */
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
-    /**@brief Carica un file FXML e restituisce il nodo genitore
-     *@param nome del file FXML da caricare 
-     *@return il nodo parent 
+    /**
+     * @brief Carica un file FXML e restituisce il nodo genitore
+     * @param nome del file FXML da caricare 
+     * @return il nodo parent 
      */
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
@@ -46,3 +48,5 @@ public class App extends Application {
     }
 
 }
+
+
