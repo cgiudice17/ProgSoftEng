@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +30,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
 
 /**
  * FXML Controller class
@@ -106,7 +106,12 @@ public class UsersSectionController implements Initializable, ValidUser {
         NumberClm.setCellFactory(TextFieldTableCell.forTableColumn());
         EmailClm.setCellFactory(TextFieldTableCell.forTableColumn());
         
-    }    
+        BooleanBinding b = Bindings.or(NameLabel.textProperty().isEmpty(), SurnameLabel.textProperty().isEmpty())
+                .or(StudentCodeLabel.textProperty().isEmpty()).or(EmailLabel.textProperty().isEmpty());
+        
+        AddUserButton.disableProperty().bind(b);
+        
+    }
 
     /**
      * @brief Gestisce l'aggiunta di un nuovo utente al sistema.

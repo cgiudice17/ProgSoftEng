@@ -14,6 +14,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -94,6 +96,11 @@ public class BookSectionController implements Initializable, ValidBook {
         CodeClm.setCellFactory(TextFieldTableCell.forTableColumn());
         YearClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         CopiesClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        
+        BooleanBinding b = Bindings.or(TitleLabel.textProperty().isEmpty(), AuthorLabel.textProperty().isEmpty())
+                .or(CodeLabel.textProperty().isEmpty()).or(YearLabel.textProperty().isEmpty()).or(CopiesLabel.textProperty().isEmpty());
+        
+        AddBookButton.disableProperty().bind(b);
         
     }    
 

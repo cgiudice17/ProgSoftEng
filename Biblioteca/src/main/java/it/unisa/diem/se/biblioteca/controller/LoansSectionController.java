@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -78,6 +80,11 @@ public class LoansSectionController implements Initializable {
         LoanBookTitleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getTitle()));
         LoanBookCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getISBN()));
         LoanDateClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getReturnDate()));
+        
+        BooleanBinding b = Bindings.or(LoanStudentLabel.textProperty().isEmpty(), LoanBookLabel.textProperty().isEmpty())
+                .or(DatePicker.valueProperty().isNull());
+        
+        LoanButton.disableProperty().bind(b);
         
     }   
     

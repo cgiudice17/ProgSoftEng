@@ -18,7 +18,7 @@
                </font>
             </Label>
             
-            <Label text="Seleziona una sezione+" textFill="#757575">
+            <Label text="Seleziona una sezione" textFill="#757575">
                <font>
                   <Font size="14.0" />
                </font>
