@@ -5,9 +5,16 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.loan.Loan;
+import it.unisa.diem.se.biblioteca.loan.LoansCollection;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,26 +47,38 @@ public class LoansSectionController implements Initializable {
     @FXML
     private Button GoBackButton;
     @FXML
-    private TableView<?> BookTable;
+    private TableView<Loan> LoanTable;
     @FXML
-    private TableColumn<?, ?> LoanNameClm;
+    private TableColumn<Loan, String> LoanNameClm;
     @FXML
-    private TableColumn<?, ?> LoanSurnameClm;
+    private TableColumn<Loan, String> LoanSurnameClm;
     @FXML
-    private TableColumn<?, ?> LoanCodeClm;
+    private TableColumn<Loan, String> LoanCodeClm;
     @FXML
-    private TableColumn<?, ?> LoanBookTitleClm;
+    private TableColumn<Loan, String> LoanBookTitleClm;
     @FXML
-    private TableColumn<?, ?> LoanBookCodeClm;
+    private TableColumn<Loan, String> LoanBookCodeClm;
     @FXML
-    private TableColumn<?, ?> LoanDateClm;
+    private TableColumn<Loan, LocalDate> LoanDateClm;
+    
+    private ObservableList<Loan> loanList;
+    private LoansCollection loans = new LoansCollection();
 
     /**
      * @brief Inizializza il controller.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        loanList = FXCollections.observableArrayList();
+        LoanTable.setItems(loanList);
+
+        LoanNameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getName()));
+        LoanSurnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getSurname()));
+        LoanCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getCode()));
+        LoanBookTitleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getTitle()));
+        LoanBookCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getISBN()));
+        LoanDateClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getReturnDate()));
+        
     }   
     
     

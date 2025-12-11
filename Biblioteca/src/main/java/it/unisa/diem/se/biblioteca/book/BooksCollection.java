@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * @brief Gestisce l'intero catalogo dei libri della biblioteca 
@@ -130,7 +131,7 @@ public class BooksCollection {
    
     private void addAuthorBooksHelper(Author a, Book b){
         if(!authorBooks.containsKey(a)){
-            authorBooks.put(a, new ArrayList());
+            authorBooks.put(a, new TreeSet());
         }
         
         authorBooks.get(a).add(b);
@@ -144,7 +145,7 @@ public class BooksCollection {
      */
     private void addTitleBooksHelper(String t, Book b){
         if(!titleBooks.containsKey(t)){
-            titleBooks.put(t, new ArrayList());
+            titleBooks.put(t, new TreeSet());
         }
         
         titleBooks.get(t).add(b);

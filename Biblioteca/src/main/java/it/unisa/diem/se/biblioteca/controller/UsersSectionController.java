@@ -5,11 +5,13 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.loan.Loan;
 import it.unisa.diem.se.biblioteca.loan.LoansCollection;
 import it.unisa.diem.se.biblioteca.user.User;
 import it.unisa.diem.se.biblioteca.user.ValidUser;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -80,13 +82,30 @@ public class UsersSectionController implements Initializable, ValidUser {
         SurnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getSurname()));
         NumberClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getCode()));
         EmailClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getEmail()));
-        LoanClm.setCellValueFactory(r -> new SimpleObjectProperty<>(loans));
+        LoanClm.setCellValueFactory(cellData -> {
+        User currentUser = cellData.getValue();
+        List<Loan> activeLoans = loans.getLoansByUser(currentUser);
         
-        TitleClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        AuthorsClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        CodeClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        YearClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        CopiesClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        if (activeLoans.isEmpty()) {
+            return new SimpleStringProperty("Nessun prestito");
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for (Loan l : activeLoans) {
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
+            sb.append(l.getBook().getTitle()); 
+        }
+        
+        return new SimpleStringProperty(sb.toString());
+    });
+        
+        NameClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        SurnameClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        NumberClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        EmailClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        
     }    
 
     /**
@@ -146,6 +165,8 @@ public class UsersSectionController implements Initializable, ValidUser {
      */
     @FXML
     private void updateName(TableColumn.CellEditEvent<User, String> event) {
+        User u = event.getRowValue();
+        u.setName(event.getNewValue());
     }
 
     /**
@@ -156,6 +177,8 @@ public class UsersSectionController implements Initializable, ValidUser {
      */
     @FXML
     private void updateSurname(TableColumn.CellEditEvent<User , String> event) {
+        User u = event.getRowValue();
+        u.setSurname(event.getNewValue());
     }
 
     /**
@@ -166,6 +189,8 @@ public class UsersSectionController implements Initializable, ValidUser {
      */
     @FXML
     private void updateCode(TableColumn.CellEditEvent<User, String> event) {
+        User u = event.getRowValue();
+        u.setCode(event.getNewValue());
     }
 
     /**
@@ -176,6 +201,8 @@ public class UsersSectionController implements Initializable, ValidUser {
      */
     @FXML
     private void updateEmail(TableColumn.CellEditEvent<User, String> event) {
+        User u = event.getRowValue();
+        u.setEmail(event.getNewValue());
     }
 
     @Override

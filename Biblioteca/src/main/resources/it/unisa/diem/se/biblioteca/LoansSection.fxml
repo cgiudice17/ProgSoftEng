@@ -43,7 +43,7 @@
                      <VBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                      </VBox.margin></TextField>
-                  <TableView fx:id="BookTable" prefHeight="478.0" prefWidth="302.0">
+                  <TableView fx:id="LoanTable" prefHeight="478.0" prefWidth="302.0">
                      <columns>
                         <TableColumn fx:id="LoanNameClm" prefWidth="69.59990234375073" text="Nome" />
                         <TableColumn fx:id="LoanSurnameClm" prefWidth="83.20001220703125" text="Cognome" />
