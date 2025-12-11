@@ -3,8 +3,8 @@ package it.unisa.diem.se.biblioteca.author;
 import java.util.Objects;
 
 /**
- *@brief rappresenta un autore di un libro all'interno del sistema.
- *Questa classe serve a memorizzare i dati anagrafici dell'autore. Fondamentale per l'indicizzazione dei liobri e la gestione del catalo.
+ * @brief rappresenta un autore di un libro all'interno del sistema.
+ * Questa classe serve a memorizzare i dati anagrafici dell'autore. Fondamentale per l'indicizzazione dei liobri e la gestione del catalo.
  */
 public class Author {
     private String name;
@@ -39,7 +39,7 @@ public class Author {
     
     /**
      * @brief Resituisce una rappresentazione in formato stringa della classe 
-     * @return stringa contenente nomee cognome dell'autore
+     * @return stringa contenente nome e cognome dell'autore
      */
     @Override
     public String toString(){
@@ -52,10 +52,10 @@ public class Author {
     }
     
     /**
-     *@brief verifica l'uguaglianza tra 2 autori 
+     * @brief verifica l'uguaglianza tra 2 autori 
      * Due autori sono considerati uguali se hanno lo stesso nome o lo stesso cognome 
-     *@param l'ogetto con cui confrontare l'autore 
-     *@return true se gli oggetti confrontati sono uguali, false altrimenti 
+     * @param l'ogetto con cui confrontare l'autore 
+     * @return true se gli oggetti confrontati sono uguali, false altrimenti 
      */
     @Override
     public boolean equals(Object o){

@@ -4,6 +4,10 @@ import it.unisa.diem.se.biblioteca.author.Author;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @brief rappresenta un libro all'interno del sistema bibliotecario.
+ * Questa classe funge da entità principale per la gestione del catalogo. 
+ */
 
 public class Book implements Comparable<Book>{
     private String title;
@@ -14,16 +18,13 @@ public class Book implements Comparable<Book>{
     
     
     /**
-     * @brief Costruttore di default
-     * 
-     * @param[in] title Titolo del libro
-     * @param[in] authors Autori
-     * @param[in] ISBN ISBN
-     * @param[in] publishYear Anno di pubblicazione 
-     * 
+     * @brief Costruttore di default. Costruisce un nuovo oggetto book
+     * @param title  il titolo del libro
+     * @param authors lista di autori 
+     * @param ISBN codice ISBN
+     * @param [publishYear anno di pubblicazione 
      * @post Libro inizializzato correttamente
      */
-
     public Book(String title, List<Author> authors, String ISBN, int publishYear) {
         this.title = title;
         this.authors = authors;
@@ -65,15 +66,10 @@ public class Book implements Comparable<Book>{
     
     
     /**
-     * @brief Override del metodo compareTo che confronta i libri
-     *        in base al titolo
-     * 
-     * 
-     * @param[in] b L'ogetto book da comparare
-     * @return Un intero negativo se l'ogetto chiamate viene prima lessigograficamente dell'argomento,
-     *         0 se sono uguali e un intero positivo se viene dopo.
+     * @brief metodo compareTo che confronta questo libro con un altro in base al titolo.
+     * @param b l'ogetto book da comparare
+     * @return Un intero negativo se l'ogetto chiamate viene prima lessicograficamente dell'argomento, 0 se sono uguali e un intero positivo se viene dopo.
      */
-    
     @Override
     public int compareTo(Book b){
         return this.title.compareTo(b.title);
@@ -84,6 +80,12 @@ public class Book implements Comparable<Book>{
         return 0;
     }
     
+    /**
+     *@brief verifica l'uguaglianza tra 2 libri 
+     * Due libei sono considerati uguali se hanno lo stesso codice ISBN 
+     *@param l'ogetto con cui confrontare l'autore 
+     *@return true se gli oggetti confrontati sono uguali, false altrimenti 
+     */
     @Override
     public boolean equals(Object o){
         if(o == null || !this.getClass().equals(o.getClass())) return false;
@@ -92,9 +94,9 @@ public class Book implements Comparable<Book>{
         return this.ISBN.equals(b.ISBN);
     }
     
-    /**
-     * @brief Override del metotdo toString per sstampare la classe corrente.
-     * 
+     /**
+     * @brief Resituisce una rappresentazione in formato stringa della classe 
+     * @return stringa contenente le informazioni che descrivono il libro
      */
     @Override
     public String toString(){

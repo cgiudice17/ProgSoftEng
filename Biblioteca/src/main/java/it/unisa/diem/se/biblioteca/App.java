@@ -15,8 +15,9 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    /**@brief Metodo di avvio dell'applicazione JavaFX. Inizializza lo stage primario 
-     *  @param stage fornito dalla piattaforma JavaFX
+   /**
+    * @brief Metodo di avvio dell'applicazione JavaFX. Inizializza lo stage primario 
+    * @param stage fornito dalla piattaforma JavaFX
     */
     @Override
     public void start(Stage stage) throws IOException {

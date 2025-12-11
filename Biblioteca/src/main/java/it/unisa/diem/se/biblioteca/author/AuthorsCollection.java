@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *@brief Gestisce la collezione degli autori registrati nel sistema.
- *La classe mantiene un elenco principale di tutti gli autori e utilizza strutture dati (mappe) per permettere rapide ricerche basate sul nome o sul cognome dell'autore 
+ * @brief Gestisce la collezione degli autori registrati nel sistema.
+ * La classe mantiene un elenco principale di tutti gli autori e utilizza strutture dati (mappe) per permettere rapide ricerche basate sul nome o sul cognome dell'autore 
  */
 public class AuthorsCollection {
     private Set<Author> authors;
@@ -15,7 +15,8 @@ public class AuthorsCollection {
     private Map<String, Set<Author>> surnameAuthors; 
     
 /**
- *Costruttore di default. Inizializza le mappe di indicizzazione
+ * @brief Costruttore di default. 
+ * Inizializza le mappe di indicizzazione
  */
     public AuthorsCollection(){
         this.authors = new HashSet<Author>();
@@ -67,9 +68,9 @@ public class AuthorsCollection {
     
   
     /**
-     *@brief Metodo helper per aggiornare la mappa degli autori indicizzata per nome.
-     *Se il nome dell'autore non è ancora presente come chiave, viene inizializzato un nuovo Set.
-     * * @param a L'autore da aggiungere all'indice per nome.
+     * @brief Metodo helper per aggiornare la mappa degli autori indicizzata per nome.
+     * Se il nome dell'autore non è ancora presente come chiave, viene inizializzato un nuovo Set.
+     * @param a L'autore da aggiungere all'indice per nome.
      */
     private void addAuthorNameHelper(Author a){
         
@@ -78,8 +79,8 @@ public class AuthorsCollection {
     
     /**
      * @brief Metodo helper per aggiornare la mappa degli autori indicizzata per cognome.
-     *Se il cognome dell'autore non è ancora presente come chiave, viene inizializzato un nuovo Set.
-     *@param a L'autore da aggiungere all'indice per cognome.
+     * Se il cognome dell'autore non è ancora presente come chiave, viene inizializzato un nuovo Set.
+     * @param a L'autore da aggiungere all'indice per cognome.
      */
     private void addAuthorSurnameHelper(Author a){
        
