@@ -12,7 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
+/**
+ * @brief Controller principale dell'applicazione 
+ * Gestisce la navigazione tra le diverse sezioni del sistema (Libri, Utenti, Prestiti)
+ */
 public class PrimaryController {
 
     private static final String PERCORSO_BASE = "/it/unisa/diem/se/biblioteca/";
@@ -26,9 +29,9 @@ public class PrimaryController {
 
     /**
      * @brief Apre la sezione dedicata alla gestione dei libri.
-     * * Metodo invocato dal click sul pulsante "Sezione libri" nel menu principale.
+     * Metodo invocato dal click sul pulsante "Sezione libri" nel menu principale.
      * Carica la vista FXML relativa ai libri.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void OpenBookSection(ActionEvent event) throws IOException {
@@ -40,9 +43,9 @@ public class PrimaryController {
 
     /**
      * @brief Apre la sezione dedicata alla gestione degli utenti.
-     * * Metodo invocato dal click sul pulsante "Sezione utenti" nel menu principale.
+     * Metodo invocato dal click sul pulsante "Sezione utenti" nel menu principale.
      * Carica la vista FXML relativa agli utenti.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void OpenUsersSection(ActionEvent event) throws IOException {
@@ -51,16 +54,21 @@ public class PrimaryController {
 
     /**
      * @brief Apre la sezione dedicata alla gestione dei prestiti.
-     * * Metodo invocato dal click sul pulsante "Sezione prestiti" nel menu principale.
+     * Metodo invocato dal click sul pulsante "Sezione prestiti" nel menu principale.
      * Carica la vista FXML relativa ai prestiti.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void OpenLoansSection(ActionEvent event) throws IOException {
         this.changeScene("loansSection.fxml", event);
     }
 
-    
+    /**
+     * @brief Metodo helper per il csmbio della scena.
+     * Carica il file FXML specificsto, imposta la nuova root e ridimensiona lo stage 
+     * @param nomeFileFXML nome del file FXML da caricare 
+     * @param event l'evento che ha scatenato il cambio di scena, usato per recuperare lo stage corrente 
+     */
     private void changeScene(String nomeFileFXML, ActionEvent event) throws IOException {
     
         String percorsoCompleto = PERCORSO_BASE + nomeFileFXML;

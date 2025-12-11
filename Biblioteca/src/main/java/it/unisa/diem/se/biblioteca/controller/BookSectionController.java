@@ -34,9 +34,8 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
 /**
- * FXML Controller class
- *
- * 
+ * @brief Controller per la gestione della sezioe libri (catalogo)
+ * Gestisce l'inserimento, la modifica e la rimozione dei libri, si occupa inoltre della gestione delle copie disponibili 
  */
 public class BookSectionController implements Initializable, ValidBook {
 
@@ -76,7 +75,8 @@ public class BookSectionController implements Initializable, ValidBook {
     private BooksCollection books = new BooksCollection();
 
     /**
-     *  @brief Inizializza la classe del controllore
+     * @brief Inizializza il controller e la TableView 
+     * Configura il binding tra le colonne e le proprietà dell' oggetto  
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -99,10 +99,10 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Gestisce l'aggiunta di un nuovo libro alla collezione.
-     * * Invocato dal click sul pulsante "Aggiungi libro". Questo metodo raccoglie i dati 
+     * Invocato dal click sul pulsante "Aggiungi libro". Questo metodo raccoglie i dati 
      * dai campi di input, valida le informazioni e, se corrette, crea un nuovo 
      * oggetto Libro inserendolo nella lista osservabile.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void AddBook(ActionEvent event) {
@@ -110,9 +110,9 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Rimuove il libro selezionato dalla tabella.
-     * * Invocato dal click sul pulsante "Rimuovi libro". Procede alla sua eliminazione 
-     * dalla lista e dal sistema di persistenza.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * Invocato dal click sul pulsante "Rimuovi libro". Procede alla sua eliminazione 
+     * dalla lista e dal sistema.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void RemoveBook(ActionEvent event) {
@@ -120,8 +120,8 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Gestisce la navigazione verso la schermata precedente.
-     * * Invocato dal click sul pulsante "Torna indietro". Torna al menu principale dell'applicazione.
-     * * @param[in] event L'evento  generato dal click sul pulsante.
+     * Invocato dal click sul pulsante "Torna indietro". Torna al menu principale dell'applicazione.
+     * @param event L'evento  generato dal click sul pulsante.
      */
     @FXML
     private void GoBack(ActionEvent event) throws IOException {
@@ -138,8 +138,8 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Esegue la ricerca di libri in base all'input del "BookSearchLabel".
-     * * Invocato dall'edit del campo di testo "BookSearchLabel". Filtra la lista dei libri visibili all'utente.
-     * * @param[in] event L'evento generato dalla scrittura sul campo di testo.
+     * Invocato dall'edit del campo di testo "BookSearchLabel". Filtra la lista dei libri visibili all'utente.
+     * @param event L'evento generato dalla scrittura sul campo di testo.
      */
     @FXML
     private void BookSearch(ActionEvent event) {
@@ -147,9 +147,9 @@ public class BookSectionController implements Initializable, ValidBook {
     
     /**
      * @brief Aggiorna il titolo del libro in seguito alla modifica nella tabella.
-     * * Invocato quando l'utente conferma la modifica (premendo Invio) nella colonna "Titolo".
+     * Invocato quando l'utente conferma la modifica (premendo Invio) nella colonna "Titolo".
      * Aggiorna la proprietà corrispondente all'oggetto con il nuovo valore inserito.
-     * * @param[in] event L'evento contenente il nuovo valore e l'oggetto modificato.
+     * @param[in] event L'evento contenente il nuovo valore e l'oggetto modificato.
      */
     @FXML
     private void updateTitle(TableColumn.CellEditEvent<Book, String> event) {
@@ -159,9 +159,9 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Aggiorna l'elenco degli autori del libro.
-     * * Invocato al termine della modifica della cella nella colonna "Autori".
+     * Invocato al termine della modifica della cella nella colonna "Autori".
      * Sincronizza il cambiamento visivo con il modello dati sottostante.
-     * * @param[in] event L'evento contenente il nuovo valore e l'oggetto modificato.
+     * @param event L'evento contenente il nuovo valore e l'oggetto modificato.
      */
     @FXML
     private void updateAuthors(TableColumn.CellEditEvent<Book, List<Author>> event) {
@@ -171,8 +171,8 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Aggiorna il codice ISBN del libro.
-     * * Invocato al termine della modifica della cella nella colonna "ISBN".
-     * * @param[in] event L'evento di modifica della cella contenente il nuovo codice.
+     * Invocato al termine della modifica della cella nella colonna "ISBN".
+     * @param event L'evento di modifica della cella contenente il nuovo codice.
      */
     @FXML
     private void updateBookCode(TableColumn.CellEditEvent<Book, String> event) {
@@ -182,8 +182,8 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Aggiorna l'anno di pubblicazione del libro.
-     * * Invocato al termine della modifica della cella nella colonna "Anno di pubblicazione".
-     * * @param[in] event L'evento di modifica della cella contenente il nuovo anno.
+     * Invocato al termine della modifica della cella nella colonna "Anno di pubblicazione".
+     * @param event L'evento di modifica della cella contenente il nuovo anno.
      */
     @FXML
     private void updateYear(TableColumn.CellEditEvent<Book, Integer> event) {
@@ -193,8 +193,8 @@ public class BookSectionController implements Initializable, ValidBook {
 
     /**
      * @brief Aggiorna il numero di copie disponibili.
-     * * Invocato al termine della modifica della cella nella colonna " Numero copie".
-     * * @param[in] event L'evento di modifica della cella contenente il nuovo numero di copie.
+     * Invocato al termine della modifica della cella nella colonna " Numero copie".
+     * @param event L'evento di modifica della cella contenente il nuovo numero di copie.
      */
     @FXML
     private void updateCopies(TableColumn.CellEditEvent<Book, Integer> event) {
@@ -202,19 +202,36 @@ public class BookSectionController implements Initializable, ValidBook {
         books.setCopies(b, event.getNewValue());
     }
 
+    /**
+     * @brief Controlla se l'ISBN inserito è valido.
+     * Viene utilizzato dal controller quando si inserisce/cerca un libro
+     * @param ISBN stringa di cifre rappresentante l'ISBN da controllare
+     * @return true se l'ISBN è valido, false altrimenti
+     */
     @Override
     public boolean validISBN(String ISBN) {
         return true;
     }
 
+    /**
+     * @brief Controlla se l'autore inserito è valido (controlla se è un nome o un cognome valido).
+     * Viene utilizzato dal controller quando si inserisce/cerca un libro
+     * @param author Il nome o cogome dell'autore da controllare
+     * @return true se l'autore è valido, false altrimenti
+     */
     @Override
     public boolean validAuthor(String author) {
         return true;
     }
 
+    /**
+     * @brief Controlla se l'anno di pubplicazione inserito è valido (minore o uguale dell'anno odierno).
+     * Viene utilizzato dal controller quando si inserisce/cerca un libro
+     * @param year l'anno da controllare
+     * @return true se l'anno è valido, false altrimenti
+     */
     @Override
     public boolean validYear(int year) {
         return true;
-    }
-    
+    }    
 }

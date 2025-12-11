@@ -22,8 +22,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
- *
+ * @brief Controller per la gestione della sezione prestiti 
+ * Gestisce il ciclo di vita dei prestiti (creazione, visualizzazione e restituzione) verificando la disponibilità delle risorse e associando utenti e libri 
  */
 public class LoansSectionController implements Initializable {
 
@@ -55,7 +55,7 @@ public class LoansSectionController implements Initializable {
     private TableColumn<?, ?> LoanDateClm;
 
     /**
-     * @brief Inizializza il controllore.
+     * @brief Inizializza il controller.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -65,9 +65,9 @@ public class LoansSectionController implements Initializable {
     
     /**
      * @brief Gestisce la selezione di uno studente per il prestito.
-     * * Invocato quando l'utente scrive nel "LoanStudentLabel". 
-     * Questo metodo aggiorna la vista per mostrare lo studente di un dato prestito.
-     * * @param[in] event L'evento generato dalla scrittura nel campo di testo.
+     * Invocato quando l'utente scrive nel "LoanStudentLabel". 
+     * permette di identificare l'utente a cui associare il prestito tramite matricola o nome 
+     * @param event L'evento generato dalla scrittura nel campo di testo.
      */
     @FXML
     private void selectStudent(ActionEvent event) {
@@ -76,9 +76,9 @@ public class LoansSectionController implements Initializable {
     
     /**
      * @brief Gestisce la selezione di libro per il prestito.
-     * * Invocato quando l'utente scrive nel "LoanBookLabel". 
+     * Invocato quando l'utente scrive nel "LoanBookLabel". 
      * Questo metodo aggiorna la vista per mostrare il libro di un dato prestito.
-     * * @param[in] event L'evento generato dalla scrittura nel campo di testo.
+     * @param event L'evento generato dalla scrittura nel campo di testo.
      */
     @FXML
     private void selectBook(ActionEvent event) {
@@ -86,9 +86,9 @@ public class LoansSectionController implements Initializable {
 
     /**
      * @brief Gestisce la selezione di una data di restituzione tramite il DatePicker.
-     * * Invocato quando l'utente sceglie una data dal calendario. 
+     * Invocato quando l'utente sceglie una data dal calendario. 
      * Questo metodo aggiorna la vista per mostrare la scedenza di un dato prestito.
-     * * @param[in] event L'evento generato dalla selezione della data.
+     * @param event L'evento generato dalla selezione della data.
      */
     @FXML
     private void SelectDate(ActionEvent event) {
@@ -96,9 +96,9 @@ public class LoansSectionController implements Initializable {
 
     /**
      * @brief Esegue l'operazione di registrazione del prestito.
-     * * Invocato dal click sul pulsante "Registra prestito".
+     * Invocato dal click sul pulsante "Registra prestito".
      * Il metodo verifica che ci siano copie disponibili, registra il nuovo prestito nel sistema.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void LoanBook(ActionEvent event) {
@@ -106,9 +106,9 @@ public class LoansSectionController implements Initializable {
 
     /**
      * @brief Esegue l'operazione di restituzione di un libro.
-     * * Invocato dal click sul pulsante "Registra restituzione".
+     * Invocato dal click sul pulsante "Registra restituzione".
      * Il metodo aggiorna la lista dei  prestiti rimuovendo il prestito e aggiornando il numero di copie dei libri.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void ReturnBook(ActionEvent event) {
@@ -116,8 +116,8 @@ public class LoansSectionController implements Initializable {
 
     /**
      * @brief Gestisce la navigazione verso la schermata precedente.
-     * * Invocato dal click sul pulsante "Torna indietro". Torna al menu principale dell'applicazione.
-     * * @param[in] event L'evento  generato dal click sul pulsante.
+     * Invocato dal click sul pulsante "Torna indietro". Torna al menu principale dell'applicazione.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void GoBack(ActionEvent event) throws IOException {
