@@ -1,0 +1,16 @@
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/controller/PrimaryController.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/book/BooksCollection.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/book/ValidBook.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/book/Book.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/controller/BookSectionController.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/loan/Loan.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/author/AuthorsCollection.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/App.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/user/UsersCollection.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/loan/LoansCollection.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/controller/LoansSectionController.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/user/ValidUser.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/author/Author.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/user/User.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/Library.java
+/Users/danilocarratu/ProgSoftEng/Biblioteca/src/main/java/it/unisa/diem/se/biblioteca/controller/UsersSectionController.java
