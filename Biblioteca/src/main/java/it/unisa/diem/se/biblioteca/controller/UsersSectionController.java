@@ -32,9 +32,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
- *
- * 
+ * @brief Controller per la gestione della sezione utenti. 
+ * Gestisce le operazioni di gestione degli utenti 
  */
 public class UsersSectionController implements Initializable, ValidUser {
 
@@ -71,7 +70,8 @@ public class UsersSectionController implements Initializable, ValidUser {
     private LoansCollection loans = new LoansCollection();
 
     /**
-     * @brief Inizialliza la classe del controller.
+     * @brief Inizialliza la classe del controller e comfigura la TableView.
+     * Imposta la lista osservabile per la tabella, definisce le factory per le celle e collega le colonne alle proprietà dell'oggetto
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -115,10 +115,10 @@ public class UsersSectionController implements Initializable, ValidUser {
 
     /**
      * @brief Gestisce l'aggiunta di un nuovo utente al sistema.
-     * * Invocato dal click sul pulsante "Aggiungi utente". Raccoglie i dati inseriti 
+     * Invocato dal click sul pulsante "Aggiungi utente". Raccoglie i dati inseriti 
      * nei campi di testo (nome, cognome,matricola, email), valida l'input tramite `checkUser` 
      * e registra il nuovo utente nella lista osservabile.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void AddUser(ActionEvent event) {
@@ -126,9 +126,9 @@ public class UsersSectionController implements Initializable, ValidUser {
 
     /**
      * @brief Rimuove l'utente selezionato dalla lista.
-     * * Invocato dal click sul pulsante "Rimuovi utente". Procede all'eliminazione dell'utente selezionato
+     * Invocato dal click sul pulsante "Rimuovi utente". Procede all'eliminazione dell'utente selezionato
      * dall'archivio della biblioteca.
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void RemoveUser(ActionEvent event) {
@@ -136,8 +136,8 @@ public class UsersSectionController implements Initializable, ValidUser {
 
     /**
      * @brief Gestisce la navigazione verso la schermata precedente.
-     * * Invocato dal click sul pulsante "Torna indietro". Torna al menu principale dell'applicazione.
-     * * @param[in] event L'evento  generato dal click sul pulsante.
+     * Invocato dal click sul pulsante "Torna indietro". Torna al menu principale dell'applicazione.
+     * @param event L'evento  generato dal click sul pulsante.
      */
     @FXML
     private void GoBack(ActionEvent event) throws IOException {
@@ -154,9 +154,9 @@ public class UsersSectionController implements Initializable, ValidUser {
 
     /**
      * @brief Esegue la ricerca degli utenti.
-     * * Invocato dall'edit del campo di testo "UserSearchLabel" . Filtra la TableView mostrando 
+     * Invocato dall'edit del campo di testo "UserSearchLabel" . Filtra la TableView mostrando 
      * solo gli utenti che corrispondono ai criteri ( nome o matricola).
-     * * @param[in] event L'evento generato dal click sul pulsante.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void userSearch(ActionEvent event) {
@@ -164,9 +164,9 @@ public class UsersSectionController implements Initializable, ValidUser {
     
     /**
      * @brief Aggiorna il nome dell'utente dopo la modifica in tabella.
-     * * Viene chiamato quando viene modificata la cella "Nome".
+     * Viene chiamato quando viene modificata la cella "Nome".
      * Salva il nuovo valore nell'oggetto User corrispondente.
-     * * @param[in] event L'evento di modifica contenente il nuovo nome.
+     * @param event L'evento di modifica contenente il nuovo nome.
      */
     @FXML
     private void updateName(TableColumn.CellEditEvent<User, String> event) {
@@ -176,9 +176,9 @@ public class UsersSectionController implements Initializable, ValidUser {
 
     /**
      * @brief Aggiorna il cognome dell'utente dopo la modifica in tabella.
-     * * Viene chiamato quando viene modificata la cella "Cognome".
+     * Viene chiamato quando viene modificata la cella "Cognome".
      * Salva il nuovo valore nell'oggetto User corrispondente.
-     * * @param[in] event L'evento di modifica contenente il nuovo cognome.
+     * @param event L'evento di modifica contenente il nuovo cognome.
      */
     @FXML
     private void updateSurname(TableColumn.CellEditEvent<User , String> event) {
@@ -188,9 +188,9 @@ public class UsersSectionController implements Initializable, ValidUser {
 
     /**
      * @brief Aggiorna la matricola dell'utente dopo la modifica in tabella.
-     * * Viene chiamato quando viene modificata la cella "Matricola".
+     * Viene chiamato quando viene modificata la cella "Matricola".
      * Salva il nuovo valore nell'oggetto User corrispondente.
-     * * @param[in] event L'evento di modifica contenente il nuovo codice.
+     * @param event L'evento di modifica contenente il nuovo codice.
      */
     @FXML
     private void updateCode(TableColumn.CellEditEvent<User, String> event) {
@@ -200,9 +200,9 @@ public class UsersSectionController implements Initializable, ValidUser {
 
     /**
      * @brief Aggiorna l'e-mail dell'utente dopo la modifica in tabella.
-     * * Viene chiamato quando viene modificata la cella "E-mail istituzionale".
+     * Viene chiamato quando viene modificata la cella "E-mail istituzionale".
      * Salva il nuovo valore nell'oggetto User corrispondente.
-     * * @param event L'evento di modifica contenente la nuova email.
+     * @param event L'evento di modifica contenente la nuova email.
      */
     @FXML
     private void updateEmail(TableColumn.CellEditEvent<User, String> event) {
@@ -210,11 +210,24 @@ public class UsersSectionController implements Initializable, ValidUser {
         u.setEmail(event.getNewValue());
     }
 
+    /**
+     * @brief Controlla se la matricola inserita è valida (deve rispettare il formato standard di cifre numeriche).
+     * Viene utilizzato dal controller quando si inserisce/cerca un utente
+     * @param code la matricola da controllare
+     * @return true se la matricola è valida, false altrimenti
+     */
+
     @Override
     public boolean validCode(String code) {
         return true;
     }
 
+    /**
+     * @brief Controlla se il cognome inserito è valido (deve contenere solo caratteri alfabetici).
+     * Viene utilizzato dal controller quando si inserisce/cerca un utente
+     * @param surname il cognome da controllare
+     * @return true se il cognome è valido, false altrimenti
+     */
     @Override
     public boolean validSurname(String surname) {
         return true;
