@@ -109,7 +109,7 @@ public class Book implements Comparable<Book>, ValidBook{
      * @return stringa contenente le informazioni che descrivono il libro
      */
     @Override
-    public String toString(){
-        return null;
+    public String toString() {
+        return "Titolo: " + title + ", Autore: " + authors + ", ISBN: " + ISBN +", Anno: " + publishYear;
     }
 }
