@@ -9,7 +9,7 @@ import java.util.List;
  * Questa classe funge da entità principale per la gestione del catalogo. 
  */
 
-public class Book implements Comparable<Book>{
+public class Book implements Comparable<Book>, ValidBook{
     private String title;
     private List<Author> authors;
     private String ISBN;
@@ -18,14 +18,28 @@ public class Book implements Comparable<Book>{
     
     
     /**
+     * @throws it.unisa.diem.se.biblioteca.book.InvalidBookException
      * @brief Costruttore di default. Costruisce un nuovo oggetto book
      * @param title  il titolo del libro
      * @param authors lista di autori 
      * @param ISBN codice ISBN
-     * @param [publishYear anno di pubblicazione 
+     * @param publishYear anno di pubblicazione 
      * @post Libro inizializzato correttamente
      */
-    public Book(String title, List<Author> authors, String ISBN, int publishYear) {
+    public Book(String title, List<Author> authors, String ISBN, int publishYear) throws InvalidBookException{
+        
+        if (!validISBN(ISBN)){
+            throw new InvalidBookException("Invalid ISBN");
+        } 
+        for (Author a : authors){
+            if (!validAuthor(a)){
+                throw new InvalidBookException("Invalid Author");
+            }
+        }
+        if (!validYear(publishYear)){
+            throw new InvalidBookException("Invalid Year");
+        }
+      
         this.title = title;
         this.authors = authors;
         this.ISBN = ISBN;

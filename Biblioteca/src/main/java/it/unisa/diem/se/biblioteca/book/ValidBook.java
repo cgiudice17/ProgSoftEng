@@ -27,7 +27,7 @@ public interface ValidBook {
     /**
      * @brief Controlla se l'autore inserito è valido (controlla se è un nome o un cognome valido).
      * Viene utilizzato dal controller quando si inserisce/cerca un libro
-     * @param author Il nome o cogome dell'autore da controllare
+     * @param name Il nome e cogome dell'autore da controllare
      * @return true se l'autore è valido, false altrimenti
      */
     public default boolean validAuthor(String name){
@@ -35,6 +35,13 @@ public interface ValidBook {
         // [\\p{L}'’]+ perchè i caratteri seguenti possono avere anche apostrofo
         // (?: \\p{Lu}[\\p{L}'’]+)* Significa che se ci sta uno spazio, il secondo nome deve essere maiuscolo e conforme al primo
         return name.matches("^\\p{Lu}[\\p{L}'’]+(?: \\p{Lu}[\\p{L}'’]+)*$");
+    }
+    
+    
+    // Da vedere bene non ne sono sicuro, penso abbia più senso mettere la verifica
+    // quando si inizializza un nuovo author
+    public default boolean validAuthor(Author a){
+        return validAuthor(a.getName() + " " + a.getSurname());
     }
     
     /**
@@ -47,6 +54,10 @@ public interface ValidBook {
         return year.matches("^\\d+$") && Integer.parseInt(year) <= LocalDate.now().getYear();
     }
     
+    public default boolean validYear(int year){    
+        return year <= LocalDate.now().getYear();
+    }
+    
     /**
      * @brief Controlla se il numero di copie inserito è valido (maggiore di 0).
      * Viene utilizzato dal controller quando si inserisce
@@ -55,5 +66,9 @@ public interface ValidBook {
      */
     public default boolean validCopies(String copies){
         return copies.matches("^\\d+$") && Integer.parseInt(copies) > 0;
+    }
+    
+    public default boolean validCopies(int copies){
+        return copies > 0;
     }
 }

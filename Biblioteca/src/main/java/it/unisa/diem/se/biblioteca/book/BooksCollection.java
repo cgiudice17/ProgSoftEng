@@ -19,7 +19,7 @@ import java.util.TreeSet;
  * Utilizza molteplici mappe per indicizzare i libri e permettere ricerche efficienti, basate sui seguenti criteri: ISBN, Autore, Titolo e Anno di pubblicazione.
  * Gestisce inoltre il conteggio delle copie disponibili per ogni libro
  */
-public class BooksCollection {
+public class BooksCollection implements ValidBook{
     
     private Map<Book, Integer> books;
 
@@ -39,6 +39,9 @@ public class BooksCollection {
      * @post Il libro è aggiunto correttamente a tutte le collezioni 
      */
     public void addBook(Book b, int copies){
+        if(b == null){
+            throw new NullPointerException("Invalid Pointer to book");
+        }
         books.put(b, copies);
     }
     
@@ -50,6 +53,9 @@ public class BooksCollection {
      * 
      */
     public void removeBook(Book b){
+        if(b == null){
+            throw new NullPointerException("Invalid Pointer to book");
+        }
         books.remove(b);
     }
 
@@ -64,6 +70,7 @@ public class BooksCollection {
     }
     
     /**
+     * @throws it.unisa.diem.se.biblioteca.book.InvalidBookException
      * @brief Aggiorna il numero di copie disponibili per un libro già presente nel catalogo.
      * Utilizza il metodo replace per sovrascrivere il valore associato alla chiave libro, permettendo di modificare la disponibilità in seguito a prestiti, restituzioni o nuovi acquisti.
      * @param b Il libro di cui si vuole modificare la disponibilità.
@@ -71,11 +78,20 @@ public class BooksCollection {
      * @pre Il libro deve essere già presente nella collezione 'books'.
      * @post Il numero di copie del libro viene aggiornato al nuovo valore specificato.
      */
-    public void setCopies(Book b,int copies){
+    public void setCopies(Book b,int copies) throws InvalidBookException{
+        if(b == null){
+            throw new NullPointerException("Invalid Pointer to book");
+        }
+        if (!validCopies(copies)){
+            throw new InvalidBookException("Invalid number of copies");
+        }
         books.replace(b, books.get(b), copies);
     }
     
     public int getCopies(Book b) {
+        if(b == null){
+            throw new NullPointerException("Invalid Pointer to book");
+        }
         return books.getOrDefault(b, 0);
     }
 
