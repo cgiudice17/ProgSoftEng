@@ -7,7 +7,6 @@ package it.unisa.diem.se.biblioteca.book;
 
 import it.unisa.diem.se.biblioteca.author.Author;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +37,7 @@ public class BooksCollection {
     /**
      * @brief Aggiunge un nuovo libro al catalogo e aggiorna tutti gli indici di ricerca 
      * @param b  libro da aggiungere
+     * @param copies numero di copie del libro da aggiungere
      * @pre Il libro da aggiungere sia valido 
      * @post Il libro è aggiunto correttamente a tutte le collezioni 
      */

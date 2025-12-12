@@ -6,6 +6,7 @@
 package it.unisa.diem.se.biblioteca.book;
 
 import it.unisa.diem.se.biblioteca.author.Author;
+import java.time.LocalDate;
 
 /**
  * @brief Interfaccia che definisce i contratti per la validazione dei dati di un libro 
@@ -19,7 +20,9 @@ public interface ValidBook {
      * @param ISBN stringa di cifre rappresentante l'ISBN da controllare
      * @return true se l'ISBN è valido, false altrimenti
      */
-    public boolean validISBN(String ISBN);
+    public default boolean validISBN(String ISBN){
+        return ISBN.matches("^978\\d{10}") || ISBN.matches("^979\\d{10}");
+    }
     
     /**
      * @brief Controlla se l'autore inserito è valido (controlla se è un nome o un cognome valido).
@@ -27,7 +30,12 @@ public interface ValidBook {
      * @param author Il nome o cogome dell'autore da controllare
      * @return true se l'autore è valido, false altrimenti
      */
-    public boolean validAuthor(String author);
+    public default boolean validAuthor(String name){
+        // ^p{Lu} perchè la prima lettera deve essere maiuscola
+        // [\\p{L}'’]+ perchè i caratteri seguenti possono avere anche apostrofo
+        // (?: \\p{Lu}[\\p{L}'’]+)* Significa che se ci sta uno spazio, il secondo nome deve essere maiuscolo e conforme al primo
+        return name.matches("^\\p{Lu}[\\p{L}'’]+(?: \\p{Lu}[\\p{L}'’]+)*$");
+    }
     
     /**
      * @brief Controlla se l'anno di pubplicazione inserito è valido (minore o uguale dell'anno odierno).
@@ -35,5 +43,17 @@ public interface ValidBook {
      * @param year l'anno da controllare
      * @return true se l'anno è valido, false altrimenti
      */
-    public boolean validYear(int year);
+    public default boolean validYear(String year){    
+        return year.matches("^\\d+$") && Integer.parseInt(year) <= LocalDate.now().getYear();
+    }
+    
+    /**
+     * @brief Controlla se il numero di copie inserito è valido (maggiore di 0).
+     * Viene utilizzato dal controller quando si inserisce
+     * @param copies le copie da inserire
+     * @return true se le copie sono valide, false altrimenti
+     */
+    public default boolean validCopies(String copies){
+        return copies.matches("^\\d+$") && Integer.parseInt(copies) > 0;
+    }
 }
