@@ -22,13 +22,15 @@ import java.util.TreeSet;
 public class BooksCollection implements ValidBook{
     
     private Map<Book, Integer> books;
+    private Map<String, Book> booksISBN;
 
     /**
      * @brief Costruttore di default
      * Inizializza la mappa principale
      */
     public BooksCollection() {
-        this.books = new TreeMap<>();        
+        this.books = new TreeMap<>();    
+        this.booksISBN = new HashMap<>();
     }
     
     /**
@@ -43,6 +45,7 @@ public class BooksCollection implements ValidBook{
             throw new NullPointerException("Invalid Pointer to book");
         }
         books.put(b, copies);
+        booksISBN.put(b.getISBN(), b);
     }
     
     /**
@@ -57,6 +60,7 @@ public class BooksCollection implements ValidBook{
             throw new NullPointerException("Invalid Pointer to book");
         }
         books.remove(b);
+        booksISBN.remove(b.getISBN());
     }
 
     /**
@@ -67,6 +71,10 @@ public class BooksCollection implements ValidBook{
     
     public Set<Book> getBooks(){
         return books.keySet();
+    }
+    
+    public Book getBookByISBN(String ISBN){
+        return booksISBN.get(ISBN);
     }
     
     /**

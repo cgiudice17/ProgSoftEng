@@ -9,6 +9,7 @@ import it.unisa.diem.se.biblioteca.book.ValidBook;
 import it.unisa.diem.se.biblioteca.author.Author;
 import it.unisa.diem.se.biblioteca.book.Book;
 import it.unisa.diem.se.biblioteca.book.BooksCollection;
+import it.unisa.diem.se.biblioteca.book.InvalidBookException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public class BookSectionController implements Initializable, ValidBook {
      * * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void AddBook(ActionEvent event) {
+    private void AddBook(ActionEvent event) throws InvalidBookException {
         
         // Titolo
         String title = this.TitleLabel.getText();
@@ -142,6 +143,10 @@ public class BookSectionController implements Initializable, ValidBook {
             // da implementare popup
             return;
         }
+        if (books.getBookByISBN(ISBN) != null){
+            // da implementare popup che il libro già esiste
+            return;
+        }
         
         // Verifica anno di publicazione
         String year = this.YearLabel.getText();
@@ -156,7 +161,9 @@ public class BookSectionController implements Initializable, ValidBook {
             // Da implementare popup
             return;
         }
+   
         Book b = new Book(title, authorsList, ISBN, Integer.parseInt(year));
+  
         books.addBook(b, Integer.parseInt(copies));
         bookList.setAll(books.getBooks());
         
@@ -318,7 +325,7 @@ BookTable.setItems(sortedData);
      * @param event L'evento di modifica della cella contenente il nuovo numero di copie.
      */
     @FXML
-    private void updateCopies(TableColumn.CellEditEvent<Book, Integer> event) {
+    private void updateCopies(TableColumn.CellEditEvent<Book, Integer> event) throws InvalidBookException {
         Book b = event.getRowValue();
         books.setCopies(b, event.getNewValue());
     }
