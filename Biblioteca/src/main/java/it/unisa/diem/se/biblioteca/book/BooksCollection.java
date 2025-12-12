@@ -70,6 +70,10 @@ public class BooksCollection {
         } 
     }
     
+    public Set<Book> getAllBooks(){
+        return books.keySet();
+    }
+    
     /**
      * @brief Recupera un libro tramite il suo codice ISBN
      * @param ISBN Il codice ISBN del libro da recuperare

@@ -11,6 +11,7 @@ import it.unisa.diem.se.biblioteca.book.Book;
 import it.unisa.diem.se.biblioteca.book.BooksCollection;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -84,6 +85,7 @@ public class BookSectionController implements Initializable, ValidBook {
     public void initialize(URL url, ResourceBundle rb) {
         bookList = FXCollections.observableArrayList();
         
+        
         BookTable.setItems(bookList);
         TitleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getTitle()));
         AuthorsClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getAuthors().toString()));
@@ -119,22 +121,24 @@ public class BookSectionController implements Initializable, ValidBook {
         
         // Verifica nome e cognome di ogni autore
         String[] names = this.AuthorLabel.getText().split(",");
+        List<Author> authorsList = new ArrayList();
 
         for (int i = 0; i < names.length; i++) {
             names[i] = names[i].trim();
             String name = names[i].split(" ")[0];
             String surname = names[i].split(" ")[1];
                     
-            if (! this.validAuthor(name, surname)){
+            if (! this.validAuthor(name)){
                 // Da implementare il popup
                 return;
             }
+            authorsList.add(new Author(name , surname));
         }
         
         // Verifica l'ISBN
         String ISBN = this.CodeLabel.getText();
         if (!this.validISBN(ISBN)){
-            // Da implementare popup
+            // da implementare popup
             return;
         }
         
@@ -151,9 +155,9 @@ public class BookSectionController implements Initializable, ValidBook {
             // Da implementare popup
             return;
         }
-        
-        
-        Book b = new Book(title, List<Author> authors, String ISBN, int publishYear);
+        Book b = new Book(title, authorsList, ISBN, Integer.parseInt(year));
+        books.addBook(b, Integer.parseInt(copies));
+        bookList.add(b);
     }
 
     /**
@@ -164,6 +168,11 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @FXML
     private void RemoveBook(ActionEvent event) {
+        Book b = this.BookTable.getSelectionModel().getSelectedItem();
+        
+        bookList.remove(b);
+        books.removeBook(b);
+        
     }
 
     /**
