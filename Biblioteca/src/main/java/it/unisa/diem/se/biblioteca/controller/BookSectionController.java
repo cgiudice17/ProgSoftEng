@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -22,6 +21,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -157,7 +158,8 @@ public class BookSectionController implements Initializable, ValidBook {
         }
         Book b = new Book(title, authorsList, ISBN, Integer.parseInt(year));
         books.addBook(b, Integer.parseInt(copies));
-        bookList.add(b);
+        bookList.setAll(books.getAllBooks());
+        
     }
 
     /**
@@ -200,6 +202,62 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @FXML
     private void BookSearch(ActionEvent event) {
+        // 1. Crea la Master List (contiene TUTTI i dati)
+ObservableList<Book> masterData = FXCollections.observableArrayList(books.getAllBooks());
+
+// 2. Crea una FilteredList avvolgendo la Master List
+// All'inizio p -> true significa "mostra tutto"
+FilteredList<Book> filteredData = new FilteredList<>(masterData, p -> true);
+
+// 3. Aggiungi un Listener al TextField di ricerca
+BookSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+    filteredData.setPredicate(book -> {
+        // Se il campo di ricerca è vuoto, mostra tutti i libri
+        if (newValue == null || newValue.isEmpty()) {
+            return true;
+        }
+
+        // Converti il testo cercato in minuscolo per ignorare maiuscole/minuscole
+        String lowerCaseFilter = newValue.toLowerCase();
+
+        // --- INIZIO LOGICA DI RICERCA ---
+        
+        // Controlla se il TITOLO contiene la parola cercata
+        if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+            return true; 
+        }
+        
+        // Controlla se gli AUTORI contengono la parola cercata
+        // (Assumendo che getAuthors() ritorni una lista o una stringa)
+        if (book.getAuthors().toString().toLowerCase().contains(lowerCaseFilter)) {
+            return true;
+        }
+        
+        // Controlla ISBN
+        if (book.getISBN().toLowerCase().contains(lowerCaseFilter)) {
+            return true;
+        }
+
+        // Controlla ANNO (convertendo l'int in stringa)
+        if (String.valueOf(book.getPublishYear()).contains(lowerCaseFilter)) {
+            return true;
+        }
+
+        // Se nessuna delle condizioni sopra è vera, nascondi il libro
+        return false; 
+    });
+});
+
+// 4. (Opzionale ma consigliato) Avvolgi in una SortedList
+// Questo serve per far funzionare ancora l'ordinamento cliccando sulle colonne
+SortedList<Book> sortedData = new SortedList<>(filteredData);
+
+// 5. Collega il comparatore della SortedList a quello della TableView
+sortedData.comparatorProperty().bind(BookTable.comparatorProperty());
+
+// 6. Infine, metti la lista ordinata e filtrata nella tabella
+BookTable.setItems(sortedData);
+        
     }
     
     /**

@@ -6,6 +6,7 @@
 package it.unisa.diem.se.biblioteca.book;
 
 import it.unisa.diem.se.biblioteca.author.Author;
+import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,12 @@ public class BooksCollection {
      */
     public BooksCollection() {
         this.books = new TreeMap();
+        this.authorBooks = new HashMap();
+        this.ISBNBooks = new HashMap();
+        this.titleBooks = new HashMap();
+        this.yearBooks = new HashMap();
+        
+        
     }
     
     /**
