@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.se.biblioteca.controller.BookSectionController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.se.biblioteca.controller.BookSectionController">
    <children>
       <SplitPane dividerPositions="0.3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -18,7 +18,7 @@
                <children>
                   <Label style="-fx-font-weight: bold; -fx-font-size: 14;" text="Gestione libri" />
                   <TextField fx:id="TitleLabel" promptText="Titolo..." />
-                  <TextField fx:id="AuthorLabel" promptText="Autori..." />
+                  <TextField fx:id="AuthorLabel" promptText="Autori (es: Mario Rossi, Luca Bianchi)..." />
                   <TextField fx:id="CodeLabel" promptText="Codice ISBN..." />
                   <TextField fx:id="YearLabel" promptText="Anno pubblicazione..." />
                   <TextField fx:id="CopiesLabel" promptText="Numero copie..." />
