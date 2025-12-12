@@ -113,6 +113,47 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @FXML
     private void AddBook(ActionEvent event) {
+        
+        // Titolo
+        String title = this.TitleLabel.getText();
+        
+        // Verifica nome e cognome di ogni autore
+        String[] names = this.AuthorLabel.getText().split(",");
+
+        for (int i = 0; i < names.length; i++) {
+            names[i] = names[i].trim();
+            String name = names[i].split(" ")[0];
+            String surname = names[i].split(" ")[1];
+                    
+            if (! this.validAuthor(name, surname)){
+                // Da implementare il popup
+                return;
+            }
+        }
+        
+        // Verifica l'ISBN
+        String ISBN = this.CodeLabel.getText();
+        if (!this.validISBN(ISBN)){
+            // Da implementare popup
+            return;
+        }
+        
+        // Verifica anno di publicazione
+        String year = this.YearLabel.getText();
+        if (!this.validYear(year)){
+            // Da implementare popup
+            return;
+        }
+        
+        // Verifica numero di copie
+        String copies = this.CopiesLabel.getText();
+        if (!this.validCopies(copies)){
+            // Da implementare popup
+            return;
+        }
+        
+        
+        Book b = new Book(title, List<Author> authors, String ISBN, int publishYear);
     }
 
     /**
@@ -208,37 +249,4 @@ public class BookSectionController implements Initializable, ValidBook {
         Book b = event.getRowValue();
         books.setCopies(b, event.getNewValue());
     }
-
-    /**
-     * @brief Controlla se l'ISBN inserito è valido.
-     * Viene utilizzato dal controller quando si inserisce/cerca un libro
-     * @param ISBN stringa di cifre rappresentante l'ISBN da controllare
-     * @return true se l'ISBN è valido, false altrimenti
-     */
-    @Override
-    public boolean validISBN(String ISBN) {
-        return true;
-    }
-
-    /**
-     * @brief Controlla se l'autore inserito è valido (controlla se è un nome o un cognome valido).
-     * Viene utilizzato dal controller quando si inserisce/cerca un libro
-     * @param author Il nome o cogome dell'autore da controllare
-     * @return true se l'autore è valido, false altrimenti
-     */
-    @Override
-    public boolean validAuthor(String author) {
-        return true;
-    }
-
-    /**
-     * @brief Controlla se l'anno di pubplicazione inserito è valido (minore o uguale dell'anno odierno).
-     * Viene utilizzato dal controller quando si inserisce/cerca un libro
-     * @param year l'anno da controllare
-     * @return true se l'anno è valido, false altrimenti
-     */
-    @Override
-    public boolean validYear(int year) {
-        return true;
-    }    
 }
