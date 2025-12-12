@@ -10,7 +10,7 @@ package it.unisa.diem.se.biblioteca.book;
  *
  * @author giudi
  */
-public class BooksCollection
+public class BooksCollectionTest
 
 
 }
