@@ -77,13 +77,12 @@ public class Loan implements Comparable<Loan>{
         return null;
     }
     
-    @Override
-    public int hashCode(){
-        return 0;
-    }
     
     @Override
     public boolean equals(Object o){
-        return false;
+        if(o == null || !this.getClass().equals(o.getClass())) return false;
+        if(this == o ) return true;
+        Loan l = (Loan) o;
+        return this.book.equals(l.getBook()) && this.returnDate.equals(l.getReturnDate()) && this.user.equals(l.getUser());
     }
 }

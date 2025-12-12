@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -23,8 +25,8 @@ public class LoansCollection {
      */
     private final static int maxLoans = 3; 
     
+    private Set<Loan> loans;
     private Map<User, List<Loan>> userLoans; 
-    private Map<Book, List<Loan>> bookLoans;
     
     /**
      * @brief Costruttore di default
@@ -32,8 +34,8 @@ public class LoansCollection {
      * @post Collezione inizializzata correttamente.
      */
     public LoansCollection(){
+        this.loans = new TreeSet<>();
         this.userLoans = new HashMap();
-        this.bookLoans = new HashMap();
     }
             
             
@@ -54,10 +56,7 @@ public class LoansCollection {
        }
        
        addUserLoanHelper(l);
-        
-       addBookLoanHelper(l);
-       
-       
+             
        return 0;
     }
     
@@ -89,20 +88,6 @@ public class LoansCollection {
     }
     
     /**
-     * @brief Metodo helper per aggiungere un prestito alla mappa dei prestiti con chiave libro.
-     * @param[in] l il prestito da inserire
-     */
-   
-    private void addBookLoanHelper(Loan l){
-        Book b = l.getBook();
-        if(!bookLoans.containsKey(b)){
-            bookLoans.put(b, new ArrayList());
-        }
-        
-        bookLoans.get(b).add(l);
-    }
-    
-    /**
      * @brief Restituisce una lista di prestiti dell' utente passato.
      * @param[in] u L'utente di cui si vuole i prestiti 
      * 
@@ -112,21 +97,13 @@ public class LoansCollection {
      */
     
     public List<Loan> getLoansByUser(User u){
-        return null;
+        return this.userLoans.get(u);
     }
     
-    /**
-     * @brief Restituisce una lista di prestiti del libro passato.
-     * @param[in] b Il libro di cui si vuole i prestiti 
-     * 
-     * @pre Il libro è valido
-     * 
-     * @return lista dei prestiti
-     */
+    public Set<Loan> getLoans(){
+        return this.loans;
+    }
     
-    public List<Loan> getLoansByBook(Book b){
-        return null;
-    } 
     
             
     /**

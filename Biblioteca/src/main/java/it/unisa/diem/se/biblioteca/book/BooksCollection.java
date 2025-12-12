@@ -23,7 +23,6 @@ public class BooksCollection {
     
     private Map<Book, Integer> books;
 
-    
     /**
      * @brief Costruttore di default
      * Inizializza la mappa principale

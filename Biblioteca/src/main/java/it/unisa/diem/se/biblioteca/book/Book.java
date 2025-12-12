@@ -75,10 +75,6 @@ public class Book implements Comparable<Book>{
         return this.title.compareTo(b.title);
     }
     
-    @Override
-    public int hashCode(){
-        return 0;
-    }
     
     /**
      *@brief verifica l'uguaglianza tra 2 libri 
