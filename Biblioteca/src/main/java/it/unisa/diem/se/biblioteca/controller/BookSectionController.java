@@ -158,7 +158,13 @@ public class BookSectionController implements Initializable, ValidBook {
         }
         Book b = new Book(title, authorsList, ISBN, Integer.parseInt(year));
         books.addBook(b, Integer.parseInt(copies));
-        bookList.setAll(books.getAllBooks());
+        bookList.setAll(books.getBooks());
+        
+        this.TitleLabel.clear();
+        this.AuthorLabel.clear();
+        this.CodeLabel.clear();
+        this.YearLabel.clear();
+        this.CopiesLabel.clear();
         
     }
 
@@ -203,14 +209,14 @@ public class BookSectionController implements Initializable, ValidBook {
     @FXML
     private void BookSearch(ActionEvent event) {
         // 1. Crea la Master List (contiene TUTTI i dati)
-ObservableList<Book> masterData = FXCollections.observableArrayList(books.getAllBooks());
+    bookList.setAll(books.getBooks());
 
-// 2. Crea una FilteredList avvolgendo la Master List
-// All'inizio p -> true significa "mostra tutto"
-FilteredList<Book> filteredData = new FilteredList<>(masterData, p -> true);
+    // 2. Crea una FilteredList avvolgendo la Master List
+    // All'inizio p -> true significa "mostra tutto"
+    FilteredList<Book> filteredData = new FilteredList<>(bookList, p -> true);
 
-// 3. Aggiungi un Listener al TextField di ricerca
-BookSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+    // 3. Aggiungi un Listener al TextField di ricerca
+    BookSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
     filteredData.setPredicate(book -> {
         // Se il campo di ricerca è vuoto, mostra tutti i libri
         if (newValue == null || newValue.isEmpty()) {

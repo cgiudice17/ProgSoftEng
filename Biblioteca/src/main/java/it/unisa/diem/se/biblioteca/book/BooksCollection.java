@@ -22,23 +22,14 @@ import java.util.TreeSet;
 public class BooksCollection {
     
     private Map<Book, Integer> books;
-    private Map<Author, Set<Book>> authorBooks;
-    private Map<String, Book> ISBNBooks;
-    private Map<String, Set<Book>> titleBooks;
-    private Map<Integer, Set<Book>> yearBooks;
+
     
     /**
      * @brief Costruttore di default
      * Inizializza la mappa principale
      */
     public BooksCollection() {
-        this.books = new TreeMap();
-        this.authorBooks = new HashMap();
-        this.ISBNBooks = new HashMap();
-        this.titleBooks = new HashMap();
-        this.yearBooks = new HashMap();
-        
-        
+        this.books = new TreeMap<>();        
     }
     
     /**
@@ -49,13 +40,7 @@ public class BooksCollection {
      * @post Il libro è aggiunto correttamente a tutte le collezioni 
      */
     public void addBook(Book b, int copies){
-        
         books.put(b, copies);
-        for(Author aut: b.getAuthors()){
-            addAuthorBooksHelper(aut, b);
-        } 
-        ISBNBooks.put(b.getISBN(), b);
-        addTitleBooksHelper(b.getTitle(),b);
     }
     
     /**
@@ -67,56 +52,18 @@ public class BooksCollection {
      */
     public void removeBook(Book b){
         books.remove(b);
-        
-        ISBNBooks.remove(b.getISBN());
-        
-        titleBooks.get(b.getTitle()).remove(b);
-        
-        for(Author aut: b.getAuthors()){
-            authorBooks.get(aut).remove(b);
-        } 
     }
+
+    /**
+     * @brief Restituisce l'insieme di tutti i libri presenti nel catalogo
+     * @return Set<Book> insieme di tutti i libri presenti nel catalogo
+     * @post Viene restituito l'insieme di tutti i libri presenti nel catalogo
+     */
     
-    public Set<Book> getAllBooks(){
+    public Set<Book> getBooks(){
         return books.keySet();
     }
     
-    /**
-     * @brief Recupera un libro tramite il suo codice ISBN
-     * @param ISBN Il codice ISBN del libro da recuperare
-     * @return il libro corrispondente al codice ISBN specificato
-     */
-    public Book getBookByISBN(String ISBN){
-        return null;
-    }
-    
-    /**
-     * @brief Recupera un libro tramite il titolo specificato 
-     * @param[ title Il titolo del libro da recuperare
-     * @return Il libro dal titolo specificato
-     */
-    public List<Book> getBookbyTitle(String title){
-        return null;
-    }
-    
-    /**
-     * @brief Restituisce una lista di libri scritti dall'autore specificato
-     * @param author L'autore del libro da recuperare
-     * @return Lista di libri associata all'autore
-     */
-    public List<Book> getBookbyAuthor(Author author){
-        return null;
-    }
-    
-    /**
-     * @brief Restituisce una lista di libri con l'anno di pubblicazione specificato
-     * @param year Anno di pubblicazione scelto
-     * @return Lista di libri corrispondenti  all'anno specificato
-     */
-    public List<Book> getBookbyYear(int year){
-        return null;
-    }
-
     /**
      * @brief Aggiorna il numero di copie disponibili per un libro già presente nel catalogo.
      * Utilizza il metodo replace per sovrascrivere il valore associato alla chiave libro, permettendo di modificare la disponibilità in seguito a prestiti, restituzioni o nuovi acquisti.
@@ -132,36 +79,7 @@ public class BooksCollection {
     public int getCopies(Book b) {
         return books.getOrDefault(b, 0);
     }
-    
-    /**
-     * @brief Metodo helper per aggiornare la mappa dei libri indicizzata per autore.
-     * * Se l'autore non è ancora presente come chiave, viene inizializzata una nuova lista.
-     * * @param a L'autore da usare come chiave.
-     * @param b Il libro da aggiungere alla lista associata all'autore.
-     */
-   
-    private void addAuthorBooksHelper(Author a, Book b){
-        if(!authorBooks.containsKey(a)){
-            authorBooks.put(a, new TreeSet());
-        }
-        
-        authorBooks.get(a).add(b);
-    }
-    
-    /**
-     * @brief Metodo helper per aggiornare la mappa dei libri indicizzata per titolo.
-     * * Se il titolo non è ancora presente come chiave, viene inizializzata una nuova lista.
-     * * @param t Il titolo da usare come chiave.
-     * @param b Il libro da aggiungere alla lista associata al titolo.
-     */
-    private void addTitleBooksHelper(String t, Book b){
-        if(!titleBooks.containsKey(t)){
-            titleBooks.put(t, new TreeSet());
-        }
-        
-        titleBooks.get(t).add(b);
-    }
-    
+
     /**
      * @brief Restituisce una rappresentazione in formato stringa dell'intero catalogo
      * @return String stringa con tutti i libri

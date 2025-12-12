@@ -5,7 +5,6 @@
  */
 package it.unisa.diem.se.biblioteca;
 
-import it.unisa.diem.se.biblioteca.author.AuthorsCollection;
 import it.unisa.diem.se.biblioteca.book.BooksCollection;
 import it.unisa.diem.se.biblioteca.loan.LoansCollection;
 import it.unisa.diem.se.biblioteca.user.UsersCollection;
@@ -14,7 +13,6 @@ import it.unisa.diem.se.biblioteca.user.UsersCollection;
  * La classe Library è il punto di accesso centrale dell'applicazione. Aggrega le collezioni (Utenti, Libri, Prestiti, Autori) e si occupa del salvataggio dei dati su file e del caricamento dell'intero sistema  
  */
 public class Library {
-    private AuthorsCollection authors;
     private LoansCollection loans;
     private BooksCollection books;
     private UsersCollection users;
