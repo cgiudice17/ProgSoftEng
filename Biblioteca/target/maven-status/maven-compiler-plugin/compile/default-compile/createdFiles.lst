@@ -13,4 +13,3 @@ it/unisa/diem/se/biblioteca/book/Book.class
 it/unisa/diem/se/biblioteca/user/User.class
 it/unisa/diem/se/biblioteca/controller/LoansSectionController.class
 it/unisa/diem/se/biblioteca/App.class
-it/unisa/diem/se/biblioteca/author/AuthorsCollection.class
