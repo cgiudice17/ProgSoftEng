@@ -53,7 +53,7 @@ public class Author {
     
     /**
      * @brief verifica l'uguaglianza tra 2 autori 
-     * Due autori sono considerati uguali se hanno lo stesso nome o lo stesso cognome 
+     * Due autori sono considerati uguali se hanno lo stesso nome e lo stesso cognome 
      * @param l'ogetto con cui confrontare l'autore 
      * @return true se gli oggetti confrontati sono uguali, false altrimenti 
      */
