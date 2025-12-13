@@ -8,9 +8,11 @@ package it.unisa.diem.se.biblioteca.controller;
 import it.unisa.diem.se.biblioteca.loan.Loan;
 import it.unisa.diem.se.biblioteca.loan.LoansCollection;
 import it.unisa.diem.se.biblioteca.user.User;
+import it.unisa.diem.se.biblioteca.user.UsersCollection;
 import it.unisa.diem.se.biblioteca.user.ValidUser;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -67,6 +69,8 @@ public class UsersSectionController implements Initializable, ValidUser {
     private TableColumn<User, String> LoanClm;
     
     private ObservableList<User> userList;
+    // Da mettere in Library per avere la collezione già inizializzata quando leggi da file
+    private UsersCollection users = new UsersCollection();
     private LoansCollection loans = new LoansCollection();
 
     /**
@@ -86,7 +90,7 @@ public class UsersSectionController implements Initializable, ValidUser {
         User currentUser = cellData.getValue();
         List<Loan> activeLoans = loans.getLoansByUser(currentUser);
         
-        if (activeLoans.isEmpty()) {
+        if (activeLoans == null || activeLoans.isEmpty()) {
             return new SimpleStringProperty("Nessun prestito");
         }
         
@@ -122,6 +126,46 @@ public class UsersSectionController implements Initializable, ValidUser {
      */
     @FXML
     private void AddUser(ActionEvent event) {
+        // Nome e cognome
+        String name = this.NameLabel.getText().trim();
+        String surname = this.SurnameLabel.getText().trim();
+        
+        // Verifica nome e cognome
+        if (!validName(name) || ! validName(surname)){
+            // da implementare popup
+            return;
+        }
+               
+        
+        // Verifica la matricola
+        String studentCode = this.StudentCodeLabel.getText();
+        if (!this.validCode(studentCode)){
+            // da implementare popup
+            return;
+        }
+        if (users.getUserByCode(studentCode) != null){
+            // da implementare popup che l'utente già esiste
+            return;
+        }
+        
+        // Verifica l'e-mail
+        String mail = this.EmailLabel.getText();
+        if (!this.validMail(mail)){
+            // Da implementare popup
+            return;
+        }
+        
+   
+        User u = new User(name, surname, studentCode, mail);
+  
+        users.addUser(u);
+        userList.setAll(users.getUsers());
+        
+        
+        this.NameLabel.clear();
+        this.SurnameLabel.clear();
+        this.StudentCodeLabel.clear();
+        this.EmailLabel.clear();
     }
 
     /**
@@ -132,6 +176,10 @@ public class UsersSectionController implements Initializable, ValidUser {
      */
     @FXML
     private void RemoveUser(ActionEvent event) {
+        User u = this.UsersTable.getSelectionModel().getSelectedItem();
+        
+        userList.remove(u);
+        users.removeUser(u);
     }
 
     /**
@@ -208,32 +256,6 @@ public class UsersSectionController implements Initializable, ValidUser {
     private void updateEmail(TableColumn.CellEditEvent<User, String> event) {
         User u = event.getRowValue();
         u.setEmail(event.getNewValue());
-    }
-
-    /**
-     * @brief Controlla se la matricola inserita è valida (deve rispettare il formato standard di cifre numeriche).
-     * Viene utilizzato dal controller quando si inserisce/cerca un utente
-     * @param code la matricola da controllare
-     * @return true se la matricola è valida, false altrimenti
-     */
-
-    @Override
-    public boolean validCode(String code) {
-        return true;
-    }
-
-    /**
-     * @brief Controlla se il cognome inserito è valido (deve contenere solo caratteri alfabetici).
-     * Viene utilizzato dal controller quando si inserisce/cerca un utente
-     * @param surname il cognome da controllare
-     * @return true se il cognome è valido, false altrimenti
-     */
-    @Override
-    public boolean validSurname(String surname) {
-        return true;
-    }
-    
-    
-    
+    }    
 }
 

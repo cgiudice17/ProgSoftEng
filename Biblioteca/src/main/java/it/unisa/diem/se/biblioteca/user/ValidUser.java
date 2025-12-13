@@ -16,7 +16,9 @@ public interface ValidUser {
      * @param code La matricola da controllare
      * @return true se la matricola è valida, false altrimenti
      */
-    public boolean validCode(String code);
+    public default boolean validCode(String code){
+        return code.matches("^\\d{10}$");
+    }
     
     
     /**
@@ -24,9 +26,24 @@ public interface ValidUser {
      * 
      * Viene utilizzato dal controller quando si inserisce/cerca un utente
      * 
-     * @param surname Il cognome da controllare
+     * @param name Il cognome da controllare
      * @return true se il cognome è valido, false altrimenti
      */
-    public boolean validSurname(String surname);
+    public default boolean validName(String name){
+        return name.matches("^\\p{Lu}[\\p{L}'’]+(?: \\p{Lu}[\\p{L}'’]+)*$");
+    }
     
+    
+    /**
+     * @brief Controlla se la mail è valida (es. m.rossi8@studenti.unisa.it)
+     * 
+     * Viene utilizzato dal controller quando si inserisce/cerca un utente
+     * 
+     * @param mail Mail da controllare
+     * @return true se la mail è valida, false altrimenti
+     */
+    public default boolean validMail(String mail){
+        return mail.matches("^\\p{Ll}\\.\\p{Ll}+[\\d]{1,3}@studenti\\.unisa\\.it$");
+    }
+            
 }

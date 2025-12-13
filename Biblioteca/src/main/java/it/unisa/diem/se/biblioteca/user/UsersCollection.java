@@ -20,7 +20,6 @@ public class UsersCollection {
     
     private Set<User> users;
     private Map<String, User> codeUsers;
-    private Map<String, List<User>> surnameUsers;
     
     
 
@@ -33,7 +32,6 @@ public class UsersCollection {
     public UsersCollection() {
         this.users = new TreeSet();
         this.codeUsers = new HashMap();
-        this.surnameUsers = new HashMap();
     }
     
     /**
@@ -46,7 +44,6 @@ public class UsersCollection {
         
         users.add(u);
         codeUsers.put(u.getCode(), u);
-        this.addSurnameUsersHelper(u.getSurname(), u);
         
     }
     
@@ -62,7 +59,6 @@ public class UsersCollection {
     public void removeUser(User u){
         users.remove(u);
         codeUsers.remove(u.getCode());
-        surnameUsers.get(u.getSurname()).remove(u); 
     }
     
     /**
@@ -79,27 +75,12 @@ public class UsersCollection {
         return this.codeUsers.get(code);
     }
     
-    /**
-     * 
-     * @brief Restituisce gli utenti col cognome passato
-     * 
-     * @param[in] surname
-     * @return La lista degli utenti con quel cognome
-     * @pre  Il cognome sia valido
-     * @post Gli utenti sono stati restituiti 
-     */
-    
-    public List<User> getUserbySurname(String surname){
-        return this.surnameUsers.get(surname);
+    public Set<User> getUsers(){
+        return this.users;
     }
     
-    private void addSurnameUsersHelper(String s, User u){
-        if(!surnameUsers.containsKey(s)){
-            surnameUsers.put(s, new ArrayList());
-        }
-        
-        surnameUsers.get(s).add(u);
-    }
+
+
     
     /**
      * @brief Restituisce una stringa contenente tutti gli utenti 
