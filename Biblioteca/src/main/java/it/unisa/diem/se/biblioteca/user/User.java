@@ -1,136 +1,85 @@
 package it.unisa.diem.se.biblioteca.user;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @brief L'utente della biblioteca
- * @invariant
- * Il numero massimo di prestiti attivi non è mai maggiore di maxLoans
- * @invariant
- *
- * 
  */
-
-
-public class User implements Comparable<User>, Serializable{
+public class User implements Comparable<User>, Serializable, ValidUser {
+    
     private static final long serialVersionUID = 1L;
+    
     private String name;
     private String surname;
     private String code;
     private String email;
     private int loanCount;
-    
 
-    
-    
-    
     /**
-     * @brief Costruttore di default
-     * 
-     * @param[in] name Nome dell'utente
-     * @param[in] surname Cognome dell'utente
-     * @param[in] code Matricola dell'utente
-     * @param[in] email Email dell'utente
-     * 
-     * @post Utente inizializzato correttamente.
-     * La lista dei presiti associata è inizializzata.
-     * 
+     * @brief Costruttore con validazione
+     * @throws InvalidUserException se i dati non rispettano il formato
      */
-    public User(String name, String surname, String code, String email){
+    public User(String name, String surname, String code, String email) throws InvalidUserException {
+        
+        if (!validName(name)) {
+            throw new InvalidUserException("Nome utente non valido: " + name);
+        }
+        if (!validName(surname)) {
+            throw new InvalidUserException("Cognome utente non valido: " + surname);
+        }
+        if (!validCode(code)) {
+            throw new InvalidUserException("Matricola non valida (devono essere 10 cifre): " + code);
+        }
+        if (!validMail(email)) {
+            throw new InvalidUserException("Email non valida (formato unisa richiesto): " + email);
+        }
+
         this.name = name;
         this.surname = surname;
         this.code = code;
         this.email = email;
-        this.loanCount=0;
+        this.loanCount = 0;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getSurname() {
-        return surname;
-    }
+    public String getSurname() { return surname; }
+    public void setSurname(String surname) { this.surname = surname; }
 
-    public String getCode() {
-        return code;
-    }
+    public String getCode() { return code; }
+    public void setCode(String code) { this.code = code; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public int getLoanCount() {
-        return loanCount;
-    }
+    public int getLoanCount() { return loanCount; }
+    public void setLoanCount(int loanCount) { this.loanCount = loanCount; }
 
-    public void setLoanCount(int loanCount) {
-        this.loanCount = loanCount;
-    }
-    
-    
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    
-    
-    
-    /**
-     * @brief Override del metodo compareTo che confronta gli user
-     *        in base al cognome e, nel caso fosse uguale, in base al nome.
-     * 
-     * 
-     * @param[in] u L'ogetto user da comparare
-     * @return Un intero negativo se l'ogetto chiamate viene prima lessigograficamente dell'argomento,
-     *         0 se sono uguali0 e un intero positivo se viene dopo.
-     */
 
     @Override
     public int compareTo(User u) {
         if(this.surname.equals(u.surname)) return this.name.compareTo(u.name);
-        
         return this.surname.compareTo(u.surname);
     }
 
-
-    /**
-     * @brief Override del metotdo toString per sstampare la classe corrente.
-     * 
-     */
     @Override
-    public String toString(){
-        return null;
+    public String toString() {
+        return "Utente: " + name + " " + surname + " | Matricola: " + code + " | Email: " + email;
     }
     
     @Override
-    public int hashCode(){
-        return this.code.hashCode();
+    public int hashCode() {
+        return Objects.hash(code);
     }
     
     @Override
-    public boolean equals(Object o){
-        if(o == null || !this.getClass().equals(o.getClass())) return false;
-        if(this == o ) return true;
+    public boolean equals(Object o) {
+        if (o == null || !this.getClass().equals(o.getClass())) return false;
+        if (this == o) return true;
         User u = (User) o;
         return this.code.equals(u.code);
     }
-    
-    
 }

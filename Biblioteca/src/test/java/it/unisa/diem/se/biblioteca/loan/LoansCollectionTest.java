@@ -14,7 +14,6 @@ public class LoansCollectionTest {
 
     private LoansCollection collection;
     private User user;
-    private User altroUtente; // Aggiunto per i test multi-utente
     private Book book;
     private Loan loan;
 
@@ -51,9 +50,6 @@ public class LoansCollectionTest {
 
     @Test
     public void testMaxLoansLimit() {
-        // IMPORTANTE: Usiamo date diverse per ogni prestito.
-        // Poiché Loan usa compareTo basato sulla data, se usassimo sempre LocalDate.now(),
-        // il TreeSet li considererebbe duplicati e il test fallirebbe.
         
         collection.addLoan(new Loan(user, book, LocalDate.now().plusDays(1)));
         collection.addLoan(new Loan(user, book, LocalDate.now().plusDays(2)));
@@ -61,7 +57,6 @@ public class LoansCollectionTest {
         
         assertEquals(3, user.getLoanCount());
 
-        // 4° prestito -> Deve fallire (usiamo una data molto diversa per sicurezza)
         Loan loanExtra = new Loan(user, book, LocalDate.now().plusDays(100));
         int result = collection.addLoan(loanExtra);
         
@@ -70,7 +65,7 @@ public class LoansCollectionTest {
         assertFalse(collection.getLoans().contains(loanExtra));
     }
 
-    // 3. TEST RIMOZIONE (STANDARD E CASI LIMITE)
+    // 3. TEST RIMOZIONE
 
     @Test
     public void testRemoveLoan() {
