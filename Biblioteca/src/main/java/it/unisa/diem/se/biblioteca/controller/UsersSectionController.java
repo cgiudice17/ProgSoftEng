@@ -42,33 +42,33 @@ import javafx.stage.Stage;
 public class UsersSectionController implements Initializable, ValidUser {
 
     @FXML
-    private TextField NameLabel;
+    private TextField nameLabel;
     @FXML
-    private TextField SurnameLabel;
+    private TextField surnameLabel;
     @FXML
-    private TextField StudentCodeLabel;
+    private TextField studentCodeLabel;
     @FXML
-    private TextField EmailLabel;
+    private TextField emailLabel;
     @FXML
-    private Button AddUserButton;
+    private Button addUserButton;
     @FXML
-    private Button RemoveUserButton;
+    private Button removeUserButton;
     @FXML
-    private Button GoBackButton;
+    private Button goBackButton;
     @FXML
-    private TextField UserSearchLabel;
+    private TextField userSearchLabel;
     @FXML
-    private TableView<User> UsersTable;
+    private TableView<User> usersTable;
     @FXML
-    private TableColumn<User, String> NameClm;
+    private TableColumn<User, String> nameClm;
     @FXML
-    private TableColumn<User, String> SurnameClm;
+    private TableColumn<User, String> surnameClm;
     @FXML
-    private TableColumn<User, String> NumberClm;
+    private TableColumn<User, String> numberClm;
     @FXML
-    private TableColumn<User, String> EmailClm;
+    private TableColumn<User, String> emailClm;
     @FXML
-    private TableColumn<User, String> LoanClm;
+    private TableColumn<User, String> loanClm;
     
     private ObservableList<User> userList;
     // Da mettere in Library per avere la collezione già inizializzata quando leggi da file
@@ -83,12 +83,12 @@ public class UsersSectionController implements Initializable, ValidUser {
     public void initialize(URL url, ResourceBundle rb) {
         userList = FXCollections.observableArrayList(users.getUsers());
         
-        UsersTable.setItems(userList);
-        NameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getName()));
-        SurnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getSurname()));
-        NumberClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getCode()));
-        EmailClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getEmail()));
-        LoanClm.setCellValueFactory(cellData -> {
+        usersTable.setItems(userList);
+        nameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getName()));
+        surnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getSurname()));
+        numberClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getCode()));
+        emailClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getEmail()));
+        loanClm.setCellValueFactory(cellData -> {
         User currentUser = cellData.getValue();
         List<Loan> activeLoans = loans.getLoansByUser(currentUser);
         
@@ -107,15 +107,15 @@ public class UsersSectionController implements Initializable, ValidUser {
         return new SimpleStringProperty(sb.toString());
     });
         
-        NameClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        SurnameClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        NumberClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        EmailClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        surnameClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        numberClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        emailClm.setCellFactory(TextFieldTableCell.forTableColumn());
         
-        BooleanBinding b = Bindings.or(NameLabel.textProperty().isEmpty(), SurnameLabel.textProperty().isEmpty())
-                .or(StudentCodeLabel.textProperty().isEmpty()).or(EmailLabel.textProperty().isEmpty());
+        BooleanBinding b = Bindings.or(nameLabel.textProperty().isEmpty(), surnameLabel.textProperty().isEmpty())
+                .or(studentCodeLabel.textProperty().isEmpty()).or(emailLabel.textProperty().isEmpty());
         
-        AddUserButton.disableProperty().bind(b);
+        addUserButton.disableProperty().bind(b);
         
     }
 
@@ -127,10 +127,10 @@ public class UsersSectionController implements Initializable, ValidUser {
      * * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void AddUser(ActionEvent event) {
+    private void addUser(ActionEvent event) {
         // Nome e cognome
-        String name = this.NameLabel.getText().trim();
-        String surname = this.SurnameLabel.getText().trim();
+        String name = this.nameLabel.getText().trim();
+        String surname = this.surnameLabel.getText().trim();
         
         // Verifica campi vuoti (controllo extra per sicurezza)
         if (name.isEmpty() || surname.isEmpty()) {
@@ -146,7 +146,7 @@ public class UsersSectionController implements Initializable, ValidUser {
                 
         
         // Verifica la matricola
-        String studentCode = this.StudentCodeLabel.getText();
+        String studentCode = this.studentCodeLabel.getText();
         
         if (!this.validCode(studentCode)){
             showError("Errore Matricola", "Formato Matricola non valido", "La matricola non rispetta il formato richiesto (es. 10 cifre).");
@@ -159,7 +159,7 @@ public class UsersSectionController implements Initializable, ValidUser {
         }
         
         // Verifica l'e-mail
-        String mail = this.EmailLabel.getText();
+        String mail = this.emailLabel.getText();
         if (!this.validMail(mail)){
             showError("Errore Email", "Email non valida", "L'indirizzo email inserito non è valido o non è istituzionale.");
             return;
@@ -173,10 +173,10 @@ public class UsersSectionController implements Initializable, ValidUser {
         userList.setAll(users.getUsers());
         
         
-        this.NameLabel.clear();
-        this.SurnameLabel.clear();
-        this.StudentCodeLabel.clear();
-        this.EmailLabel.clear();
+        this.nameLabel.clear();
+        this.surnameLabel.clear();
+        this.studentCodeLabel.clear();
+        this.emailLabel.clear();
   
     }
 
@@ -187,8 +187,8 @@ public class UsersSectionController implements Initializable, ValidUser {
      * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void RemoveUser(ActionEvent event) {
-        User u = this.UsersTable.getSelectionModel().getSelectedItem();
+    private void removeUser(ActionEvent event) {
+        User u = this.usersTable.getSelectionModel().getSelectedItem();
         
         userList.remove(u);
         users.removeUser(u);
@@ -200,11 +200,11 @@ public class UsersSectionController implements Initializable, ValidUser {
      * @param event L'evento  generato dal click sul pulsante.
      */
     @FXML
-    private void GoBack(ActionEvent event) throws IOException {
+    private void goBack(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unisa/diem/se/biblioteca/primary.fxml"));
         Parent root = loader.load();
 
-        Stage stage = (Stage) GoBackButton.getScene().getWindow();
+        Stage stage = (Stage) goBackButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setWidth(800);  
@@ -223,7 +223,7 @@ public class UsersSectionController implements Initializable, ValidUser {
         
         userList.setAll(users.getUsers());
         FilteredList<User> filteredData = new FilteredList<>(userList, p -> true);
-        UserSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+        userSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
         filteredData.setPredicate(user -> {
             // Se il campo di ricerca è vuoto, mostra tutti i libri
             if (newValue == null || newValue.isEmpty()) {
@@ -260,8 +260,8 @@ public class UsersSectionController implements Initializable, ValidUser {
 
 
         SortedList<User> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(UsersTable.comparatorProperty());
-        UsersTable.setItems(sortedData);
+        sortedData.comparatorProperty().bind(usersTable.comparatorProperty());
+        usersTable.setItems(sortedData);
     }
     
     /**

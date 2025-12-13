@@ -47,35 +47,35 @@ import javafx.scene.control.Alert.AlertType;
 public class BookSectionController implements Initializable, ValidBook {
 
     @FXML
-    private TextField TitleLabel;
+    private TextField titleLabel;
     @FXML
-    private TextField AuthorLabel;
+    private TextField authorLabel;
     @FXML
-    private TextField CodeLabel;
+    private TextField codeLabel;
     @FXML
-    private TextField YearLabel;
+    private TextField yearLabel;
     @FXML
-    private TextField CopiesLabel;
+    private TextField copiesLabel;
     @FXML
-    private Button AddBookButton;
+    private Button addBookButton;
     @FXML
-    private Button RemoveButton;
+    private Button removeButton;
     @FXML
-    private Button GoBackButton;
+    private Button goBackButton;
     @FXML
-    private TextField BookSearchLabel;
+    private TextField bookSearchLabel;
     @FXML
-    private TableView<Book> BookTable;
+    private TableView<Book> bookTable;
     @FXML
-    private TableColumn<Book, String> TitleClm;
+    private TableColumn<Book, String> titleClm;
     @FXML
-    private TableColumn<Book, String> AuthorsClm;
+    private TableColumn<Book, String> authorsClm;
     @FXML
-    private TableColumn<Book, String> CodeClm;
+    private TableColumn<Book, String> codeClm;
     @FXML
-    private TableColumn<Book, Integer> YearClm;
+    private TableColumn<Book, Integer> yearClm;
     @FXML
-    private TableColumn<Book, Integer> CopiesClm;
+    private TableColumn<Book, Integer> copiesClm;
     
     private ObservableList<Book> bookList;
     
@@ -90,23 +90,23 @@ public class BookSectionController implements Initializable, ValidBook {
         bookList = FXCollections.observableArrayList(books.getBooks());
         
         
-        BookTable.setItems(bookList);
-        TitleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getTitle()));
-        AuthorsClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getAuthors().toString()));
-        CodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getISBN()));
-        YearClm.setCellValueFactory(r -> new SimpleIntegerProperty(r.getValue().getPublishYear()).asObject());
-        CopiesClm.setCellValueFactory(r -> new SimpleObjectProperty<>(books.getCopies(r.getValue())));
+        bookTable.setItems(bookList);
+        titleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getTitle()));
+        authorsClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getAuthors().toString()));
+        codeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getISBN()));
+        yearClm.setCellValueFactory(r -> new SimpleIntegerProperty(r.getValue().getPublishYear()).asObject());
+        copiesClm.setCellValueFactory(r -> new SimpleObjectProperty<>(books.getCopies(r.getValue())));
         
-        TitleClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        AuthorsClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        CodeClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        YearClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        CopiesClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        titleClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        authorsClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        codeClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        yearClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        copiesClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         
-        BooleanBinding b = Bindings.or(TitleLabel.textProperty().isEmpty(), AuthorLabel.textProperty().isEmpty())
-                .or(CodeLabel.textProperty().isEmpty()).or(YearLabel.textProperty().isEmpty()).or(CopiesLabel.textProperty().isEmpty());
+        BooleanBinding b = Bindings.or(titleLabel.textProperty().isEmpty(), authorLabel.textProperty().isEmpty())
+                .or(codeLabel.textProperty().isEmpty()).or(yearLabel.textProperty().isEmpty()).or(copiesLabel.textProperty().isEmpty());
         
-        AddBookButton.disableProperty().bind(b);
+        addBookButton.disableProperty().bind(b);
         
     }    
 
@@ -118,17 +118,17 @@ public class BookSectionController implements Initializable, ValidBook {
      * * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void AddBook(ActionEvent event) {
+    private void addBook(ActionEvent event) {
         
         // Titolo
-        String title = this.TitleLabel.getText();
+        String title = this.titleLabel.getText();
         if (title == null || title.isEmpty()) {
             showError("Errore Input", "Titolo mancante", "Per favore inserisci il titolo del libro.");
             return;
         }
         
         // Verifica nome e cognome di ogni autore
-        String authorsText = this.AuthorLabel.getText();
+        String authorsText = this.authorLabel.getText();
         if (authorsText == null || authorsText.isEmpty()) {
              showError("Errore Input", "Autore mancante", "Per favore inserisci almeno un autore.");
              return;
@@ -158,7 +158,7 @@ public class BookSectionController implements Initializable, ValidBook {
         }
         
         // Verifica l'ISBN
-        String ISBN = this.CodeLabel.getText();
+        String ISBN = this.codeLabel.getText();
         if (!this.validISBN(ISBN)){
             showError("Errore ISBN", "Codice ISBN non valido", "Il formato dell'ISBN inserito non è corretto.");
             return;
@@ -170,14 +170,14 @@ public class BookSectionController implements Initializable, ValidBook {
         }
         
         // Verifica anno di publicazione
-        String year = this.YearLabel.getText();
+        String year = this.yearLabel.getText();
         if (!this.validYear(year)){
             showError("Errore Anno", "Anno non valido", "Inserire un anno numerico valido (es. 2024).");
             return;
         }
         
         // Verifica numero di copie
-        String copies = this.CopiesLabel.getText();
+        String copies = this.copiesLabel.getText();
         if (!this.validCopies(copies)){
             showError("Errore Copie", "Numero copie non valido", "Inserire un numero intero positivo.");
             return;
@@ -190,11 +190,11 @@ public class BookSectionController implements Initializable, ValidBook {
             bookList.setAll(books.getBooks());
             
             // Pulizia campi
-            this.TitleLabel.clear();
-            this.AuthorLabel.clear();
-            this.CodeLabel.clear();
-            this.YearLabel.clear();
-            this.CopiesLabel.clear();
+            this.titleLabel.clear();
+            this.authorLabel.clear();
+            this.codeLabel.clear();
+            this.yearLabel.clear();
+            this.copiesLabel.clear();
             
         } catch (InvalidBookException e) {
             showError("Errore nella creazione del libro", "Errore di creazione", "Controllare i parametri passati");
@@ -208,8 +208,8 @@ public class BookSectionController implements Initializable, ValidBook {
      * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void RemoveBook(ActionEvent event) {
-        Book b = this.BookTable.getSelectionModel().getSelectedItem();
+    private void removeBook(ActionEvent event) {
+        Book b = this.bookTable.getSelectionModel().getSelectedItem();
         
         bookList.remove(b);
         books.removeBook(b);
@@ -222,11 +222,11 @@ public class BookSectionController implements Initializable, ValidBook {
      * @param event L'evento  generato dal click sul pulsante.
      */
     @FXML
-    private void GoBack(ActionEvent event) throws IOException {
+    private void goBack(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unisa/diem/se/biblioteca/primary.fxml"));
         Parent root = loader.load();
 
-        Stage stage = (Stage) GoBackButton.getScene().getWindow();
+        Stage stage = (Stage) goBackButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setWidth(800);  
@@ -240,13 +240,13 @@ public class BookSectionController implements Initializable, ValidBook {
      * @param event L'evento generato dalla scrittura sul campo di testo.
      */
     @FXML
-    private void BookSearch(ActionEvent event) {
+    private void bookSearch(ActionEvent event) {
       
         bookList.setAll(books.getBooks());
 
         FilteredList<Book> filteredData = new FilteredList<>(bookList, p -> true);
 
-        BookSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+        bookSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
         filteredData.setPredicate(book -> {
             // Se il campo di ricerca è vuoto, mostra tutti i libri
             if (newValue == null || newValue.isEmpty()) {
@@ -283,8 +283,8 @@ public class BookSectionController implements Initializable, ValidBook {
 
     
         SortedList<Book> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(BookTable.comparatorProperty());
-        BookTable.setItems(sortedData);  
+        sortedData.comparatorProperty().bind(bookTable.comparatorProperty());
+        bookTable.setItems(sortedData);  
     }
     
     /**
