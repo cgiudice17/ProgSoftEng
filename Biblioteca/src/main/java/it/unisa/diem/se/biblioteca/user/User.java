@@ -2,6 +2,7 @@ package it.unisa.diem.se.biblioteca.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -119,12 +120,15 @@ public class User implements Comparable<User>{
     
     @Override
     public int hashCode(){
-        return 0;
+        return this.code.hashCode();
     }
     
     @Override
     public boolean equals(Object o){
-        return false;
+        if(o == null || !this.getClass().equals(o.getClass())) return false;
+        if(this == o ) return true;
+        User u = (User) o;
+        return this.code.equals(u.code);
     }
     
     
