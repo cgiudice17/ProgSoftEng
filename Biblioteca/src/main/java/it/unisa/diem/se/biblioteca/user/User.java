@@ -3,7 +3,7 @@ package it.unisa.diem.se.biblioteca.user;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+import java.io.Serializable;
 
 /**
  * @brief L'utente della biblioteca
@@ -15,7 +15,8 @@ import java.util.Objects;
  */
 
 
-public class User implements Comparable<User>{
+public class User implements Comparable<User>, Serializable{
+    private static final long serialVersionUID = 1L;
     private String name;
     private String surname;
     private String code;
