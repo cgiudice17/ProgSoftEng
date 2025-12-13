@@ -39,8 +39,8 @@ public class BooksCollection implements ValidBook, Serializable {
      /**
      * @brief Aggiunge un nuovo libro al catalogo e aggiorna gli indici.
      *
-     * @param[in] b        Il libro da aggiungere.
-     * @param[in] copies   Il numero di copie da aggiungere.
+     * @param b        Il libro da aggiungere.
+     * @param copies   Il numero di copie da aggiungere.
      * @throws NullPointerException Se il libro passato è null.
      * @pre Il libro da aggiungere deve essere valido.
      * @post Il libro è aggiunto correttamente alle collezioni.
@@ -55,7 +55,7 @@ public class BooksCollection implements ValidBook, Serializable {
     
     /**
      * @brief Rimuove un libro dal catalogo e da tutti gli indici associsti 
-     * @param[in] b    Il libro da rimuovere.
+     * @param b    Il libro da rimuovere.
      * @throws NullPointerException Se il libro passato è null.
      * @pre Il libro da rimuovere deve essere presente nelle collezioni.
      * @post Il libro è rimosso da tutte le collezioni.
@@ -81,7 +81,7 @@ public class BooksCollection implements ValidBook, Serializable {
     /**
     * @brief Cerca e restituisce un libro dato il suo codice ISBN
     *
-    * @param[in] ISBN    Il codice ISBN del libro da cercare
+    * @param ISBN    Il codice ISBN del libro da cercare
     * @return il libro del codice ISBN specificato
     */
     public Book getBookByISBN(String ISBN){
@@ -92,8 +92,8 @@ public class BooksCollection implements ValidBook, Serializable {
      * @throws it.unisa.diem.se.biblioteca.book.InvalidBookException
      * @brief Aggiorna il numero di copie disponibili per un libro già presente nel catalogo.
      * Utilizza il metodo replace per sovrascrivere il valore associato alla chiave libro, permettendo di modificare la disponibilità in seguito a prestiti, restituzioni o nuovi acquisti.
-     * @param[in] b Il libro di cui si vuole modificare la disponibilità.
-     * @param[in] copies Il nuovo numero di copie da impostare.
+     * @param b         Il libro di cui si vuole modificare la disponibilità.
+     * @param copies    Il nuovo numero di copie da impostare.
      * @pre Il libro deve essere già presente nella collezione 'books'.
      * @post Il numero di copie del libro viene aggiornato al nuovo valore specificato.
      */
@@ -108,7 +108,7 @@ public class BooksCollection implements ValidBook, Serializable {
     }
      /**
      * @brief Restituisce il numero di copie disponibili per un determinato libro
-     * @param[in] b    Il libro a cui controllare le copie.
+     * @param b    Il libro a cui controllare le copie.
      * @return Passa il numero di copie disponibili, oppure restituisce 0 se il libro non è presente
      * @throws NullPointerException Se il libro passato è null.
      */
