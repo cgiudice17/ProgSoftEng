@@ -50,7 +50,7 @@
                      </VBox.margin>
                   </TextField>
                   
-                  <TableView fx:id="BookTable" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="BookTable" editable="true" VBox.vgrow="ALWAYS">
                      <columns>
                         <TableColumn fx:id="TitleClm" onEditCommit="#updateTitle" text="Titolo" />
                         <TableColumn fx:id="AuthorsClm" onEditCommit="#updateAuthors" text="Autori" />

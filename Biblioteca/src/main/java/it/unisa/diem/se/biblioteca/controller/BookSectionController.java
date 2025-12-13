@@ -85,7 +85,7 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        bookList = FXCollections.observableArrayList();
+        bookList = FXCollections.observableArrayList(books.getBooks());
         
         
         BookTable.setItems(bookList);
@@ -258,18 +258,18 @@ public class BookSectionController implements Initializable, ValidBook {
 
         // Se nessuna delle condizioni sopra è vera, nascondi il libro
         return false; 
+        });
     });
-});
 
 // 4. (Opzionale ma consigliato) Avvolgi in una SortedList
 // Questo serve per far funzionare ancora l'ordinamento cliccando sulle colonne
-SortedList<Book> sortedData = new SortedList<>(filteredData);
+    SortedList<Book> sortedData = new SortedList<>(filteredData);
 
 // 5. Collega il comparatore della SortedList a quello della TableView
-sortedData.comparatorProperty().bind(BookTable.comparatorProperty());
+    sortedData.comparatorProperty().bind(BookTable.comparatorProperty());
 
 // 6. Infine, metti la lista ordinata e filtrata nella tabella
-BookTable.setItems(sortedData);
+    BookTable.setItems(sortedData);
         
     }
     

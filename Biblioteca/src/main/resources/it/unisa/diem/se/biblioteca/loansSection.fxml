@@ -56,7 +56,7 @@
                      </VBox.margin>
                   </TextField>
                   
-                  <TableView fx:id="LoanTable" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="LoanTable" editable="true" VBox.vgrow="ALWAYS">
                      <columns>
                         <TableColumn fx:id="LoanNameClm" text="Nome" />
                         <TableColumn fx:id="LoanSurnameClm" text="Cognome" />
