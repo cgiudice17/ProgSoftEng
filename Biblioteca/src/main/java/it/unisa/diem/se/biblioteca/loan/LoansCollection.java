@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
+import java.io.Serializable;
 /**
  *
  * 
  */
-public class LoansCollection {
-    
+public class LoansCollection implements Serializable{
+    private static final long serialVersionUID = 1L;
     /**
      * @brief Costante usata per definire il numero massimo di possibili prestiti attivi
      */

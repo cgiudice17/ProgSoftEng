@@ -36,8 +36,6 @@ public class Library implements Serializable {
         this.users = new UsersCollection();
     }
     
-    // --- GETTERS (Necessari per permettere al Controller di accedere ai dati) ---
-
     public BooksCollection getBooks() {
         return books;
     }
@@ -50,7 +48,17 @@ public class Library implements Serializable {
         return users;
     }
 
-    // --- PERSISTENZA DEI DATI ---
+    public void setBooks(BooksCollection books) {
+        this.books = books;
+    }
+
+    public void setLoans(LoansCollection loans) {
+        this.loans = loans;
+    }
+
+    public void setUsers(UsersCollection users) {
+        this.users = users;
+    }
 
     /**
      * @brief Salva l'intero stato della biblioteca (libri, studenti e prestiti) su un file locale.
@@ -72,7 +80,7 @@ public class Library implements Serializable {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             return (Library) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            // Se il file non esiste o è corrotto, restituisce una nuova libreria vuota
+
             System.err.println("Errore nel caricamento (o file non trovato): " + e.getMessage());
             return new Library();
         }

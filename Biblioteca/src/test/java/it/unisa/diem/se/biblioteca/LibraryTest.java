@@ -2,8 +2,10 @@ package it.unisa.diem.se.biblioteca;
 
 import it.unisa.diem.se.biblioteca.author.Author;
 import it.unisa.diem.se.biblioteca.book.Book;
+import it.unisa.diem.se.biblioteca.book.BooksCollection;
+import it.unisa.diem.se.biblioteca.loan.LoansCollection;
+import it.unisa.diem.se.biblioteca.user.UsersCollection;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LibraryTest {
 
     private final String TEST_FILENAME = "test_library_backup.bin";
+    private Library lib;
 
     @AfterEach
     public void tearDown() {
@@ -22,64 +25,71 @@ public class LibraryTest {
         }
     }
 
-    // 1. TEST INIZIALIZZAZIONE
+    // 1. TEST COSTRUTTORE E GETTERS
 
     @Test
-    public void testCostruttore() {
-        Library lib = new Library();
+    public void testCostruttoreEGetters() {
+        lib = new Library();
+
+        assertNotNull(lib);
+        assertNotNull(lib.getBooks());
+        assertNotNull(lib.getUsers());
+        assertNotNull(lib.getLoans());
         
-        // Verifica che le collezioni siano state create e non siano null
-        assertNotNull(lib.getBooks(), "La collezione libri non deve essere null");
-        assertNotNull(lib.getUsers(), "La collezione utenti non deve essere null");
-        assertNotNull(lib.getLoans(), "La collezione prestiti non deve essere null");
+        assertTrue(lib.getBooks().getBooks().isEmpty());
     }
 
-    // 2. TEST SALVATAGGIO E CARICAMENTO
+    // 2. TEST SETTERS
+
+    @Test
+    public void testSetters() {
+        lib = new Library();
+        
+        BooksCollection newBooks = new BooksCollection();
+        UsersCollection newUsers = new UsersCollection();
+        LoansCollection newLoans = new LoansCollection();
+
+        lib.setBooks(newBooks);
+        lib.setUsers(newUsers);
+        lib.setLoans(newLoans);
+
+        assertSame(newBooks, lib.getBooks());
+        assertSame(newUsers, lib.getUsers());
+        assertSame(newLoans, lib.getLoans());
+    }
+
+    // 3. SALVATAGGIO E CARICAMENTO
 
     @Test
     public void testSalvataggioECaricamento() throws Exception {
-
         Library libOriginale = new Library();
         
-        // Creiamo un libro e aggiungiamolo alla libreria originale
+        // Creazione dati
         List<Author> autori = new ArrayList<>();
         autori.add(new Author("Mario", "Rossi"));
-        Book libro = new Book("Libro Test", autori, "9781234567890", 2020);
-        
-        libOriginale.getBooks().addBook(libro, 5);
-        
-        // Salviamo lo stato su file
+        Book libroTest = new Book("Libro Test", autori, "9781234567890", 2020);
+        libOriginale.getBooks().addBook(libroTest, 5);
+
+        // Salvataggio
         libOriginale.writeObj(TEST_FILENAME);
-        
-        // Verifica che il file sia stato creato fisicamente
-        File file = new File(TEST_FILENAME);
-        assertTrue(file.exists(), "Il file di salvataggio deve esistere");
-        
-        // Creiamo una NUOVA istanza caricando dal file
+        assertTrue(new File(TEST_FILENAME).exists());
+
+        // Caricamento e Verifica
         Library libCaricata = Library.readObj(TEST_FILENAME);
         
-        // Verifica
-        assertNotNull(libCaricata, "La libreria caricata non deve essere null");
-        
-        // Controlliamo che il libro ci sia ancora
-        assertTrue(libCaricata.getBooks().getBooks().contains(libro), 
-                   "Il libro salvato deve essere presente dopo il caricamento");
-                   
-        // Controlliamo anche i dettagli (es. copie)
-        assertEquals(5, libCaricata.getBooks().getCopies(libro), 
-                     "Il numero di copie deve essere preservato");
+        assertNotNull(libCaricata);
+        assertTrue(libCaricata.getBooks().getBooks().contains(libroTest));
+        assertEquals(5, libCaricata.getBooks().getCopies(libroTest));
     }
 
-    // 3. TEST CASI LIMITE (FILE MANCANTE)
+    // 4. TEST CASI LIMITE (
 
     @Test
     public void testCaricamentoFileInesistente() {
-        // File che non esiste
-        Library lib = Library.readObj("file_che_non_esiste.bin");
-        
-        assertNotNull(lib);
-        assertNotNull(lib.getBooks());
-        // Deve essere vuota
-        assertTrue(lib.getBooks().getBooks().isEmpty());
+        Library libVuota = Library.readObj("file_inesistente.bin");
+
+        assertNotNull(libVuota);
+        assertNotNull(libVuota.getBooks());
+        assertTrue(libVuota.getBooks().getBooks().isEmpty());
     }
 }

@@ -12,12 +12,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import java.io.Serializable;
+
 /**
  *
  * 
  */
-public class UsersCollection {
-    
+public class UsersCollection implements Serializable{
+    private static final long serialVersionUID = 1L;
     private Set<User> users;
     private Map<String, User> codeUsers;
     
