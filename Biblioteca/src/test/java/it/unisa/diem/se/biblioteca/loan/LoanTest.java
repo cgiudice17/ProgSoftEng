@@ -43,7 +43,7 @@ public class LoanTest {
     // 2. TEST SETTERS
 
     @Test
-    public void testSetters() {
+    public void testSetters() throws Exception{
         LocalDate nuovaData = LocalDate.of(2030, 1, 1);
         prestito.setReturnDate(nuovaData);
         assertEquals(nuovaData, prestito.getReturnDate());

@@ -1,15 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package it.unisa.diem.se.biblioteca.user;
 
-/**
- *
- * @author giudi
- */
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 public class InvalidUserExceptionTest {
 
+    // 1. TEST COSTRUTTORE SENZA ARGOMENTI
+
+    @Test
+    public void testConstructorNoArgs() {
+        InvalidUserException exception = new InvalidUserException();
+        
+        assertNotNull(exception);
+        // Verifica che l'oggetto creato sia effettivamente un'istanza della classe corretta
+        assertTrue(exception instanceof InvalidUserException);
+    }
+
+    // 2. TEST COSTRUTTORE CON MESSAGGIO
+
+    @Test
+    public void testConstructorWithMessage() {
+        String errorMessage = "Errore: Dati utente non validi";
+        InvalidUserException exception = new InvalidUserException(errorMessage);
+        
+        assertNotNull(exception);
+        // Verifica che il messaggio passato sia stato memorizzato correttamente
+        assertEquals(errorMessage, exception.getMessage());
+    }
 }

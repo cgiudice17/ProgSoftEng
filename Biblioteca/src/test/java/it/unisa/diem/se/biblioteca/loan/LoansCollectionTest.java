@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LoansCollectionTest {
 
     private LoansCollection collection;
+    private User altroUtente;
     private User user;
     private Book book;
     private Loan loan;

@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
 /**
  * @brief Controller principale dell'applicazione 
  * Gestisce la navigazione tra le diverse sezioni del sistema (Libri, Utenti, Prestiti)
@@ -69,13 +70,14 @@ public class PrimaryController {
     }
     
     @FXML
-    private void loadFile(ActionEvent event){
-        Library.loadFromFile();
+    private void loadFile(ActionEvent event) throws IOException, ClassNotFoundException {
+        // MODIFICATO: Aggiunto throws ClassNotFoundException per gestire la deserializzazione
+        Library.loadFromFile("biblioteca.bin");
     }
     
     @FXML
-    private void createNewLibrary(ActionEvent event){
-        Library.createNewLibrary();
+    private void createNewLibrary(ActionEvent event) throws IOException {
+        Library.createNewLibrary("biblioteca.bin");
     }
 
     /**

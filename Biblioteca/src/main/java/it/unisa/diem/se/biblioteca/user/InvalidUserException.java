@@ -1,22 +1,30 @@
 package it.unisa.diem.se.biblioteca.user;
 
-/**
- * @brief Eccezione lanciata quando si tenta di creare un Utente con dati non validi
- */
-public class InvalidUserException extends Exception {
-    
-    /**
-     * @brief Costruttore senza messaggi
-     */
-    public InvalidUserException() {
-        super();
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class InvalidUserExceptionTest {
+
+    // 1. TEST COSTRUTTORE SENZA ARGOMENTI
+
+    @Test
+    public void testConstructorNoArgs() {
+        InvalidUserException exception = new InvalidUserException();
+        
+        assertNotNull(exception);
+        // Verifica che l'oggetto creato sia un'istanza valida
+        assertTrue(exception instanceof Exception);
     }
 
-    /**
-     * @brief Costruttore con messaggio di errore
-     * @param msg Il messaggio che spiega l'errore
-     */
-    public InvalidUserException(String msg) {
-        super(msg);
+    // 2. TEST COSTRUTTORE CON MESSAGGIO
+
+    @Test
+    public void testConstructorWithMessage() {
+        String errorMessage = "Errore: Dati utente non validi";
+        InvalidUserException exception = new InvalidUserException(errorMessage);
+        
+        assertNotNull(exception);
+        // Verifica che il messaggio passato sia stato memorizzato correttamente
+        assertEquals(errorMessage, exception.getMessage());
     }
 }
