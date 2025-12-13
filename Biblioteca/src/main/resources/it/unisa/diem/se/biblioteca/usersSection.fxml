@@ -18,20 +18,20 @@
                <children>
                   <Label style="-fx-font-weight: bold; -fx-font-size: 14;" text="Gestione utenti" />
                   
-                  <TextField fx:id="NameLabel" promptText="Nome..." />
-                  <TextField fx:id="SurnameLabel" promptText="Cognome..." />
-                  <TextField fx:id="StudentCodeLabel" promptText="Matricola..." />
-                  <TextField fx:id="EmailLabel" promptText="E-mail istituzionale..." />
+                  <TextField fx:id="nameLabel" promptText="Nome..." />
+                  <TextField fx:id="surnameLabel" promptText="Cognome..." />
+                  <TextField fx:id="studentCodeLabel" promptText="Matricola..." />
+                  <TextField fx:id="emailLabel" promptText="E-mail istituzionale..." />
                   
-                  <Button fx:id="AddUserButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#AddUser" text="Aggiungi utente" />
+                  <Button fx:id="addUserButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#addUser" text="Aggiungi utente" />
                   
-                  <Button fx:id="RemoveUserButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#RemoveUser" text="Rimuovi utente">
+                  <Button fx:id="removeUserButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#removeUser" text="Rimuovi utente">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
                   
-                  <Button fx:id="GoBackButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#GoBack" text="Torna indietro">
+                  <Button fx:id="goBackButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#goBack" text="Torna indietro">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -44,19 +44,19 @@
             
             <VBox spacing="10.0">
                <children>
-                  <TextField fx:id="UserSearchLabel" onAction="#userSearch" promptText="Cerca per cognome o matricola...">
+                  <TextField fx:id="userSearchLabel" onAction="#userSearch" promptText="Cerca per cognome o matricola...">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </TextField>
                   
-                  <TableView fx:id="UsersTable" editable="true" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="usersTable" editable="true" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="NameClm" onEditCommit="#updateName" text="Nome" />
-                        <TableColumn fx:id="SurnameClm" onEditCommit="#updateSurname" text="Cognome" />
-                        <TableColumn fx:id="NumberClm" onEditCommit="#updateCode" text="Matricola" />
-                        <TableColumn fx:id="EmailClm" onEditCommit="#updateEmail" text="E-mail" />
-                        <TableColumn fx:id="LoanClm" text="Prestiti Attivi" />
+                        <TableColumn fx:id="nameClm" onEditCommit="#updateName" prefWidth="116.79998475313187" text="Nome" />
+                        <TableColumn fx:id="surnameClm" onEditCommit="#updateSurname" prefWidth="127.20005798339844" text="Cognome" />
+                        <TableColumn fx:id="numberClm" onEditCommit="#updateCode" prefWidth="127.20001220703125" text="Matricola" />
+                        <TableColumn fx:id="emailClm" onEditCommit="#updateEmail" prefWidth="119.199951171875" text="E-mail" />
+                        <TableColumn fx:id="loanClm" prefWidth="104.0" text="Prestiti Attivi" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -17,21 +17,21 @@
             <VBox alignment="CENTER" spacing="20.0">
                <children>
                   <Label style="-fx-font-weight: bold; -fx-font-size: 14;" text="Gestione libri" />
-                  <TextField fx:id="TitleLabel" promptText="Titolo..." />
-                  <TextField fx:id="AuthorLabel" promptText="Autori (es: Mario Rossi, Luca Bianchi)..." />
-                  <TextField fx:id="CodeLabel" promptText="Codice ISBN..." />
-                  <TextField fx:id="YearLabel" promptText="Anno pubblicazione..." />
-                  <TextField fx:id="CopiesLabel" promptText="Numero copie..." />
+                  <TextField fx:id="titleLabel" promptText="Titolo..." />
+                  <TextField fx:id="authorLabel" promptText="Autori (es: Mario Rossi, Luca Bianchi)..." />
+                  <TextField fx:id="codeLabel" promptText="Codice ISBN..." />
+                  <TextField fx:id="yearLabel" promptText="Anno pubblicazione..." />
+                  <TextField fx:id="copiesLabel" promptText="Numero copie..." />
                   
-                  <Button fx:id="AddBookButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#AddBook" text="Aggiungi libro" />
+                  <Button fx:id="addBookButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#addBook" text="Aggiungi libro" />
                   
-                  <Button fx:id="RemoveButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#RemoveBook" text="Rimuovi libro">
+                  <Button fx:id="removeButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#removeBook" text="Rimuovi libro">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
                   
-                  <Button fx:id="GoBackButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#GoBack" text="Torna indietro">
+                  <Button fx:id="goBackButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#goBack" text="Torna indietro">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -44,19 +44,19 @@
             
             <VBox>
                <children>
-                  <TextField fx:id="BookSearchLabel" onAction="#BookSearch" promptText="Cerca per titolo, cognome autore o codice ISBN...">
+                  <TextField fx:id="bookSearchLabel" onAction="#bookSearch" promptText="Cerca per titolo, cognome autore o codice ISBN...">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </TextField>
                   
-                  <TableView fx:id="BookTable" editable="true" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="bookTable" editable="true" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="TitleClm" onEditCommit="#updateTitle" text="Titolo" />
-                        <TableColumn fx:id="AuthorsClm" onEditCommit="#updateAuthors" text="Autori" />
-                        <TableColumn fx:id="CodeClm" onEditCommit="#updateBookCode" text="ISBN" />
-                        <TableColumn fx:id="YearClm" onEditCommit="#updateYear" text="Anno" />
-                        <TableColumn fx:id="CopiesClm" onEditCommit="#updateCopies" text="Copie" />
+                        <TableColumn fx:id="titleClm" onEditCommit="#updateTitle" prefWidth="130.39996033906937" text="Titolo" />
+                        <TableColumn fx:id="authorsClm" onEditCommit="#updateAuthors" prefWidth="165.60008239746094" text="Autori" />
+                        <TableColumn fx:id="codeClm" onEditCommit="#updateBookCode" prefWidth="147.20001220703125" text="ISBN" />
+                        <TableColumn fx:id="yearClm" onEditCommit="#updateYear" prefWidth="72.7999267578125" text="Anno" />
+                        <TableColumn fx:id="copiesClm" onEditCommit="#updateCopies" prefWidth="90.39990234375" text="Copie" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -81,8 +81,9 @@ public class PrimaryController {
         Stage stage = (Stage) BookButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setWidth(800);  
-        stage.setHeight(550); 
+        stage.setWidth(1000);  
+        stage.setHeight(800); 
+        stage.centerOnScreen();
         stage.show();
 
     
