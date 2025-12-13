@@ -31,9 +31,7 @@ public class ValidBookTest implements ValidBook {
     @Test
     public void testValidAuthor() {
         // --- CASI VALIDI STANDARD ---
-        assertTrue(validAuthor("Mario Rossi"));
-        
-        // --- CASI VALIDI COMPLESSI 
+        assertTrue(validAuthor("Mario Rossi")); 
         assertTrue(validAuthor("Niccolò Ammaniti"), "Accenti");
         assertTrue(validAuthor("D'Annunzio"), "Apostrofo");
         assertTrue(validAuthor("De Luca"), "Particella con maiuscola");

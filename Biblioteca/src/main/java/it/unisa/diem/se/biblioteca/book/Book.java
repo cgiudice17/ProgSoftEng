@@ -2,8 +2,10 @@ package it.unisa.diem.se.biblioteca.book;
 
 import it.unisa.diem.se.biblioteca.author.Author;
 import java.util.List;
+import java.io.Serializable;
 
-public class Book implements Comparable<Book>, ValidBook {
+public class Book implements Comparable<Book>, ValidBook, Serializable {
+    private static final long serialVersionUID = 1L;   
     private String title;
     private List<Author> authors;
     private String ISBN;

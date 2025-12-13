@@ -7,20 +7,21 @@ package it.unisa.diem.se.biblioteca.book;
 
 import it.unisa.diem.se.biblioteca.author.Author;
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import java.io.Serializable;
+
 /**
  * @brief Gestisce l'intero catalogo dei libri della biblioteca 
  * Utilizza molteplici mappe per indicizzare i libri e permettere ricerche efficienti, basate sui seguenti criteri: ISBN, Autore, Titolo e Anno di pubblicazione.
  * Gestisce inoltre il conteggio delle copie disponibili per ogni libro
  */
-public class BooksCollection implements ValidBook{
-    
+public class BooksCollection implements ValidBook, Serializable {
+    private static final long serialVersionUID = 1L;
     private Map<Book, Integer> books;
     private Map<String, Book> booksISBN;
 
