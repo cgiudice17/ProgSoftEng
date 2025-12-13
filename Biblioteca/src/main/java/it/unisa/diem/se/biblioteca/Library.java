@@ -29,7 +29,7 @@ public class Library implements Serializable {
 
     // Questo campo serve a ricordare su quale file stiamo lavorando per i salvataggi futuri
     // 'transient' perché non vogliamo salvarlo DENTRO il file binario, è solo per la sessione corrente
-    private transient String currentFilePath; 
+    private transient String currentFilePath = "file"; 
 
     private LoansCollection loans;
     private BooksCollection books;
