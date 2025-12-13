@@ -118,7 +118,7 @@ public class BookSectionController implements Initializable, ValidBook {
      * * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void AddBook(ActionEvent event) throws InvalidBookException {
+    private void AddBook(ActionEvent event) {
         
         // Titolo
         String title = this.TitleLabel.getText();
@@ -196,15 +196,8 @@ public class BookSectionController implements Initializable, ValidBook {
             this.YearLabel.clear();
             this.CopiesLabel.clear();
             
-            // Opzionale: Popup di successo
-            Alert confirm = new Alert(AlertType.INFORMATION);
-            confirm.setTitle("Successo");
-            confirm.setHeaderText(null);
-            confirm.setContentText("Libro aggiunto correttamente!");
-            confirm.showAndWait();
-
-        } catch (NumberFormatException e) {
-            showError("Errore Formato", "Errore di conversione", "Controllare che anno e copie siano numeri interi.");
+        } catch (InvalidBookException e) {
+            showError("Errore nella creazione del libro", "Errore di creazione", "Controllare i parametri passati");
         }
     }
 
@@ -248,62 +241,50 @@ public class BookSectionController implements Initializable, ValidBook {
      */
     @FXML
     private void BookSearch(ActionEvent event) {
-        // 1. Crea la Master List (contiene TUTTI i dati)
-    bookList.setAll(books.getBooks());
+      
+        bookList.setAll(books.getBooks());
 
-    // 2. Crea una FilteredList avvolgendo la Master List
-    // All'inizio p -> true significa "mostra tutto"
-    FilteredList<Book> filteredData = new FilteredList<>(bookList, p -> true);
+        FilteredList<Book> filteredData = new FilteredList<>(bookList, p -> true);
 
-    // 3. Aggiungi un Listener al TextField di ricerca
-    BookSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
-    filteredData.setPredicate(book -> {
-        // Se il campo di ricerca è vuoto, mostra tutti i libri
-        if (newValue == null || newValue.isEmpty()) {
-            return true;
-        }
+        BookSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+        filteredData.setPredicate(book -> {
+            // Se il campo di ricerca è vuoto, mostra tutti i libri
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
 
-        // Converti il testo cercato in minuscolo per ignorare maiuscole/minuscole
-        String lowerCaseFilter = newValue.toLowerCase();
+            
+            String lowerCaseFilter = newValue.toLowerCase();
 
-        // --- INIZIO LOGICA DI RICERCA ---
-        
-        // Controlla se il TITOLO contiene la parola cercata
-        if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
-            return true; 
-        }
-        
-        // Controlla se gli AUTORI contengono la parola cercata
-        // (Assumendo che getAuthors() ritorni una lista o una stringa)
-        if (book.getAuthors().toString().toLowerCase().contains(lowerCaseFilter)) {
-            return true;
-        }
-        
-        // Controlla ISBN
-        if (book.getISBN().toLowerCase().contains(lowerCaseFilter)) {
-            return true;
-        }
+            // Controllo sul titolo
+            if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
 
-        // Controlla ANNO (convertendo l'int in stringa)
-        if (String.valueOf(book.getPublishYear()).contains(lowerCaseFilter)) {
-            return true;
-        }
+            // Controllo sugli autori
+            if (book.getAuthors().toString().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            }
 
-        // Se nessuna delle condizioni sopra è vera, nascondi il libro
-        return false; 
+            // Controllo ISBN
+            if (book.getISBN().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            }
+
+            // Controllo anno 
+            if (String.valueOf(book.getPublishYear()).contains(lowerCaseFilter)) {
+                return true;
+            }
+
+            // Se nessuna delle condizioni sopra è vera, nascondi il libro
+            return false; 
+            });
         });
-    });
 
-// 4. (Opzionale ma consigliato) Avvolgi in una SortedList
-// Questo serve per far funzionare ancora l'ordinamento cliccando sulle colonne
-    SortedList<Book> sortedData = new SortedList<>(filteredData);
-
-// 5. Collega il comparatore della SortedList a quello della TableView
-    sortedData.comparatorProperty().bind(BookTable.comparatorProperty());
-
-// 6. Infine, metti la lista ordinata e filtrata nella tabella
-    BookTable.setItems(sortedData);
-        
+    
+        SortedList<Book> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(BookTable.comparatorProperty());
+        BookTable.setItems(sortedData);  
     }
     
     /**

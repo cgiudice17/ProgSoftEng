@@ -28,7 +28,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -167,7 +166,7 @@ public class UsersSectionController implements Initializable, ValidUser {
         }
         
    
-        // Creazione e salvataggio
+
         User u = new User(name, surname, studentCode, mail);
   
         users.addUser(u);
@@ -178,13 +177,7 @@ public class UsersSectionController implements Initializable, ValidUser {
         this.SurnameLabel.clear();
         this.StudentCodeLabel.clear();
         this.EmailLabel.clear();
-        
-        // Popup di conferma (Successo)
-        Alert confirm = new Alert(AlertType.INFORMATION);
-        confirm.setTitle("Operazione Completata");
-        confirm.setHeaderText(null);
-        confirm.setContentText("Utente " + name + " " + surname + " aggiunto correttamente!");
-        confirm.showAndWait();
+  
     }
 
     /**
@@ -227,60 +220,48 @@ public class UsersSectionController implements Initializable, ValidUser {
      */
     @FXML
     private void userSearch(ActionEvent event) {
+        
         userList.setAll(users.getUsers());
+        FilteredList<User> filteredData = new FilteredList<>(userList, p -> true);
+        UserSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+        filteredData.setPredicate(user -> {
+            // Se il campo di ricerca è vuoto, mostra tutti i libri
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
 
-    // 2. Crea una FilteredList avvolgendo la Master List
-    // All'inizio p -> true significa "mostra tutto"
-    FilteredList<User> filteredData = new FilteredList<>(userList, p -> true);
+            String lowerCaseFilter = newValue.toLowerCase();
 
-    // 3. Aggiungi un Listener al TextField di ricerca
-    UserSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
-    filteredData.setPredicate(user -> {
-        // Se il campo di ricerca è vuoto, mostra tutti i libri
-        if (newValue == null || newValue.isEmpty()) {
-            return true;
-        }
+            // Controllo nome
+            if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
 
-        // Converti il testo cercato in minuscolo per ignorare maiuscole/minuscole
-        String lowerCaseFilter = newValue.toLowerCase();
+            // Controllo cognome
+            // (Assumendo che getAuthors() ritorni una lista o una stringa)
+            if (user.getSurname().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            }
 
-        // --- INIZIO LOGICA DI RICERCA ---
-        
-        // Controlla se il TITOLO contiene la parola cercata
-        if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
-            return true; 
-        }
-        
-        // Controlla se gli AUTORI contengono la parola cercata
-        // (Assumendo che getAuthors() ritorni una lista o una stringa)
-        if (user.getSurname().toLowerCase().contains(lowerCaseFilter)) {
-            return true;
-        }
-        
-        // Controlla ISBN
-        if (user.getCode().toLowerCase().contains(lowerCaseFilter)) {
-            return true;
-        }
+            // Controllo matricola
+            if (user.getCode().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            }
 
-        // Controlla ANNO (convertendo l'int in stringa)
-        if (user.getEmail().toLowerCase().contains(lowerCaseFilter)) {
-            return true;
-        }
+            // Controllo email
+            if (user.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            }
 
-        // Se nessuna delle condizioni sopra è vera, nascondi il libro
-        return false; 
+            // Se nessuna delle condizioni sopra è vera, nascondi il libro
+            return false; 
+            });
         });
-    });
 
-// 4. (Opzionale ma consigliato) Avvolgi in una SortedList
-// Questo serve per far funzionare ancora l'ordinamento cliccando sulle colonne
-    SortedList<User> sortedData = new SortedList<>(filteredData);
 
-// 5. Collega il comparatore della SortedList a quello della TableView
-    sortedData.comparatorProperty().bind(UsersTable.comparatorProperty());
-
-// 6. Infine, metti la lista ordinata e filtrata nella tabella
-    UsersTable.setItems(sortedData);
+        SortedList<User> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(UsersTable.comparatorProperty());
+        UsersTable.setItems(sortedData);
     }
     
     /**

@@ -24,14 +24,14 @@
                      </font>
                   </Label>
                   
-                  <TextField fx:id="LoanStudentLabel" onAction="#selectStudent" promptText="Matricola o cognome studente..." />
-                  <TextField fx:id="LoanBookLabel" onAction="#selectBook" promptText="Libro..." />
+                  <TextField fx:id="LoanStudentLabel" onAction="#selectStudent" promptText="Matricola studente..." />
+                  <TextField fx:id="LoanBookLabel" onAction="#selectBook" promptText="ISBN libro..." />
                   
                   <DatePicker fx:id="DatePicker" maxWidth="Infinity" onAction="#SelectDate" promptText="Data di restituzione..." />
                   
-                  <Button fx:id="LoanButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#LoanBook" text="Registra prestito" />
+                  <Button fx:id="LoanButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#addLoan" text="Registra prestito" />
                   
-                  <Button fx:id="ReturnButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#ReturnBook" text="Registra restituzione">
+                  <Button fx:id="ReturnButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#returnLoan" text="Registra restituzione">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -50,7 +50,7 @@
             
             <VBox spacing="10.0">
                <children>
-                  <TextField promptText="Cerca per matricola studente o ISBN libro...">
+                  <TextField fx:id="LoanSearchLabel" onAction="#searchLoan" promptText="Cerca per matricola studente o ISBN libro...">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>

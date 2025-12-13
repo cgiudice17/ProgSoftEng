@@ -38,6 +38,8 @@ import javafx.stage.Stage;
 public class LoansSectionController implements Initializable {
 
     @FXML
+    private TextField LoanSearchLabel;
+    @FXML
     private TextField LoanStudentLabel;
     @FXML
     private TextField LoanBookLabel;
@@ -99,6 +101,7 @@ public class LoansSectionController implements Initializable {
      */
     @FXML
     private void selectStudent(ActionEvent event) {
+        
     }
     
     
@@ -129,7 +132,9 @@ public class LoansSectionController implements Initializable {
      * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void LoanBook(ActionEvent event) {
+    private void addLoan(ActionEvent event) {
+        String code = this.LoanStudentLabel.getText();
+        
     }
 
     /**
@@ -139,7 +144,7 @@ public class LoansSectionController implements Initializable {
      * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void ReturnBook(ActionEvent event) {
+    private void returnLoan(ActionEvent event) {
     }
 
     /**
@@ -158,6 +163,11 @@ public class LoansSectionController implements Initializable {
         stage.setWidth(800);  
         stage.setHeight(550); 
         stage.show();
+    }
+    
+    @FXML
+    private void searchLoan(ActionEvent event){
+        
     }
     
 }
