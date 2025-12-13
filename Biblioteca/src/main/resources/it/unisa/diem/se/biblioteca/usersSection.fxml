@@ -52,11 +52,11 @@
                   
                   <TableView fx:id="usersTable" editable="true" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="nameClm" onEditCommit="#updateName" text="Nome" />
-                        <TableColumn fx:id="surnameClm" onEditCommit="#updateSurname" text="Cognome" />
-                        <TableColumn fx:id="numberClm" onEditCommit="#updateCode" text="Matricola" />
-                        <TableColumn fx:id="emailClm" onEditCommit="#updateEmail" text="E-mail" />
-                        <TableColumn fx:id="loanClm" text="Prestiti Attivi" />
+                        <TableColumn fx:id="nameClm" onEditCommit="#updateName" prefWidth="116.79998475313187" text="Nome" />
+                        <TableColumn fx:id="surnameClm" onEditCommit="#updateSurname" prefWidth="127.20005798339844" text="Cognome" />
+                        <TableColumn fx:id="numberClm" onEditCommit="#updateCode" prefWidth="127.20001220703125" text="Matricola" />
+                        <TableColumn fx:id="emailClm" onEditCommit="#updateEmail" prefWidth="119.199951171875" text="E-mail" />
+                        <TableColumn fx:id="loanClm" prefWidth="104.0" text="Prestiti Attivi" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
