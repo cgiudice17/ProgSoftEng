@@ -31,6 +31,12 @@
                   <Button fx:id="LoansButton" mnemonicParsing="false" onAction="#OpenLoansSection" prefHeight="50.0" prefWidth="150.0" text="Sezione Prestiti" />
                </children>
             </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="372.0" spacing="40.0">
+               <children>
+                  <Button fx:id="loadFileButton" mnemonicParsing="false" onAction="#loadFile" prefHeight="50.0" prefWidth="190.0" text="Carica biblioteca da un file" />
+                  <Button fx:id="CreateNewButton" mnemonicParsing="false" onAction="#createNewLibrary" prefHeight="50.0" prefWidth="190.0" text="Crea una nuova biblioteca" />
+               </children>
+            </HBox>
             
          </children>
       </VBox>

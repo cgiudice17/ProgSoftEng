@@ -1,5 +1,6 @@
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.Library;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +27,10 @@ public class PrimaryController {
     private Button UsersButton;
     @FXML
     private Button LoansButton;
+    @FXML
+    private Button loadFileButton;
+    @FXML
+    private Button CreateNewButton;
 
     /**
      * @brief Apre la sezione dedicata alla gestione dei libri.
@@ -61,6 +66,16 @@ public class PrimaryController {
     @FXML
     private void OpenLoansSection(ActionEvent event) throws IOException {
         this.changeScene("loansSection.fxml", event);
+    }
+    
+    @FXML
+    private void loadFile(ActionEvent event){
+        Library.loadFromFile();
+    }
+    
+    @FXML
+    private void createNewLibrary(ActionEvent event){
+        Library.createNewLibrary();
     }
 
     /**

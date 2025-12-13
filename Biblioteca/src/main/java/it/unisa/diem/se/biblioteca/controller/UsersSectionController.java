@@ -8,6 +8,7 @@ package it.unisa.diem.se.biblioteca.controller;
 import it.unisa.diem.se.biblioteca.Library;
 import it.unisa.diem.se.biblioteca.loan.Loan;
 import it.unisa.diem.se.biblioteca.loan.LoansCollection;
+import it.unisa.diem.se.biblioteca.user.InvalidUserException;
 import it.unisa.diem.se.biblioteca.user.User;
 import it.unisa.diem.se.biblioteca.user.UsersCollection;
 import it.unisa.diem.se.biblioteca.user.ValidUser;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
@@ -168,10 +171,16 @@ public class UsersSectionController implements Initializable, ValidUser {
         
    
 
-        User u = new User(name, surname, studentCode, mail);
+        User u;
+        try {
+            u = new User(name, surname, studentCode, mail);
+            users.addUser(u);
+            userList.setAll(users.getUsers());
+        } catch (InvalidUserException ex) {
+            Logger.getLogger(UsersSectionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
   
-        users.addUser(u);
-        userList.setAll(users.getUsers());
+        
         
         
         this.nameLabel.clear();
