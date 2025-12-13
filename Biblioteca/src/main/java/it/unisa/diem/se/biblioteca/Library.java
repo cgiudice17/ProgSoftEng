@@ -111,4 +111,11 @@ public class Library implements Serializable {
     public void setUsers(UsersCollection users) {
         this.users = users;
     }
+
+    /**
+     * @brief Metodo di utilità per i TEST. Resetta il singleton.
+     */
+    public static void resetInstance() {
+        instance = null;
+    }
 }
