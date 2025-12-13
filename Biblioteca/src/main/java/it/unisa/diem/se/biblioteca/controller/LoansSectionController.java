@@ -5,9 +5,14 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.book.Book;
+import it.unisa.diem.se.biblioteca.book.BooksCollection;
+import it.unisa.diem.se.biblioteca.book.ValidBook;
 import it.unisa.diem.se.biblioteca.loan.Loan;
 import it.unisa.diem.se.biblioteca.loan.LoansCollection;
+import it.unisa.diem.se.biblioteca.user.User;
 import it.unisa.diem.se.biblioteca.user.UsersCollection;
+import it.unisa.diem.se.biblioteca.user.ValidUser;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -24,6 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -35,40 +41,41 @@ import javafx.stage.Stage;
  * @brief Controller per la gestione della sezione prestiti 
  * Gestisce il ciclo di vita dei prestiti (creazione, visualizzazione e restituzione) verificando la disponibilità delle risorse e associando utenti e libri 
  */
-public class LoansSectionController implements Initializable {
+public class LoansSectionController implements Initializable, ValidUser, ValidBook {
 
     @FXML
-    private TextField LoanSearchLabel;
+    private TextField loanSearchLabel;
     @FXML
-    private TextField LoanStudentLabel;
+    private TextField loanStudentLabel;
     @FXML
-    private TextField LoanBookLabel;
+    private TextField loanBookLabel;
     @FXML
-    private DatePicker DatePicker;
+    private DatePicker datePicker;
     @FXML
-    private Button LoanButton;
+    private Button loanButton;
     @FXML
-    private Button ReturnButton;
+    private Button returnButton;
     @FXML
-    private Button GoBackButton;
+    private Button goBackButton;
     @FXML
-    private TableView<Loan> LoanTable;
+    private TableView<Loan> loanTable;
     @FXML
-    private TableColumn<Loan, String> LoanNameClm;
+    private TableColumn<Loan, String> loanNameClm;
     @FXML
-    private TableColumn<Loan, String> LoanSurnameClm;
+    private TableColumn<Loan, String> loanSurnameClm;
     @FXML
-    private TableColumn<Loan, String> LoanCodeClm;
+    private TableColumn<Loan, String> loanCodeClm;
     @FXML
-    private TableColumn<Loan, String> LoanBookTitleClm;
+    private TableColumn<Loan, String> loanBookTitleClm;
     @FXML
-    private TableColumn<Loan, String> LoanBookCodeClm;
+    private TableColumn<Loan, String> loanBookCodeClm;
     @FXML
-    private TableColumn<Loan, LocalDate> LoanDateClm;
+    private TableColumn<Loan, LocalDate> loanDateClm;
     
     private ObservableList<Loan> loanList;
     private LoansCollection loans = new LoansCollection();
     private UsersCollection users = new UsersCollection();
+    private BooksCollection books = new BooksCollection();
 
     /**
      * @brief Inizializza il controller.
@@ -76,19 +83,19 @@ public class LoansSectionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loanList = FXCollections.observableArrayList(loans.getLoans());
-        LoanTable.setItems(loanList);
+        loanTable.setItems(loanList);
 
-        LoanNameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getName()));
-        LoanSurnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getSurname()));
-        LoanCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getCode()));
-        LoanBookTitleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getTitle()));
-        LoanBookCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getISBN()));
-        LoanDateClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getReturnDate()));
+        loanNameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getName()));
+        loanSurnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getSurname()));
+        loanCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getCode()));
+        loanBookTitleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getTitle()));
+        loanBookCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getISBN()));
+        loanDateClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getReturnDate()));
         
-        BooleanBinding b = Bindings.or(LoanStudentLabel.textProperty().isEmpty(), LoanBookLabel.textProperty().isEmpty())
-                .or(DatePicker.valueProperty().isNull());
+        BooleanBinding b = Bindings.or(loanStudentLabel.textProperty().isEmpty(), loanBookLabel.textProperty().isEmpty())
+                .or(datePicker.valueProperty().isNull());
         
-        LoanButton.disableProperty().bind(b);
+        loanButton.disableProperty().bind(b);
         
     }   
     
@@ -122,7 +129,7 @@ public class LoansSectionController implements Initializable {
      * @param event L'evento generato dalla selezione della data.
      */
     @FXML
-    private void SelectDate(ActionEvent event) {
+    private void selectDate(ActionEvent event) {
     }
 
     /**
@@ -133,7 +140,39 @@ public class LoansSectionController implements Initializable {
      */
     @FXML
     private void addLoan(ActionEvent event) {
-        String code = this.LoanStudentLabel.getText();
+        String code = this.loanStudentLabel.getText();
+        String ISBN = this.loanBookLabel.getText();
+        
+        if (!this.validCode(code)){
+            showError("Errore Matricola", "Formato Matricola non valido", "La matricola non rispetta il formato richiesto (es. 10 cifre).");
+            return;
+        }
+        
+        if (users.getUserByCode(code) == null){
+            showError("Errore utente non registrato", "Utente non è registrato", "Non esiste un utente registrato con la matricola: " + code);
+            return;
+        }
+        
+        if (!this.validISBN(ISBN)){
+            showError("Errore ISBN", "Codice ISBN non valido", "Il formato dell'ISBN inserito non è corretto.");
+            return;
+        }
+        
+        if (books.getBookByISBN(ISBN) == null){
+            showError("Errore libro non esistente", "Libro non esiste", "Non esiste un libro in catalogo con questo codice ISBN.");
+            return;
+        }
+        
+        
+        
+        User u = users.getUserByCode(code);
+        Book b = books.getBookByISBN(ISBN);
+        LocalDate returnDate = this.datePicker.getValue();
+        loans.addLoan(new Loan(u, b, returnDate));
+        loanList.setAll(loans.getLoans());
+        
+        this.loanStudentLabel.clear();
+        this.loanBookLabel.clear();
         
     }
 
@@ -145,6 +184,7 @@ public class LoansSectionController implements Initializable {
      */
     @FXML
     private void returnLoan(ActionEvent event) {
+        
     }
 
     /**
@@ -153,11 +193,11 @@ public class LoansSectionController implements Initializable {
      * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void GoBack(ActionEvent event) throws IOException {
+    private void goBack(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unisa/diem/se/biblioteca/primary.fxml"));
         Parent root = loader.load();
 
-        Stage stage = (Stage) GoBackButton.getScene().getWindow();
+        Stage stage = (Stage) goBackButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setWidth(800);  
@@ -168,6 +208,14 @@ public class LoansSectionController implements Initializable {
     @FXML
     private void searchLoan(ActionEvent event){
         
+    }
+    
+    private void showError(String titolo, String intestazione, String messaggio) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titolo);
+        alert.setHeaderText(intestazione);
+        alert.setContentText(messaggio);
+        alert.showAndWait();
     }
     
 }

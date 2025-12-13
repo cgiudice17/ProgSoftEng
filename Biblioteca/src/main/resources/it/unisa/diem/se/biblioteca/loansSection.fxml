@@ -24,20 +24,20 @@
                      </font>
                   </Label>
                   
-                  <TextField fx:id="LoanStudentLabel" onAction="#selectStudent" promptText="Matricola studente..." />
-                  <TextField fx:id="LoanBookLabel" onAction="#selectBook" promptText="ISBN libro..." />
+                  <TextField fx:id="loanStudentLabel" onAction="#selectStudent" promptText="Matricola studente..." />
+                  <TextField fx:id="loanBookLabel" onAction="#selectBook" promptText="ISBN libro..." />
                   
-                  <DatePicker fx:id="DatePicker" maxWidth="Infinity" onAction="#SelectDate" promptText="Data di restituzione..." />
+                  <DatePicker fx:id="datePicker" maxWidth="Infinity" onAction="#selectDate" promptText="Data di restituzione..." />
                   
-                  <Button fx:id="LoanButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#addLoan" text="Registra prestito" />
+                  <Button fx:id="loanButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#addLoan" text="Registra prestito" />
                   
-                  <Button fx:id="ReturnButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#returnLoan" text="Registra restituzione">
+                  <Button fx:id="returnButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#returnLoan" text="Registra restituzione">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
                   
-                  <Button fx:id="GoBackButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#GoBack" text="Torna indietro">
+                  <Button fx:id="goBackButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#goBack" text="Torna indietro">
                      <VBox.margin>
                         <Insets top="30.0" />
                      </VBox.margin>
@@ -50,20 +50,20 @@
             
             <VBox spacing="10.0">
                <children>
-                  <TextField fx:id="LoanSearchLabel" onAction="#searchLoan" promptText="Cerca per matricola studente o ISBN libro...">
+                  <TextField fx:id="loanSearchLabel" onAction="#searchLoan" promptText="Cerca per matricola studente o ISBN libro...">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </TextField>
                   
-                  <TableView fx:id="LoanTable" editable="true" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="loanTable" editable="true" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="LoanNameClm" text="Nome" />
-                        <TableColumn fx:id="LoanSurnameClm" text="Cognome" />
-                        <TableColumn fx:id="LoanCodeClm" text="Matricola" />
-                        <TableColumn fx:id="LoanBookTitleClm" text="Titolo libro" />
-                        <TableColumn fx:id="LoanBookCodeClm" text="ISBN libro" />
-                        <TableColumn fx:id="LoanDateClm" text="Data scadenza" />
+                        <TableColumn fx:id="loanNameClm" text="Nome" />
+                        <TableColumn fx:id="loanSurnameClm" text="Cognome" />
+                        <TableColumn fx:id="loanCodeClm" text="Matricola" />
+                        <TableColumn fx:id="loanBookTitleClm" text="Titolo libro" />
+                        <TableColumn fx:id="loanBookCodeClm" text="ISBN libro" />
+                        <TableColumn fx:id="loanDateClm" text="Data scadenza" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
