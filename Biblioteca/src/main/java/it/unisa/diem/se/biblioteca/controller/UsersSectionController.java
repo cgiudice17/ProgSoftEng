@@ -12,7 +12,6 @@ import it.unisa.diem.se.biblioteca.user.UsersCollection;
 import it.unisa.diem.se.biblioteca.user.ValidUser;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -28,6 +27,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -132,32 +133,41 @@ public class UsersSectionController implements Initializable, ValidUser {
         String name = this.NameLabel.getText().trim();
         String surname = this.SurnameLabel.getText().trim();
         
-        // Verifica nome e cognome
-        if (!validName(name) || ! validName(surname)){
-            // da implementare popup
+        // Verifica campi vuoti (controllo extra per sicurezza)
+        if (name.isEmpty() || surname.isEmpty()) {
+            showError("Errore Input", "Campi mancanti", "Per favore inserisci sia il Nome che il Cognome.");
             return;
         }
-               
+        
+        // Verifica validità nome e cognome (es. caratteri speciali)
+        if (!validName(name) || !validName(surname)){
+            showError("Errore Formato", "Nome o Cognome non validi", "Inserire solo lettere valide, senza numeri o simboli speciali e con la prima lettera maiuscola.");
+            return;
+        }
+                
         
         // Verifica la matricola
         String studentCode = this.StudentCodeLabel.getText();
+        
         if (!this.validCode(studentCode)){
-            // da implementare popup
+            showError("Errore Matricola", "Formato Matricola non valido", "La matricola non rispetta il formato richiesto (es. 10 cifre).");
             return;
         }
+        
         if (users.getUserByCode(studentCode) != null){
-            // da implementare popup che l'utente già esiste
+            showError("Errore Duplicato", "Utente già esistente", "Esiste già un utente registrato con la matricola: " + studentCode);
             return;
         }
         
         // Verifica l'e-mail
         String mail = this.EmailLabel.getText();
         if (!this.validMail(mail)){
-            // Da implementare popup
+            showError("Errore Email", "Email non valida", "L'indirizzo email inserito non è valido o non è istituzionale.");
             return;
         }
         
    
+        // Creazione e salvataggio
         User u = new User(name, surname, studentCode, mail);
   
         users.addUser(u);
@@ -168,6 +178,13 @@ public class UsersSectionController implements Initializable, ValidUser {
         this.SurnameLabel.clear();
         this.StudentCodeLabel.clear();
         this.EmailLabel.clear();
+        
+        // Popup di conferma (Successo)
+        Alert confirm = new Alert(AlertType.INFORMATION);
+        confirm.setTitle("Operazione Completata");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Utente " + name + " " + surname + " aggiunto correttamente!");
+        confirm.showAndWait();
     }
 
     /**
@@ -314,5 +331,13 @@ public class UsersSectionController implements Initializable, ValidUser {
         User u = event.getRowValue();
         u.setEmail(event.getNewValue());
     }    
+    
+    private void showError(String titolo, String intestazione, String messaggio) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titolo);
+        alert.setHeaderText(intestazione);
+        alert.setContentText(messaggio);
+        alert.showAndWait();
+    }
 }
 

@@ -7,6 +7,7 @@ package it.unisa.diem.se.biblioteca.controller;
 
 import it.unisa.diem.se.biblioteca.loan.Loan;
 import it.unisa.diem.se.biblioteca.loan.LoansCollection;
+import it.unisa.diem.se.biblioteca.user.UsersCollection;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -65,13 +66,14 @@ public class LoansSectionController implements Initializable {
     
     private ObservableList<Loan> loanList;
     private LoansCollection loans = new LoansCollection();
+    private UsersCollection users = new UsersCollection();
 
     /**
      * @brief Inizializza il controller.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loanList = FXCollections.observableArrayList();
+        loanList = FXCollections.observableArrayList(loans.getLoans());
         LoanTable.setItems(loanList);
 
         LoanNameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getName()));

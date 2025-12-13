@@ -36,6 +36,7 @@ public class Library implements Serializable {
         this.users = new UsersCollection();
     }
     
+
     public BooksCollection getBooks() {
         return books;
     }
@@ -48,6 +49,7 @@ public class Library implements Serializable {
         return users;
     }
 
+
     public void setBooks(BooksCollection books) {
         this.books = books;
     }
@@ -59,6 +61,7 @@ public class Library implements Serializable {
     public void setUsers(UsersCollection users) {
         this.users = users;
     }
+
 
     /**
      * @brief Salva l'intero stato della biblioteca (libri, studenti e prestiti) su un file locale.

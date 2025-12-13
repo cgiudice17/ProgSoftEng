@@ -37,6 +37,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * @brief Controller per la gestione della sezioe libri (catalogo)
@@ -120,18 +122,36 @@ public class BookSectionController implements Initializable, ValidBook {
         
         // Titolo
         String title = this.TitleLabel.getText();
+        if (title == null || title.isEmpty()) {
+            showError("Errore Input", "Titolo mancante", "Per favore inserisci il titolo del libro.");
+            return;
+        }
         
         // Verifica nome e cognome di ogni autore
-        String[] names = this.AuthorLabel.getText().split(",");
-        List<Author> authorsList = new ArrayList();
+        String authorsText = this.AuthorLabel.getText();
+        if (authorsText == null || authorsText.isEmpty()) {
+             showError("Errore Input", "Autore mancante", "Per favore inserisci almeno un autore.");
+             return;
+        }
+
+        String[] names = authorsText.split(",");
+        List<Author> authorsList = new ArrayList<>();
 
         for (int i = 0; i < names.length; i++) {
             names[i] = names[i].trim();
-            String name = names[i].split(" ")[0];
-            String surname = names[i].split(" ")[1];
+            
+            // Controllo preventivo per evitare crash se manca il cognome
+            String[] nameParts = names[i].split(" ");
+            if (nameParts.length < 2) {
+                showError("Errore Formato Autore", "Formato non valido per: " + names[i], "Inserire 'Nome Cognome' separati da spazio.");
+                return;
+            }
+
+            String name = nameParts[0];
+            String surname = nameParts[1];
                     
-            if (! this.validAuthor(name)){
-                // Da implementare il popup
+            if (!this.validAuthor(name)){
+                showError("Errore Autore", "Nome autore non valido", "Il nome dell'autore '" + name + "' contiene caratteri non validi.");
                 return;
             }
             authorsList.add(new Author(name , surname));
@@ -140,39 +160,52 @@ public class BookSectionController implements Initializable, ValidBook {
         // Verifica l'ISBN
         String ISBN = this.CodeLabel.getText();
         if (!this.validISBN(ISBN)){
-            // da implementare popup
+            showError("Errore ISBN", "Codice ISBN non valido", "Il formato dell'ISBN inserito non è corretto.");
             return;
         }
+        
         if (books.getBookByISBN(ISBN) != null){
-            // da implementare popup che il libro già esiste
+            showError("Errore Duplicato", "Libro già presente", "Esiste già un libro in catalogo con questo codice ISBN.");
             return;
         }
         
         // Verifica anno di publicazione
         String year = this.YearLabel.getText();
         if (!this.validYear(year)){
-            // Da implementare popup
+            showError("Errore Anno", "Anno non valido", "Inserire un anno numerico valido (es. 2024).");
             return;
         }
         
         // Verifica numero di copie
         String copies = this.CopiesLabel.getText();
         if (!this.validCopies(copies)){
-            // Da implementare popup
+            showError("Errore Copie", "Numero copie non valido", "Inserire un numero intero positivo.");
             return;
         }
    
-        Book b = new Book(title, authorsList, ISBN, Integer.parseInt(year));
-  
-        books.addBook(b, Integer.parseInt(copies));
-        bookList.setAll(books.getBooks());
-        
-        this.TitleLabel.clear();
-        this.AuthorLabel.clear();
-        this.CodeLabel.clear();
-        this.YearLabel.clear();
-        this.CopiesLabel.clear();
-        
+        // Creazione e aggiunta libro
+        try {
+            Book b = new Book(title, authorsList, ISBN, Integer.parseInt(year));
+            books.addBook(b, Integer.parseInt(copies));
+            bookList.setAll(books.getBooks());
+            
+            // Pulizia campi
+            this.TitleLabel.clear();
+            this.AuthorLabel.clear();
+            this.CodeLabel.clear();
+            this.YearLabel.clear();
+            this.CopiesLabel.clear();
+            
+            // Opzionale: Popup di successo
+            Alert confirm = new Alert(AlertType.INFORMATION);
+            confirm.setTitle("Successo");
+            confirm.setHeaderText(null);
+            confirm.setContentText("Libro aggiunto correttamente!");
+            confirm.showAndWait();
+
+        } catch (NumberFormatException e) {
+            showError("Errore Formato", "Errore di conversione", "Controllare che anno e copie siano numeri interi.");
+        }
     }
 
     /**
@@ -328,5 +361,14 @@ public class BookSectionController implements Initializable, ValidBook {
     private void updateCopies(TableColumn.CellEditEvent<Book, Integer> event) throws InvalidBookException {
         Book b = event.getRowValue();
         books.setCopies(b, event.getNewValue());
+    }
+    
+    
+    private void showError(String titolo, String intestazione, String messaggio) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(titolo);
+        alert.setHeaderText(intestazione);
+        alert.setContentText(messaggio);
+        alert.showAndWait();
     }
 }
