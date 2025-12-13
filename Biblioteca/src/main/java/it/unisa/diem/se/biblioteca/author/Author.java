@@ -1,12 +1,14 @@
 package it.unisa.diem.se.biblioteca.author;
 
 import java.util.Objects;
+import java.io.Serializable;
 
 /**
  * @brief rappresenta un autore di un libro all'interno del sistema.
  * Questa classe serve a memorizzare i dati anagrafici dell'autore. Fondamentale per l'indicizzazione dei liobri e la gestione del catalo.
  */
-public class Author {
+public class Author implements Serializable {
+    private static final long serialVersionUID = 1L;    
     private String name;
     private String surname;
     

@@ -6,69 +6,93 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidBookTest implements ValidBook {
 
+    // 1. TEST ISBN
+
     @Test
     public void testValidISBN() {
-        System.out.println("Test: Validazione ISBN (Regex)");
-
         // --- CASI VALIDI ---
-        assertTrue(validISBN("9781234567890"), "ISBN 978 valido");
-        assertTrue(validISBN("9790000000000"), "ISBN 979 valido");
+        assertTrue(validISBN("9781234567890"), "ISBN 978 standard");
+        assertTrue(validISBN("9790000000000"), "ISBN 979 standard");
 
-        // --- CASI INVALIDI ---
+        // --- CASI NON VALIDI
         assertFalse(validISBN("123"), "Troppo corto");
         assertFalse(validISBN("9771234567890"), "Prefisso errato (977)");
-        assertFalse(validISBN("978123456789X"), "Contiene lettere");
+        assertFalse(validISBN("978-1234567890"), "Trattini non ammessi dalla tua regex");
+        assertFalse(validISBN(" 9781234567890"), "Spazio iniziale non ammesso");
+        assertFalse(validISBN("9781234567890 "), "Spazio finale non ammesso");
+        
+        // --- CASI LIMITE ---
         assertFalse(validISBN(""), "Stringa vuota");
-        assertFalse(validISBN(null), "Null dovrebbe essere gestito (o crashare se non gestito, ma qui testiamo la regex)"); 
+        assertFalse(validISBN(null), "Null deve restituire false");
     }
+
+    // 2. TEST AUTORE
 
     @Test
     public void testValidAuthor() {
-        System.out.println("Test: Validazione Autore");
-
-        // --- CASI VALIDI ---
-        assertTrue(validAuthor("Mario Rossi"));
+        // --- CASI VALIDI STANDARD ---
+        assertTrue(validAuthor("Mario Rossi")); 
+        assertTrue(validAuthor("Niccolò Ammaniti"), "Accenti");
         assertTrue(validAuthor("D'Annunzio"), "Apostrofo");
-        assertTrue(validAuthor("De Luca"), "Spazio nel cognome");
+        assertTrue(validAuthor("De Luca"), "Particella con maiuscola");
+        assertTrue(validAuthor("Renzo"), "Nome singolo");
 
-        // --- CASI INVALIDI ---
-        assertFalse(validAuthor("mario rossi"), "Minuscolo");
-        assertFalse(validAuthor("Mario123"), "Numeri");
-        assertFalse(validAuthor(""), "Vuoto");
+        // --- CASI NON VALIDI ---
+        assertFalse(validAuthor("mario rossi"), "Tutto minuscolo");
+        assertFalse(validAuthor("Mario123"), "Numeri nel nome");
+        assertFalse(validAuthor("Mario @Rossi"), "Caratteri speciali");
+        assertFalse(validAuthor(" Mario Rossi"), "Spazio iniziale");
+        
+        // --- CASI LIMITE ---
+        assertFalse(validAuthor(""), "Stringa vuota");
+        assertFalse(validAuthor((String)null), "Null");
     }
+
+    // 3. TEST ANNO 
 
     @Test
     public void testValidYear() {
-        System.out.println("Test: Validazione Anno");
-
         int annoCorrente = LocalDate.now().getYear();
 
-        // Test versione String
+        // --- CASI VALIDI ---
         assertTrue(validYear("2000"));
+        assertTrue(validYear("0"), "Anno 0 è tecnicamente un numero valido");
         assertTrue(validYear(String.valueOf(annoCorrente)));
-        
-        assertFalse(validYear("3000"), "Futuro");
-        assertFalse(validYear("abc"), "Lettere");
-        assertFalse(validYear("-100"), "Negativo");
 
-        // Test versione int
+        // --- CASI NON VALIDI ---
+        assertFalse(validYear("3000"), "Futuro");
+        assertFalse(validYear("-100"), "Negativo (la regex vuole solo digit)");
+        assertFalse(validYear("2020a"), "Alfanumerico");
+        assertFalse(validYear(" 2020"), "Spazio iniziale");
+
+        // --- CASI LIMITE ---
+        assertFalse(validYear(""), "Stringa vuota");
+        assertFalse(validYear(null), "Null");
+        
+        //int
         assertTrue(validYear(2000));
         assertFalse(validYear(3000));
     }
 
+    // 4. TEST COPIE 
+
     @Test
     public void testValidCopies() {
-        System.out.println("Test: Validazione Copie");
-
-        // Test versione String
+        // --- CASI VALIDI ---
         assertTrue(validCopies("1"));
-        assertTrue(validCopies("100"));
-        
-        assertFalse(validCopies("0"), "Zero copie non ha senso");
-        assertFalse(validCopies("-5"), "Negativo");
-        assertFalse(validCopies("abc"), "Lettere");
+        assertTrue(validCopies("1000"));
 
-        // Test versione int
+        // --- CASI NON VALIDI ---
+        assertFalse(validCopies("0"), "Zero copie non ammesso");
+        assertFalse(validCopies("-5"), "Negativo");
+        assertFalse(validCopies("10 "), "Spazio finale");
+        assertFalse(validCopies("10a"), "Alfanumerico");
+
+        // --- CASI LIMITE ---
+        assertFalse(validCopies(""), "Stringa vuota");
+        assertFalse(validCopies(null), "Null");
+        
+        //int
         assertTrue(validCopies(10));
         assertFalse(validCopies(0));
     }
