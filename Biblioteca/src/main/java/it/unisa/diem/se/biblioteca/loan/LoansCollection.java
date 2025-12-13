@@ -20,10 +20,19 @@ public class LoansCollection implements Serializable {
         this.loans = new TreeSet<>();
         this.userLoans = new HashMap<>();
     }
-            
+        /**
+     * @brief Permette di aggiungere nuovi prestiti alla collezione
+     *Inoltre verifica se l'utente ha raggiunto il limite massimo di prestiti consentiti.
+     * Se il limite non è raggiunto, aggiunge il prestito sia alla collezione globale che alla lista dell'utente,
+     * e incrementa il contatore dei prestiti dell'utente.
+     *
+     * @param l      Il prestito da aggiungere.
+     * @return ritorna 0 se l'inserimento ha avuto successo, mentre 1 se l'utente ha raggiunto il limite massimo di prestiti.
+     * @post Il prestito è aggiunto alla collezione, e il contatore prestiti dell'utente è incrementato.
+     */        
     public int addLoan(Loan l){
        if(l.getUser().getLoanCount() >= maxLoans){
-           return 1; // Errore: Limite raggiunto
+           return 1;
        }
        
        if(!userLoans.containsKey(l.getUser())){
@@ -35,9 +44,14 @@ public class LoansCollection implements Serializable {
        
        l.getUser().setLoanCount(l.getUser().getLoanCount() + 1);
              
-       return 0; // Successo
+       return 0; 
     }
-    
+    /**
+     * @brief Rimuove un prestito dall'insieme globale e dalla lista personale dell'utente, decrementa
+     * il contatore dei prestiti attivi dell'utente.
+     * @param l      Il prestito da rimuovere.
+     * @post Il prestito viene rimosso e il contatore dell'utente viene decrementato
+     */    
     public void removeLoan(Loan l){
         if (l == null) return;
         
@@ -52,7 +66,14 @@ public class LoansCollection implements Serializable {
             u.setLoanCount(u.getLoanCount() - 1);
         }
     }
-    
+
+        /**
+     * @brief Restituisce la lista dei prestiti associati a uno specifico utente.
+     *
+     * @param u L'utente di cui cercare i prestiti.
+     * @return Una lista di oggetti {@link Loan} associati all'utente.
+     * Se l'utente non ha prestiti, restituisce una lista vuota (non null).
+     */
     public List<Loan> getLoansByUser(User u){
         return this.userLoans.getOrDefault(u, new ArrayList<>());
     }
