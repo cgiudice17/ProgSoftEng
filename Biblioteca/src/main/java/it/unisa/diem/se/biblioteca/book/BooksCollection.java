@@ -107,8 +107,24 @@ public class BooksCollection implements ValidBook{
      * @brief Restituisce una rappresentazione in formato stringa dell'intero catalogo
      * @return String stringa con tutti i libri
      */
-    public static String printAll(){
-        return null;
+   public String printAll() {
+        if (books.isEmpty()) {
+            return "Il catalogo è vuoto.";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("--- Catalogo Libri ---\n");
+        
+        for (Map.Entry<Book, Integer> entry : books.entrySet()) {
+            Book b = entry.getKey();
+            Integer copie = entry.getValue();
+            
+            sb.append(b.toString())
+              .append(" | Copie disponibili: ")
+              .append(copie)
+              .append("\n----------------------\n");
+        }
+        
+        return sb.toString();
     }
-    
 }

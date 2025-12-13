@@ -21,6 +21,7 @@ public interface ValidBook {
      * @return true se l'ISBN è valido, false altrimenti
      */
     public default boolean validISBN(String ISBN){
+        if (ISBN == null) return false; // Protezione contro NullPointer
         return ISBN.matches("^978\\d{10}") || ISBN.matches("^979\\d{10}");
     }
     
@@ -31,6 +32,7 @@ public interface ValidBook {
      * @return true se l'autore è valido, false altrimenti
      */
     public default boolean validAuthor(String name){
+        if (name == null) return false; // Protezione contro NullPointer
         // ^p{Lu} perchè la prima lettera deve essere maiuscola
         // [\\p{L}'’]+ perchè i caratteri seguenti possono avere anche apostrofo
         // (?: \\p{Lu}[\\p{L}'’]+)* Significa che se ci sta uno spazio, il secondo nome deve essere maiuscolo e conforme al primo
@@ -41,6 +43,7 @@ public interface ValidBook {
     // Da vedere bene non ne sono sicuro, penso abbia più senso mettere la verifica
     // quando si inizializza un nuovo author
     public default boolean validAuthor(Author a){
+        if (a == null) return false; // Protezione contro NullPointer
         return validAuthor(a.getName() + " " + a.getSurname());
     }
     
@@ -50,7 +53,8 @@ public interface ValidBook {
      * @param year l'anno da controllare
      * @return true se l'anno è valido, false altrimenti
      */
-    public default boolean validYear(String year){    
+    public default boolean validYear(String year){  
+        if (year == null) return false; // Protezione contro NullPointer
         return year.matches("^\\d+$") && Integer.parseInt(year) <= LocalDate.now().getYear();
     }
     
@@ -65,6 +69,7 @@ public interface ValidBook {
      * @return true se le copie sono valide, false altrimenti
      */
     public default boolean validCopies(String copies){
+        if (copies == null) return false; // Protezione contro NullPointer
         return copies.matches("^\\d+$") && Integer.parseInt(copies) > 0;
     }
     
