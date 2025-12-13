@@ -20,7 +20,7 @@ public class ValidBookTest implements ValidBook {
         assertFalse(validISBN("978-1234567890"), "Trattini non ammessi dalla tua regex");
         assertFalse(validISBN(" 9781234567890"), "Spazio iniziale non ammesso");
         assertFalse(validISBN("9781234567890 "), "Spazio finale non ammesso");
-        
+        //assertFalse(validISBN("9781234567890ABC"), "Spazio finale non ammesso");
         // --- CASI LIMITE ---
         assertFalse(validISBN(""), "Stringa vuota");
         assertFalse(validISBN(null), "Null deve restituire false");
@@ -42,6 +42,7 @@ public class ValidBookTest implements ValidBook {
         assertFalse(validAuthor("Mario123"), "Numeri nel nome");
         assertFalse(validAuthor("Mario @Rossi"), "Caratteri speciali");
         assertFalse(validAuthor(" Mario Rossi"), "Spazio iniziale");
+        //assertFalse(validAuthor(" MaRio Rossi"), "Spazio iniziale");
         
         // --- CASI LIMITE ---
         assertFalse(validAuthor(""), "Stringa vuota");

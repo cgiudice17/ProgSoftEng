@@ -5,6 +5,7 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.Library;
 import it.unisa.diem.se.biblioteca.loan.Loan;
 import it.unisa.diem.se.biblioteca.loan.LoansCollection;
 import it.unisa.diem.se.biblioteca.user.User;
@@ -72,8 +73,8 @@ public class UsersSectionController implements Initializable, ValidUser {
     
     private ObservableList<User> userList;
     // Da mettere in Library per avere la collezione già inizializzata quando leggi da file
-    private UsersCollection users = new UsersCollection();
-    private LoansCollection loans = new LoansCollection();
+    private UsersCollection users = Library.getInstance().getUsers();
+    private LoansCollection loans = Library.getInstance().getLoans();
 
     /**
      * @brief Inizialliza la classe del controller e comfigura la TableView.

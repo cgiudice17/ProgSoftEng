@@ -5,6 +5,7 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.Library;
 import it.unisa.diem.se.biblioteca.book.Book;
 import it.unisa.diem.se.biblioteca.book.BooksCollection;
 import it.unisa.diem.se.biblioteca.book.ValidBook;
@@ -73,9 +74,9 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
     private TableColumn<Loan, LocalDate> loanDateClm;
     
     private ObservableList<Loan> loanList;
-    private LoansCollection loans = new LoansCollection();
-    private UsersCollection users = new UsersCollection();
-    private BooksCollection books = new BooksCollection();
+    private LoansCollection loans = Library.getInstance().getLoans();
+    private UsersCollection users = Library.getInstance().getUsers();
+    private BooksCollection books = Library.getInstance().getBooks();
 
     /**
      * @brief Inizializza il controller.

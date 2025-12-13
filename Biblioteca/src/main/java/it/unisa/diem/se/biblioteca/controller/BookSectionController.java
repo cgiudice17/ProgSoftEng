@@ -5,6 +5,7 @@
  */
 package it.unisa.diem.se.biblioteca.controller;
 
+import it.unisa.diem.se.biblioteca.Library;
 import it.unisa.diem.se.biblioteca.book.ValidBook;
 import it.unisa.diem.se.biblioteca.author.Author;
 import it.unisa.diem.se.biblioteca.book.Book;
@@ -79,7 +80,7 @@ public class BookSectionController implements Initializable, ValidBook {
     
     private ObservableList<Book> bookList;
     
-    private BooksCollection books = new BooksCollection();
+    private BooksCollection books = Library.getInstance().getBooks();
 
     /**
      * @brief Inizializza il controller e la TableView 
