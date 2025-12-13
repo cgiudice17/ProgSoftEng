@@ -60,24 +60,7 @@ public class BooksCollectionTest {
         assertEquals(10, collezione.getCopies(libro));
     }
 
-    // 3. TEST STAMPA (PRINT ALL)
-
-    @Test
-    public void testPrintAll() {
-        // Caso 1: Vuoto
-        assertEquals("Il catalogo è vuoto.", collezione.printAll());
-        
-        // Caso 2: Pieno
-        collezione.addBook(libro, 3);
-        String risultato = collezione.printAll();
-        
-        assertNotNull(risultato);
-        assertTrue(risultato.contains("Libro Test"));
-        assertTrue(risultato.contains("9781234567890"));
-        assertTrue(risultato.contains("Copie disponibili: 3"));
-    }
-
-    // 4. TEST ERRORI ED ECCEZIONI (Uso delle Lambda)
+    // 4. TEST ERRORI ED ECCEZIONI 
 
     @Test
     public void testAggiuntaNull() {
@@ -107,5 +90,22 @@ public class BooksCollectionTest {
         assertThrows(NullPointerException.class, () -> 
             collezione.setCopies(null, 5)
         );
+    }
+
+    // 3. TEST STAMPA (PRINT ALL)
+
+    @Test
+    public void testPrintAll() {
+        // Caso 1: Vuoto
+        assertEquals("Il catalogo è vuoto.", collezione.printAll());
+        
+        // Caso 2: Pieno
+        collezione.addBook(libro, 3);
+        String risultato = collezione.printAll();
+        
+        assertNotNull(risultato);
+        assertTrue(risultato.contains("Libro Test"));
+        assertTrue(risultato.contains("9781234567890"));
+        assertTrue(risultato.contains("Copie disponibili: 3"));
     }
 }

@@ -48,6 +48,15 @@ public class BookTest {
     }
 
     @Test
+    public void testCostruttore_AnnoZero() {
+        // Test per anno tecnicamente valido ma molto vecchio
+        assertDoesNotThrow(() ->
+            new Book("Titolo", listaAutori, "9781234567890", 0),
+            "Anno 0 deve essere accettato da ValidYear"
+        );
+    }
+
+    @Test
     public void testCostruttore_AutoreInvalido() {
         List<Author> autoriSbagliati = new ArrayList<>();
         autoriSbagliati.add(new Author("mario", "rossi")); 
@@ -68,16 +77,28 @@ public class BookTest {
     // 3. TEST COMPARE TO
 
     @Test
-    public void testCompareTo() throws Exception {
-        // Creiamo due libri  per questo confronto
-        // "Algoritmi" (A) vs "Database" (D)
+    public void testCompareTo_Minore() throws Exception {
+        // "Algoritmi" (A) vs "Database" (D) -> A viene prima, risultato < 0
         Book b1 = new Book("Algoritmi", listaAutori, "9781111111111", 2020);
         Book b2 = new Book("Database", listaAutori, "9782222222222", 2020);
-
-        // A viene prima di D, quindi il risultato deve essere negativo (< 0)
-        assertTrue(b1.compareTo(b2) < 0);
+        assertTrue(b1.compareTo(b2) < 0, "B1 deve essere minore di B2 (ordine alfabetico)");
+    }
+    
+    @Test
+    public void testCompareTo_Maggiore() throws Exception {
+        // "Database" (D) vs "Algoritmi" (A) -> D viene dopo, risultato > 0
+        Book b1 = new Book("Algoritmi", listaAutori, "9781111111111", 2020);
+        Book b2 = new Book("Database", listaAutori, "9782222222222", 2020);
+        assertTrue(b2.compareTo(b1) > 0, "B2 deve essere maggiore di B1");
     }
 
+    @Test
+    public void testCompareTo_Uguale() throws Exception {
+        // Titoli uguali -> risultato = 0
+        Book b1 = new Book("Algoritmi", listaAutori, "9781111111111", 2020);
+        Book b3 = new Book("Algoritmi", listaAutori, "9783333333333", 2021); // ISBN/Anno diversi non contano
+        assertTrue(b1.compareTo(b3) == 0, "Titoli uguali devono dare 0");
+    }
     // 4. TEST EQUALS
 
     @Test
@@ -98,8 +119,8 @@ public class BookTest {
         String s = libro.toString();
         
         // Verifichiamo solo che non sia null e contenga i dati chiave
-        assertNotNull(s);
-        assertTrue(s.contains("Java Manual"));
-        assertTrue(s.contains("9781234567890"));
+        assertNotNull(s, "La stringa non deve essere null");
+        assertTrue(s.contains("Java Manual"), "Deve contenere il titolo");
+        assertTrue(s.contains("9781234567890"), "Deve contenere l'ISBN");
     }
 }

@@ -18,9 +18,9 @@ public class AuthorTest {
 
     @Test
     public void testCostruttoreEGetters() {
-        assertNotNull(autore);
-        assertEquals("Mario", autore.getName());
-        assertEquals("Rossi", autore.getSurname());
+        assertNotNull(autore, "L'oggetto Autore non dovrebbe essere null dopo l'inizializzazione.");
+        assertEquals("Mario", autore.getName(), "Il nome recuperato non corrisponde a quello fornito nel costruttore.");
+        assertEquals("Rossi", autore.getSurname(), "Il cognome recuperato non corrisponde a quello fornito nel costruttore.");
     }
 
     // 2. TEST SETTERS
@@ -30,8 +30,8 @@ public class AuthorTest {
         autore.setName("Luigi");
         autore.setSurname("Bianchi");
 
-        assertEquals("Luigi", autore.getName());
-        assertEquals("Bianchi", autore.getSurname());
+        assertEquals("Luigi", autore.getName(), "Il setter setName non ha aggiornato il nome correttamente.");
+        assertEquals("Bianchi", autore.getSurname(), "Il setter setSurname non ha aggiornato il cognome correttamente.");
     }
 
     // 3. TEST EQUALS
@@ -42,15 +42,16 @@ public class AuthorTest {
         Author autoreDiversoNome = new Author("Luigi", "Rossi");
         Author autoreDiversoCognome = new Author("Mario", "Verdi");
 
+
         // Riflessività e Simmetria
-        assertEquals(autore, autore); // Se stesso
-        assertEquals(autore, stessoAutore); // Stessi dati
+        assertEquals(autore, autore, "Uguaglianza riflessiva: un oggetto deve essere uguale a se stesso.");
+        assertEquals(autore, stessoAutore, "Due autori con nome e cognome identici devono essere uguali.");
         
         // Diversità
-        assertNotEquals(autore, autoreDiversoNome);
-        assertNotEquals(autore, autoreDiversoCognome);
-        assertNotEquals(autore, null);
-        assertNotEquals(autore, "Una Stringa");
+        assertNotEquals(autore, autoreDiversoNome, "Autori con nomi diversi non devono essere uguali.");
+        assertNotEquals(autore, autoreDiversoCognome, "Autori con cognomi diversi non devono essere uguali.");
+        assertNotEquals(autore, null, "Il confronto con null deve restituire false.");
+        assertNotEquals(autore, "Una Stringa", "Il confronto con oggetti di classi diverse deve restituire false.");
     }
 
     // 4. TEST HASHCODE
@@ -58,12 +59,16 @@ public class AuthorTest {
     @Test
     public void testHashCode() {
         Author copiaAutore = new Author("Mario", "Rossi");
+        Author autoreDiverso = new Author("Luigi", "Verdi");
 
         // Se due oggetti sono uguali (equals true), devono avere lo stesso HashCode
-        assertEquals(autore.hashCode(), copiaAutore.hashCode());
+        assertEquals(autore.hashCode(), copiaAutore.hashCode(), "L'HashCode deve essere lo stesso per oggetti uguali.");
+        
+        // L'HashCode di oggetti diversi DEVE essere diverso (anche se non è strettamente richiesto da Java, è buona pratica per le HashMap)
+        assertNotEquals(autore.hashCode(), autoreDiverso.hashCode(), "L'HashCode di oggetti diversi dovrebbe essere diverso (probabilistico).");
         
         // Verifica che l'hashcode non sia zero (probabilisticamente)
-        assertNotEquals(0, autore.hashCode());
+        assertNotEquals(0, autore.hashCode(), "L'HashCode non dovrebbe essere 0 per valori validi.");
     }
 
     // 5. TEST TOSTRING
@@ -72,8 +77,8 @@ public class AuthorTest {
     public void testToString() {
         String descrizione = autore.toString();
 
-        assertNotNull(descrizione);
-        assertTrue(descrizione.contains("Mario"));
-        assertTrue(descrizione.contains("Rossi"));
+        assertNotNull(descrizione, "La stringa toString non deve essere null.");
+        assertTrue(descrizione.contains("Mario"), "La descrizione toString deve contenere il nome.");
+        assertTrue(descrizione.contains("Rossi"), "La descrizione toString deve contenere il cognome.");
     }
 }

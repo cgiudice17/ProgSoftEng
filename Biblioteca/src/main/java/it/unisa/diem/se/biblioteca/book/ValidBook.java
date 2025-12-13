@@ -36,7 +36,7 @@ public interface ValidBook {
         // ^p{Lu} perchè la prima lettera deve essere maiuscola
         // [\\p{L}'’]+ perchè i caratteri seguenti possono avere anche apostrofo
         // (?: \\p{Lu}[\\p{L}'’]+)* Significa che se ci sta uno spazio, il secondo nome deve essere maiuscolo e conforme al primo
-        return name.matches("^\\p{Lu}[\\p{Ll}]+(?:['’\\-]\\p{Lu}\\p{Ll}+)*(?:['’\\-]\\p{Ll}+)*(?: \\p{Lu}[\\p{L}'’\\-]+)*$");
+        return name.matches("^\\p{Lu}[\\p{Ll}]*(?:['’\\-]\\p{Lu}\\p{Ll}+)*(?:['’\\-]\\p{Ll}+)*(?: \\p{Lu}[\\p{L}'’\\-]+)*$");
     }
     
     
