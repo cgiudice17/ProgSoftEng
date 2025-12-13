@@ -19,7 +19,8 @@ public class LoanTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        utente = new User("Mario", "Rossi", "0123456789", "m.rossi@studenti.unisa.it");
+        // CORRETTO: Aggiunto '1' all'email per passare la validazione
+        utente = new User("Mario", "Rossi", "0123456789", "m.rossi1@studenti.unisa.it");
         
         List<Author> autori = new ArrayList<>();
         autori.add(new Author("Giovanni", "Verga"));
@@ -48,7 +49,8 @@ public class LoanTest {
         prestito.setReturnDate(nuovaData);
         assertEquals(nuovaData, prestito.getReturnDate());
 
-        User nuovoUtente = new User("Luigi", "Bianchi", "9876543210", "l.bianchi@test.it");
+        // CORRETTO: Email valida (con numero '1' e dominio corretto)
+        User nuovoUtente = new User("Luigi", "Bianchi", "9876543210", "l.bianchi1@studenti.unisa.it");
         prestito.setUser(nuovoUtente);
         assertEquals(nuovoUtente, prestito.getUser());
     }

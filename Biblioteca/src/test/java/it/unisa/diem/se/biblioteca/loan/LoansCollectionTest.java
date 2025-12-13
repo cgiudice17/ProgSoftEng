@@ -22,16 +22,14 @@ public class LoansCollectionTest {
     public void setUp() throws Exception {
         collection = new LoansCollection();
         
-        // Setup Utenti
-        user = new User("Mario", "Rossi", "0123456789", "m.rossi@test.it");
-        altroUtente = new User("Luigi", "Verdi", "9876543210", "l.verdi@test.it");
+        // CORRETTO: Email valide per entrambi gli utenti
+        user = new User("Mario", "Rossi", "0123456789", "m.rossi1@studenti.unisa.it");
+        altroUtente = new User("Luigi", "Verdi", "9876543210", "l.verdi1@studenti.unisa.it");
         
-        // Setup Libro
         List<Author> authors = new ArrayList<>();
         authors.add(new Author("Autore", "Test"));
         book = new Book("Titolo Test", authors, "9781234567890", 2020);
         
-        // Setup Prestito base
         loan = new Loan(user, book, LocalDate.now().plusDays(30));
     }
 

@@ -12,8 +12,8 @@ public class InvalidUserExceptionTest {
         InvalidUserException exception = new InvalidUserException();
         
         assertNotNull(exception);
-        // Verifica che l'oggetto creato sia effettivamente un'istanza della classe corretta
-        assertTrue(exception instanceof InvalidUserException);
+        // Verifica che l'oggetto creato sia un'istanza valida
+        assertTrue(exception instanceof Exception);
     }
 
     // 2. TEST COSTRUTTORE CON MESSAGGIO
