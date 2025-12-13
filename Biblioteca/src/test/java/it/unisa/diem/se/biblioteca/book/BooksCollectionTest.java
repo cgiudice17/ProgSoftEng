@@ -45,6 +45,11 @@ public class BooksCollectionTest {
         assertNull(collezione.getBookByISBN("9781234567890"));
     }
 
+    @Test
+    public void testRemoveNullBook() {
+        assertThrows(NullPointerException.class, () -> collezione.removeBook(null));
+    }
+
     // 2. TEST GESTIONE COPIE
 
     @Test

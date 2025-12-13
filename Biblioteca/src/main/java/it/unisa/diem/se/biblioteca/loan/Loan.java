@@ -3,10 +3,10 @@ package it.unisa.diem.se.biblioteca.loan;
 import it.unisa.diem.se.biblioteca.user.User;
 import it.unisa.diem.se.biblioteca.book.Book;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-
-public class Loan implements Comparable<Loan>{
-    
+public class Loan implements Comparable<Loan>, Serializable{
+    private static final long serialVersionUID = 1L;
     private User user;
     private Book book;
     private LocalDate returnDate;
@@ -66,23 +66,20 @@ public class Loan implements Comparable<Loan>{
     public int compareTo(Loan l) {
         return this.returnDate.compareTo(l.returnDate);
     }
-    
-    
-    /**
-     * @brief Override del metotdo toString per sstampare la classe corrente.
-     * 
-     */
-    @Override
-    public String toString(){
-        return null;
-    }
-    
-    
+        
     @Override
     public boolean equals(Object o){
         if(o == null || !this.getClass().equals(o.getClass())) return false;
         if(this == o ) return true;
         Loan l = (Loan) o;
         return this.book.equals(l.getBook()) && this.returnDate.equals(l.getReturnDate()) && this.user.equals(l.getUser());
+    }
+
+     /**
+     * @brief Override del metotdo toString per stampare la classe corrente.
+     */
+    @Override
+    public String toString(){
+        return "Prestito: Utente: " + user + ", Libro: " + book.getTitle() + ", Data: " + returnDate;
     }
 }

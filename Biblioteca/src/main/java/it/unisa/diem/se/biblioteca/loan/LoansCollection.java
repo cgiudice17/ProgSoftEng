@@ -1,117 +1,63 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unisa.diem.se.biblioteca.loan;
 
-import it.unisa.diem.se.biblioteca.book.Book;
 import it.unisa.diem.se.biblioteca.user.User;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.io.Serializable;
-/**
- *
- * 
- */
-public class LoansCollection implements Serializable{
+
+public class LoansCollection implements Serializable {
     private static final long serialVersionUID = 1L;
-    /**
-     * @brief Costante usata per definire il numero massimo di possibili prestiti attivi
-     */
     private final static int maxLoans = 3; 
     
     private Set<Loan> loans;
     private Map<User, List<Loan>> userLoans; 
     
-    /**
-     * @brief Costruttore di default
-     * 
-     * @post Collezione inizializzata correttamente.
-     */
     public LoansCollection(){
         this.loans = new TreeSet<>();
-        this.userLoans = new HashMap();
+        this.userLoans = new HashMap<>();
     }
             
-            
-            
-    /**
-     * @brief Aggiunge un prestito alla lista dei prestiti dell'utente
-     * 
-     * @pre Il numero di prestiti attivi deve essere minore di maxLoans
-     * @post Il prestito è stato inserito alla lista 
-     * 
-     * @param[in] l Un prestito valido 
-     * @return 1 se l'utente ha già maxLoans prestiti, 0 se è stato aggiunto il prestito.
-     */
     public int addLoan(Loan l){
-       
-       if((l.getUser().getLoanCount()) >= maxLoans){
-           return 1;
+       if(l.getUser().getLoanCount() >= maxLoans){
+           return 1; // Errore: Limite raggiunto
        }
        
-       addUserLoanHelper(l);
+       if(!userLoans.containsKey(l.getUser())){
+           userLoans.put(l.getUser(), new ArrayList<>());
+       }
+       userLoans.get(l.getUser()).add(l);
+       
+       loans.add(l);
+       
+       l.getUser().setLoanCount(l.getUser().getLoanCount() + 1);
              
-       return 0;
+       return 0; // Successo
     }
     
-    /**
-     * @brief Rimuove un prestito dalla collezione dei prestiti dell'utente
-     * 
-     * @pre Il prestito deve essere nella collezione
-     * @post Il prestito è stato riomosso dalla collezione 
-     * 
-     * @param[in] l Un prestito valido 
-     *  
-     */
     public void removeLoan(Loan l){
+        if (l == null) return;
         
-    }
-    
-    /**
-     * @brief Metodo helper per aggiungere un prestito alla mappa dei prestiti con chiave utente.
-     * @param[in] l il prestito da inserire
-     */
-   
-    private void addUserLoanHelper(Loan l){
+        loans.remove(l);
+        
         User u = l.getUser();
-        if(!userLoans.containsKey(u)){
-            userLoans.put(u, new ArrayList());
+        if (userLoans.containsKey(u)) {
+            userLoans.get(u).remove(l);
         }
         
-        userLoans.get(u).add(l);
+        if (u.getLoanCount() > 0) {
+            u.setLoanCount(u.getLoanCount() - 1);
+        }
     }
     
-    /**
-     * @brief Restituisce una lista di prestiti dell' utente passato.
-     * @param[in] u L'utente di cui si vuole i prestiti 
-     * 
-     * @pre L'utente è valido
-     * 
-     * @return lista dei prestiti
-     */
-    
     public List<Loan> getLoansByUser(User u){
-        return this.userLoans.get(u);
+        return this.userLoans.getOrDefault(u, new ArrayList<>());
     }
     
     public Set<Loan> getLoans(){
         return this.loans;
-    }
-    
-    
-            
-    /**
-     * @brief Restituisce una stringa contenente tutti i prestiti
-     * 
-     * @return String tutti i presititi
-     */
-    public static String printAll(){
-        return null;
     }
 }
