@@ -11,33 +11,48 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test di unità per la classe Library.
+ * Questa classe verifica il corretto funzionamento del pattern Singleton e i meccanismi 
+ * di persistenza dei dati (serializzazione e deserializzazione).
+ */
 public class LibraryTest {
 
+    // Nome del file temporaneo utilizzato per il salvataggio/caricamento nei test.
     private static final String TEST_FILE = "test_biblioteca.bin";
 
+    /**
+     * Metodo eseguito prima di ogni singolo test.
+     * Garantisce che l'ambiente sia pulito e che una nuova istanza Library sia disponibile.
+     */
     @BeforeEach
     public void setUp() {
-        // 1. Resettiamo il Singleton
+        // Resettiamo l'istanza Singleton per isolare i test.
         Library.resetInstance();
         
-        // 2. Inizializziamo una nuova libreria di test
+        // Inizializziamo una nuova libreria vuota, associandola al file di test.
         Library.createNewLibrary(TEST_FILE);
     }
 
+    /**
+     * Metodo eseguito dopo ogni singolo test.
+     * Si occupa della pulizia delle risorse, eliminando il file temporaneo.
+     */    
     @AfterEach
     public void tearDown() {
-        // 1. Cancelliamo il file fisico
+        // Cancelliamo il file fisico generato durante il test.
         File f = new File(TEST_FILE);
         if (f.exists()) {
             f.delete();
         }
 
-        // 2. Resettiamo di nuovo la memoria
+        // Resettiamo l'istanza Singleton in memoria.
         Library.resetInstance();
     }
 
     // 1. TEST INIZIALIZZAZIONE
 
+    // Verifica che createNewLibrary crei un'istanza non nulla e che tutte le collezioni siano inizializzate.
     @Test
     public void testCreateNewLibrary() {
         Library lib = Library.getInstance();
@@ -50,6 +65,7 @@ public class LibraryTest {
 
     // 2. TEST SINGLETON PATTERN
 
+    // Verifica che due chiamate consecutive a getInstance() restituiscano lo stesso oggetto in memoria.
     @Test
     public void testSingletonPattern() {
         Library lib1 = Library.getInstance();
@@ -60,6 +76,7 @@ public class LibraryTest {
 
     // 3. TEST ECCEZIONE (Accesso senza inizializzazione)
 
+    // Verifica che l'accesso a getInstance() prima che la libreria sia stata creata o caricata lanci un'eccezione.
     @Test
     public void testGetInstanceWithoutLoad() {
         Library.resetInstance();
@@ -69,8 +86,9 @@ public class LibraryTest {
         }, "L'accesso a getInstance() senza aver prima chiamato createNewLibrary o loadFromFile deve lanciare IllegalStateException.");
     }
 
-    // 4. TEST SALVATAGGIO E CARICAMENTO (File fisico)
+    // 4. TEST SALVATAGGIO E CARICAMENTO 
 
+    // Verifica che il salvataggio crei un file e che il caricamento riesca a deserializzare l'oggetto.
     @Test
     public void testSaveAndLoadFileCreation() throws IOException, ClassNotFoundException {
         Library libOriginale = Library.getInstance();
@@ -86,7 +104,8 @@ public class LibraryTest {
     }
     
     // 5. TEST CARICAMENTO FILE INESISTENTE
-    
+
+    // Verifica che il tentativo di caricare un file inesistente lanci una IOException.
     @Test
     public void testLoadNonExistentFile() {
         assertThrows(IOException.class, () -> {
@@ -95,7 +114,8 @@ public class LibraryTest {
     }
 
     // 6. TEST SETTERS (Nuovi Casi aggiunti)
-    
+
+    // Verifica che i metodi setter permettano di sostituire le collezioni interne con nuove istanze.
     @Test
     public void testSetters() {
         Library lib = Library.getInstance();
@@ -105,42 +125,36 @@ public class LibraryTest {
         UsersCollection newUsers = new UsersCollection();
         LoansCollection newLoans = new LoansCollection();
         
-        // Usiamo i setter
         lib.setBooks(newBooks);
         lib.setUsers(newUsers);
         lib.setLoans(newLoans);
         
-        // Verifichiamo che siano stati impostati correttamente
+        // Verifichiamo che i riferimenti siano corretti
         assertSame(newBooks, lib.getBooks(), "Il setter per BooksCollection non ha funzionato correttamente.");
         assertSame(newUsers, lib.getUsers(), "Il setter per UsersCollection non ha funzionato correttamente.");
         assertSame(newLoans, lib.getLoans(), "Il setter per LoansCollection non ha funzionato correttamente.");
     }
 
-    // 7. TEST PERSISTENZA DATI REALE (Nuovo Caso aggiunto)
-    // Verifica che se aggiungo un utente, salvo e ricarico, l'utente c'è ancora.
-    
+    // 7. TEST PERSISTENZA DATI REALE 
+
+    // Verifica che i dati aggiunti (un utente), salvati e ricaricati siano effettivamente persistenti e corretti.
     @Test
     public void testDataPersistence() throws Exception {
-        // FASE A: Popolamento
+
         Library lib = Library.getInstance();
-        // Attenzione: Usiamo un utente valido per non far fallire il test
+        
         User u = new User("Mario", "Rossi", "0123456789", "m.rossi1@studenti.unisa.it");
         lib.getUsers().addUser(u);
         
-        // Verifica pre-salvataggio
         assertEquals(1, lib.getUsers().getUsers().size(), "Prima del salvataggio, deve esserci 1 utente.");
         
-        // FASE B: Salvataggio
         lib.save();
         
-        // FASE C: Reset totale (simulo chiusura app)
         Library.resetInstance();
         
-        // FASE D: Ricaricamento
         Library.loadFromFile(TEST_FILE);
         Library libCaricata = Library.getInstance();
         
-        // Verifica post-caricamento: L'utente deve esserci!
         assertNotNull(libCaricata.getUsers().getUserByCode("0123456789"), "L'utente salvato deve essere ritrovato dopo il caricamento tramite matricola.");
         assertEquals("Mario", libCaricata.getUsers().getUserByCode("0123456789").getName(), "Il nome dell'utente ricaricato deve corrispondere all'originale.");
     }
