@@ -16,7 +16,8 @@ import javafx.stage.Stage;
 
 /**
  * @brief Controller principale dell'applicazione 
- * Gestisce la navigazione tra le diverse sezioni del sistema (Libri, Utenti, Prestiti)
+ * Gestisce la navigazione tra le diverse sezioni del sistema (Libri, Utenti, Prestiti) 
+ * tramite i diversi pulsanti e metodi 
  */
 public class PrimaryController {
 
@@ -29,7 +30,6 @@ public class PrimaryController {
     @FXML
     private Button LoansButton;
 
-
     /**
      * @brief Apre la sezione dedicata alla gestione dei libri.
      * Metodo invocato dal click sul pulsante "Sezione libri" nel menu principale.
@@ -37,11 +37,8 @@ public class PrimaryController {
      * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
-    private void OpenBookSection(ActionEvent event) throws IOException {
-        
-            
+    private void OpenBookSection(ActionEvent event) throws IOException {  
         this.changeScene("booksSection.fxml", event);
-        
     }
 
     /**
@@ -65,10 +62,9 @@ public class PrimaryController {
     private void OpenLoansSection(ActionEvent event) throws IOException {
         this.changeScene("loansSection.fxml", event);
     }
-    
-
+   
     /**
-     * @brief Metodo helper per il csmbio della scena.
+     * @brief Metodo helper per il cambio della scena.
      * Carica il file FXML specificsto, imposta la nuova root e ridimensiona lo stage 
      * @param nomeFileFXML nome del file FXML da caricare 
      * @param event l'evento che ha scatenato il cambio di scena, usato per recuperare lo stage corrente 
@@ -80,17 +76,15 @@ public class PrimaryController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(percorsoCompleto));
         Parent root = loader.load();
 
-        
-        
+        // Recupera lo stage corrente utilizzando un elemento noto (BookButton)
         Stage stage = (Stage) BookButton.getScene().getWindow();
+        
+        // Imposta la nuova scena e ridimensiona
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setWidth(1000);  
         stage.setHeight(800); 
         stage.centerOnScreen();
         stage.show();
-
-    
     }
-    
 }

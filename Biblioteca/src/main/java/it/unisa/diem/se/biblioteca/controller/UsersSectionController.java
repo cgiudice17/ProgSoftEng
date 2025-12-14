@@ -41,7 +41,9 @@ import javafx.stage.Stage;
 
 /**
  * @brief Controller per la gestione della sezione utenti. 
- * Gestisce le operazioni di gestione degli utenti 
+ * Gestisce la visualizzazione, l'inserimento, la modifica e la rimozione degli utenti
+ * del sistema, verificando la validità dei dati di input e visualizzando i  prestiti attivi per ciascun utente.
+ * Implementa l'interfaccia {@link ValidUser} per la validazione
  */
 public class UsersSectionController implements Initializable, ValidUser {
 
@@ -75,23 +77,29 @@ public class UsersSectionController implements Initializable, ValidUser {
     private TableColumn<User, String> loanClm;
     
     private ObservableList<User> userList;
-    // Da mettere in Library per avere la collezione già inizializzata quando leggi da file
     private UsersCollection users = Library.getInstance().getUsers();
     private LoansCollection loans = Library.getInstance().getLoans();
 
-    /**
-     * @brief Inizialliza la classe del controller e comfigura la TableView.
-     * Imposta la lista osservabile per la tabella, definisce le factory per le celle e collega le colonne alle proprietà dell'oggetto
+  /**
+     * @brief Inizializza la classe del controller e configura la TableView.
+     * Imposta la lista osservabile per la tabella, definisce le factory per le celle, 
+     * collega le colonne alle proprietà dell'oggetto e configura l'editing in linea.
+     * @param url La posizione utilizzata per risolvere i percorsi relativi per l'oggetto radice.
+     * @param rb Le risorse utilizzate per localizzare l'oggetto radice.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userList = FXCollections.observableArrayList(users.getUsers());
         
         usersTable.setItems(userList);
+
+        // Configurazione colonne dati utente 
         nameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getName()));
         surnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getSurname()));
         numberClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getCode()));
         emailClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getEmail()));
+        
+        // Colonna Prestiti Attivi
         loanClm.setCellValueFactory(cellData -> {
         User currentUser = cellData.getValue();
         List<Loan> activeLoans = loans.getLoansByUser(currentUser);
@@ -100,6 +108,7 @@ public class UsersSectionController implements Initializable, ValidUser {
             return new SimpleStringProperty("Nessun prestito");
         }
         
+        // Costruisce una stringa con i titoli dei libri in prestito
         StringBuilder sb = new StringBuilder();
         for (Loan l : activeLoans) {
             if (sb.length() > 0) {
@@ -111,27 +120,30 @@ public class UsersSectionController implements Initializable, ValidUser {
         return new SimpleStringProperty(sb.toString());
     });
         
+        // Configurazione Cell Factory per l'editing
         nameClm.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameClm.setCellFactory(TextFieldTableCell.forTableColumn());
         numberClm.setCellFactory(TextFieldTableCell.forTableColumn());
         emailClm.setCellFactory(TextFieldTableCell.forTableColumn());
         
+        // Binding pulsante di aggiunta
         BooleanBinding b = Bindings.or(nameLabel.textProperty().isEmpty(), surnameLabel.textProperty().isEmpty())
                 .or(studentCodeLabel.textProperty().isEmpty()).or(emailLabel.textProperty().isEmpty());
-        
+       
         addUserButton.disableProperty().bind(b);
         
     }
 
     /**
      * @brief Gestisce l'aggiunta di un nuovo utente al sistema.
-     * Invocato dal click sul pulsante "Aggiungi utente". Raccoglie i dati inseriti 
-     * nei campi di testo (nome, cognome,matricola, email), valida l'input tramite `checkUser` 
-     * e registra il nuovo utente nella lista osservabile.
-     * * @param event L'evento generato dal click sul pulsante.
+     * * Invocato dal click sul pulsante "Aggiungi utente". Il metodo esegue una validazione completa 
+     * di tutti i campi, verifica l'esistenza di duplicati (matricola) e, in caso di successo, 
+     * crea e registra il nuovo User nella  UsersCollection.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void addUser(ActionEvent event) {
+        
         // Nome e cognome
         String name = this.nameLabel.getText().trim();
         String surname = this.surnameLabel.getText().trim();
@@ -146,8 +158,7 @@ public class UsersSectionController implements Initializable, ValidUser {
         if (!validName(name) || !validName(surname)){
             showError("Errore Formato", "Nome o Cognome non validi", "Inserire solo lettere valide, senza numeri o simboli speciali e con la prima lettera maiuscola.");
             return;
-        }
-                
+        }   
         
         // Verifica la matricola
         String studentCode = this.studentCodeLabel.getText();
@@ -168,9 +179,8 @@ public class UsersSectionController implements Initializable, ValidUser {
             showError("Errore Email", "Email non valida", "L'indirizzo email inserito non è valido o non è istituzionale.");
             return;
         }
-        
    
-
+        // Creazione e aggiunta
         User u;
         try {
             u = new User(name, surname, studentCode, mail);
@@ -180,9 +190,7 @@ public class UsersSectionController implements Initializable, ValidUser {
             Logger.getLogger(UsersSectionController.class.getName()).log(Level.SEVERE, null, ex);
         }
   
-        
-        
-        
+        // Pulizia campi dopo il successo 
         this.nameLabel.clear();
         this.surnameLabel.clear();
         this.studentCodeLabel.clear();
@@ -223,10 +231,10 @@ public class UsersSectionController implements Initializable, ValidUser {
     }
 
     /**
-     * @brief Esegue la ricerca degli utenti.
-     * Invocato dall'edit del campo di testo "UserSearchLabel" . Filtra la TableView mostrando 
-     * solo gli utenti che corrispondono ai criteri ( nome o matricola).
-     * @param event L'evento generato dal click sul pulsante.
+     * @brief Esegue la ricerca e il filtro degli utenti.
+     * Invocato dall'edit del campo di testo "userSearchLabel". Filtra la usersTable TableView
+     * mostrando gli utenti che corrispondono ai criteri (nome, cognome, matricola o email).
+     * @param event L'evento generato dalla scrittura sul campo di testo.
      */
     @FXML
     private void userSearch(ActionEvent event) {
@@ -263,11 +271,9 @@ public class UsersSectionController implements Initializable, ValidUser {
                 return true;
             }
 
-            // Se nessuna delle condizioni sopra è vera, nascondi il libro
             return false; 
             });
         });
-
 
         SortedList<User> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(usersTable.comparatorProperty());
@@ -323,6 +329,13 @@ public class UsersSectionController implements Initializable, ValidUser {
         u.setEmail(event.getNewValue());
     }    
     
+    /**
+     * @brief Mostra un pop-up di errore all'utente.
+     * Utility method per standardizzare la visualizzazione degli errori di validazione o di sistema.
+     * @param titolo Il titolo della finestra di alert.
+     * @param intestazione L'intestazione del messaggio di errore.
+     * @param messaggio Il messaggio di errore dettagliato.
+     */
     private void showError(String titolo, String intestazione, String messaggio) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titolo);

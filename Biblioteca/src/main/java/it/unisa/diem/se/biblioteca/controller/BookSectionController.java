@@ -44,7 +44,8 @@ import javafx.scene.control.Alert.AlertType;
 /**
  * @brief Controller per la gestione della sezioe libri (catalogo)
  * Gestisce l'inserimento, la modifica e la rimozione dei libri, si occupa inoltre della gestione delle copie disponibili 
- */
+ * Implementa l'interfaccia ValidBook per la validazione dei dati di input.
+*/
 public class BookSectionController implements Initializable, ValidBook {
 
     @FXML
@@ -79,31 +80,37 @@ public class BookSectionController implements Initializable, ValidBook {
     private TableColumn<Book, Integer> copiesClm;
     
     private ObservableList<Book> bookList;
-    
     private BooksCollection books = Library.getInstance().getBooks();
 
     /**
-     * @brief Inizializza il controller e la TableView 
-     * Configura il binding tra le colonne e le proprietà dell' oggetto  
+     * @brief Inizializza il controller e la TableView.
+     * Metodo chiamato al caricamento del file FXML. Configura il binding tra le colonne 
+     * della tabella e le proprietà degli oggetti Book. 
+     * Imposta la TableView come editabile e abilita/disabilita il pulsante di aggiunta.
+     * @param url La posizione utilizzata per risolvere i percorsi relativi per l'oggetto radice.
+     * @param rb Le risorse utilizzate per localizzare l'oggetto radice.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         bookList = FXCollections.observableArrayList(books.getBooks());
         
-        
         bookTable.setItems(bookList);
+        
+        // Configurazione delle CellValueFactory per il binding dei dati
         titleClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getTitle()));
         authorsClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getAuthors().toString()));
         codeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getISBN()));
         yearClm.setCellValueFactory(r -> new SimpleIntegerProperty(r.getValue().getPublishYear()).asObject());
         copiesClm.setCellValueFactory(r -> new SimpleObjectProperty<>(books.getCopies(r.getValue())));
         
+        // Configurazione delle CellFactory per l'editing in linea
         titleClm.setCellFactory(TextFieldTableCell.forTableColumn());
         authorsClm.setCellFactory(TextFieldTableCell.forTableColumn());
         codeClm.setCellFactory(TextFieldTableCell.forTableColumn());
         yearClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         copiesClm.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         
+        // Binding per disabilitare il pulsante di aggiunta se un campo è vuoto
         BooleanBinding b = Bindings.or(titleLabel.textProperty().isEmpty(), authorLabel.textProperty().isEmpty())
                 .or(codeLabel.textProperty().isEmpty()).or(yearLabel.textProperty().isEmpty()).or(copiesLabel.textProperty().isEmpty());
         
@@ -147,7 +154,7 @@ public class BookSectionController implements Initializable, ValidBook {
                 showError("Errore Formato Autore", "Formato non valido per: " + names[i], "Inserire 'Nome Cognome' separati da spazio.");
                 return;
             }
-
+            
             String name = nameParts[0];
             String surname = nameParts[1];
                     
@@ -190,7 +197,7 @@ public class BookSectionController implements Initializable, ValidBook {
             books.addBook(b, Integer.parseInt(copies));
             bookList.setAll(books.getBooks());
             
-            // Pulizia campi
+            // Pulizia campi dopo il successo 
             this.titleLabel.clear();
             this.authorLabel.clear();
             this.codeLabel.clear();
@@ -253,7 +260,6 @@ public class BookSectionController implements Initializable, ValidBook {
             if (newValue == null || newValue.isEmpty()) {
                 return true;
             }
-
             
             String lowerCaseFilter = newValue.toLowerCase();
 
@@ -282,7 +288,7 @@ public class BookSectionController implements Initializable, ValidBook {
             });
         });
 
-    
+        // Applica i filtri e l'ordinamento alla TableView
         SortedList<Book> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(bookTable.comparatorProperty());
         bookTable.setItems(sortedData);  
@@ -292,7 +298,7 @@ public class BookSectionController implements Initializable, ValidBook {
      * @brief Aggiorna il titolo del libro in seguito alla modifica nella tabella.
      * Invocato quando l'utente conferma la modifica (premendo Invio) nella colonna "Titolo".
      * Aggiorna la proprietà corrispondente all'oggetto con il nuovo valore inserito.
-     * @param[in] event L'evento contenente il nuovo valore e l'oggetto modificato.
+     * @param event L'evento contenente il nuovo valore e l'oggetto modificato.
      */
     @FXML
     private void updateTitle(TableColumn.CellEditEvent<Book, String> event) {
@@ -337,6 +343,7 @@ public class BookSectionController implements Initializable, ValidBook {
     /**
      * @brief Aggiorna il numero di copie disponibili.
      * Invocato al termine della modifica della cella nella colonna " Numero copie".
+     * Questo metodo chiama BooksCollection.setCopies(Book, int) setCopie  per aggiornare il conteggio nel modello dati.
      * @param event L'evento di modifica della cella contenente il nuovo numero di copie.
      */
     @FXML
@@ -345,7 +352,13 @@ public class BookSectionController implements Initializable, ValidBook {
         books.setCopies(b, event.getNewValue());
     }
     
-    
+    /**
+     * @brief Mostra un pop-up di errore all'utente.
+     * Utility method per standardizzare la visualizzazione degli errori di validazione o di sistema.
+     * @param titolo Il titolo della finestra di alert.
+     * @param intestazione L'intestazione del messaggio di errore.
+     * @param messaggio Il messaggio di errore dettagliato.
+     */
     private void showError(String titolo, String intestazione, String messaggio) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(titolo);

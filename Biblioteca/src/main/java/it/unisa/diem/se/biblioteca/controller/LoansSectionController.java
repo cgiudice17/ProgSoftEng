@@ -46,7 +46,9 @@ import javafx.stage.Stage;
 
 /**
  * @brief Controller per la gestione della sezione prestiti 
- * Gestisce il ciclo di vita dei prestiti (creazione, visualizzazione e restituzione) verificando la disponibilità delle risorse e associando utenti e libri 
+ * Gestisce il ciclo di vita dei prestiti (creazione, visualizzazione e restituzione)
+ * verificando la disponibilità delle risorse e associando utenti e libri 
+ * Implementa le interfacce ValidUser e ValidBook per la validazione.
  */
 public class LoansSectionController implements Initializable, ValidUser, ValidBook {
 
@@ -86,12 +88,17 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
 
     /**
      * @brief Inizializza il controller.
+     * Metodo chiamato al caricamento del file FXML. Configura il binding delle colonne della tabella
+     * imposta la logica per colorare le date di restituzione scadute.
+     * @param url La posizione utilizzata per risolvere i percorsi relativi per l'oggetto radice.
+     * @param rb Le risorse utilizzate per localizzare l'oggetto radice.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loanList = FXCollections.observableArrayList(loans.getLoans());
         loanTable.setItems(loanList);
 
+        // Configurazione delle CellValueFactory
         loanNameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getName()));
         loanSurnameClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getSurname()));
         loanCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUser().getCode()));
@@ -99,9 +106,11 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         loanBookCodeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getBook().getISBN()));
         loanDateClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getReturnDate()));
         
+        // Binding per disabilitare il pulsante di prestito se i campi essenziali sono vuoti
         BooleanBinding b = Bindings.or(loanStudentLabel.textProperty().isEmpty(), loanBookLabel.textProperty().isEmpty())
                 .or(datePicker.valueProperty().isNull());
         
+        // Logica per colorare le date scadute
         loanButton.disableProperty().bind(b);
         
         loanDateClm.setCellFactory(column -> {
@@ -129,14 +138,14 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
                 }
             };
         });
-        
     }   
     
 
     /**
      * @brief Esegue l'operazione di registrazione del prestito.
      * Invocato dal click sul pulsante "Registra prestito".
-     * Il metodo verifica che ci siano copie disponibili, registra il nuovo prestito nel sistema.
+     * Il metodo valida la matricola utente e l'ISBN libro, verifica che ci siano copie disponibili,
+     * , verifica il limite di prestiti per l'utente infine registra il nuovo prestito nel sistema.
      * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
@@ -144,6 +153,7 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         String code = this.loanStudentLabel.getText();
         String ISBN = this.loanBookLabel.getText();
         
+        // validazione matricola 
         if (!this.validCode(code)){
             showError("Errore Matricola", "Formato Matricola non valido", "La matricola non rispetta il formato richiesto (es. 10 cifre).");
             return;
@@ -154,6 +164,7 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
             return;
         }
         
+        // validazione isbn e libro 
         if (!this.validISBN(ISBN)){
             showError("Errore ISBN", "Codice ISBN non valido", "Il formato dell'ISBN inserito non è corretto.");
             return;
@@ -164,15 +175,17 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
             return;
         }
         
+        // verifica copie disponibili
         if(books.getCopies(books.getBookByISBN(ISBN)) == 0){
             showError("Errore libro", "Libro non ha copie disponibili al prestito", "Scegliere un altro libro o aggiungere coopie al libro selezionato");
             return;
         }
         
-        
         User u = users.getUserByCode(code);
         Book b = books.getBookByISBN(ISBN);
         LocalDate returnDate = this.datePicker.getValue();
+
+        // registrazione prestito e gestione dei limiti 
         int v = loans.addLoan(new Loan(u, b, returnDate));
         if (v==1){
             showError("Errore prestiti", "Superato il numero massimo di prestiti", "Il numero massimo di prestiti attivi è: " + loans.getMaxLoans());
@@ -183,6 +196,7 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
             return;
         }
         
+        // aggiornamento 
         loanList.setAll(loans.getLoans());
         try {
             books.setCopies(b, books.getCopies(b)-1);
@@ -231,6 +245,12 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         stage.show();
     }
     
+    /**
+     * @brief Esegue la ricerca e il filtro dei prestiti attivi.
+     * Invocato dall'edit del campo di testo "loanSearchLabel". Filtra la lista dei prestiti in base 
+     * ai dati dell'utente (nome, cognome, matricola, email) o del libro (titolo, ISBN) o data di restituzione.
+     * @param event L'evento generato dalla scrittura sul campo di testo (non usato direttamente, ma triggera il listener).
+     */
     @FXML
     private void searchLoan(ActionEvent event){
         loanList.setAll(loans.getLoans());
@@ -244,7 +264,6 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
                 return true;
             }
 
-            
             String lowerCaseFilter = newValue.toLowerCase();
             
             // Controllo sul nome
@@ -281,20 +300,23 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
             if (loan.getReturnDate().toString().toLowerCase().contains(lowerCaseFilter)) {
                 return true; 
             }
-            
-  
             return false; 
             });
         });
 
-    
+        // Applica i filtri e l'ordinamento alla TableView
         SortedList<Loan> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(loanTable.comparatorProperty());
         loanTable.setItems(sortedData);  
     }
-        
 
-
+    /**
+     * @brief Mostra un pop-up di errore all'utente.
+     * Utility method per standardizzare la visualizzazione degli errori di validazione o di sistema.
+     * @param titolo Il titolo della finestra di alert.
+     * @param intestazione L'intestazione del messaggio di errore.
+     * @param messaggio Il messaggio di errore dettagliato.
+     */
     private void showError(String titolo, String intestazione, String messaggio) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titolo);
@@ -302,5 +324,4 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         alert.setContentText(messaggio);
         alert.showAndWait();
     }
-    
 }
