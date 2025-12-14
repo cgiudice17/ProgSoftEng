@@ -46,10 +46,10 @@ public class LoansCollectionTest {
     public void testAddLoan_Successo() {
         int result = collection.addLoan(loan);
         
-        assertEquals(0, result, "Il risultato dell'aggiunta deve essere 0 (Successo)."); // 0 = Successo
+        assertEquals(0, result, "Il risultato dell'aggiunta deve essere 0 (Successo).");
         assertTrue(collection.getLoans().contains(loan), "Il prestito deve essere nella collezione globale.");
         assertTrue(collection.getLoansByUser(user).contains(loan), "Il prestito deve essere nella lista dell'utente.");
-        assertEquals(1, user.getLoanCount(), "Il contatore prestiti dell'utente deve essere 1."); // Il contatore utente deve aumentare
+        assertEquals(1, user.getLoanCount(), "Il contatore prestiti dell'utente deve essere 1.");
     }
     
     @Test
@@ -70,7 +70,6 @@ public class LoansCollectionTest {
 
     @Test
     public void testAddNullLoan() {
-        // Dato che addLoan chiama l.getUser(), un Loan nullo deve lanciare NullPointerException
         assertThrows(NullPointerException.class, () -> 
             collection.addLoan(null),
             "L'aggiunta di un prestito nullo deve lanciare NullPointerException."
@@ -80,25 +79,38 @@ public class LoansCollectionTest {
 
     // 2. TEST LIMITE PRESTITI (MAX 3)
     @Test
-    public void testMaxLoansLimit() throws Exception { // <--- MODIFICA: Aggiunto throws Exception
-        // Aggiungo 3 prestiti unici (usando book, book2, e book3)
-        collection.addLoan(new Loan(user, book, LocalDate.now().plusDays(1))); // Count = 1
-        collection.addLoan(new Loan(user, book2, LocalDate.now().plusDays(2))); // Count = 2
+    public void testMaxLoansLimit() throws Exception { // Gestisce InvalidBookException
+        // Aggiungo 3 prestiti unici
+        Loan loan1 = new Loan(user, book, LocalDate.now().plusDays(1)); 
+        collection.addLoan(loan1); // Count = 1
         
-        // Creazione del terzo libro, ora gestita dall'eccezione
+        Loan loan2 = new Loan(user, book2, LocalDate.now().plusDays(2));
+        collection.addLoan(loan2); // Count = 2
+        
         List<Author> authors3 = new ArrayList<>();
         authors3.add(new Author("Autore", "Tre"));
         Book book3 = new Book("Titolo Tre", authors3, "9782222222222", 2022);
-        collection.addLoan(new Loan(user, book3, LocalDate.now().plusDays(3))); // Count = 3
+        Loan loan3 = new Loan(user, book3, LocalDate.now().plusDays(3));
+        collection.addLoan(loan3); // Count = 3
         
         assertEquals(3, user.getLoanCount(), "Il contatore deve essere 3 (limite massimo).");
+        assertEquals(3, collection.getLoansByUser(user).size(), "La lista utente deve contenere 3 prestiti unici.");
 
-        Loan loanExtra = new Loan(user, book, LocalDate.now().plusDays(100)); // Duplicato di loan originale ma fuori limite
+        // Tentativo di aggiungere il quarto prestito (nuovo oggetto non duplicato, per testare il limite)
+        List<Author> authorsExtra = new ArrayList<>();
+        authorsExtra.add(new Author("Autore", "Extra"));
+        Book bookExtra = new Book("Titolo Extra", authorsExtra, "9780000000000", 2023);
+        Loan loanExtra = new Loan(user, bookExtra, LocalDate.now().plusDays(100)); 
+        
         int result = collection.addLoan(loanExtra);
         
-        assertEquals(1, result, "L'aggiunta deve restituire 1 (Limite raggiunto)."); // 1 = Errore (Limite raggiunto)
+        assertEquals(1, result, "L'aggiunta deve restituire 1 (Limite raggiunto)."); // 1 = Limite raggiunto
         assertEquals(3, user.getLoanCount(), "Il contatore non deve aumentare oltre il limite."); 
-        assertFalse(collection.getLoansByUser(user).contains(loanExtra), "Il prestito extra non deve essere aggiunto.");
+        
+        // L'oggetto NON DEVE essere nella lista/collezione perché addLoan è ritornato prima dell'aggiunta
+        assertFalse(collection.getLoansByUser(user).contains(loanExtra), "Il prestito extra non deve essere aggiunto alla lista utente.");
+        assertFalse(collection.getLoans().contains(loanExtra), "Il prestito extra non deve essere aggiunto alla collezione globale.");
+        assertEquals(3, collection.getLoansByUser(user).size(), "La lista utente non deve avere più di 3 elementi.");
     }
 
     // 3. TEST RIMOZIONE
@@ -116,7 +128,6 @@ public class LoansCollectionTest {
     
     @Test
     public void testRemoveNullLoan() {
-        // L'implementazione ha un 'if (l == null) return;' quindi non lancia eccezioni.
         assertDoesNotThrow(() -> 
             collection.removeLoan(null),
             "La rimozione di un prestito nullo non deve lanciare eccezioni."

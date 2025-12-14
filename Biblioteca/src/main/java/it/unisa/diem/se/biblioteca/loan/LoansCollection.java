@@ -37,28 +37,34 @@ public class LoansCollection implements Serializable {
         return maxLoans;
     }
       
-    /**
+   /**
      * @brief Aggiunge un nuovo prestito alla collezione, verificando prima se l'utente ha raggiunto il limite massimo.
      * Se il limite non è raggiunto, aggiunge il prestito all'insieme globale, alla lista dell'utente e incrementa il contatore dei prestiti dell'utente.
-     * @param l Il  prestito da aggiungere.
-     * @return Ritorna 0 se l'inserimento ha avuto successo, mentre 1 se l'utente ha raggiunto il limite massimo di prestiti.
-     * @throws NullPointerException Se il prestito passato è null.
-     */        
+     * @param l Il  prestito da aggiungere.
+     * @return Ritorna 0 se l'inserimento ha avuto successo, 1 se l'utente ha raggiunto il limite massimo di prestiti, 
+     * oppure 2 se il prestito (stesso utente/libro) è già presente.
+     * @throws NullPointerException Se il prestito passato è {@code null}.
+     */       
     public int addLoan(Loan l){
-       if (l == null) {
-           throw new NullPointerException("Il prestito non può essere null.");
-       }
-       if(l.getUser().getLoanCount() >= maxLoans){
-           return 1; 
-       }
-       
-       if(userLoans.containsKey(l.getUser()) && userLoans.get(l.getUser()).contains(l)){
-           return 2;
-       }
-       userLoans.computeIfAbsent(l.getUser(), k -> new ArrayList<>()).add(l);
-       loans.add(l);
-       l.getUser().setLoanCount(l.getUser().getLoanCount() + 1);
-       return 0; 
+        if (l == null) {
+            throw new NullPointerException("Il prestito non può essere null.");
+        }
+
+        if(l.getUser().getLoanCount() >= maxLoans){
+            return 1; 
+        }
+        
+        List<Loan> userLoanList = userLoans.computeIfAbsent(l.getUser(), k -> new ArrayList<>());
+
+        if(userLoanList.contains(l)){
+            return 2;
+        }
+
+        userLoanList.add(l);
+        loans.add(l);
+        
+        l.getUser().setLoanCount(l.getUser().getLoanCount() + 1);
+        return 0; 
     }
 
     /**
