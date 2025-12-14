@@ -10,7 +10,7 @@ public class InvalidBookException extends Exception {
 
     /**
      * @brief Costruttore senza argomenti.
-     * * Crea un'istanza vuota di {@code InvalidBookException}.
+     * Crea un'istanza vuota di InvalidBookException.
      */
     public InvalidBookException() {
     }

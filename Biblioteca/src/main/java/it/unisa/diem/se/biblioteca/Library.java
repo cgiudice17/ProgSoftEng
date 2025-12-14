@@ -26,7 +26,7 @@ public class Library implements Serializable {
     private static Library instance;
     private static final long serialVersionUID = 1L;
 
-   /**
+    /**
      * @brief Percorso del file corrente utilizzato per il salvataggio/caricamento.
      * È marcato come 'transient' in quanto non deve essere serializzato insieme all'oggetto Library.
      */
@@ -85,8 +85,8 @@ public class Library implements Serializable {
 
     /**
      * @brief Crea una nuova istanza vuota della Library (Singleton).
-     * * Utilizzato quando non è possibile caricare i dati esistenti.
-     * * @param filepath Il percorso del file che sarà utilizzato per i futuri salvataggi.
+     * Utilizzato quando non è possibile caricare i dati esistenti.
+     * @param filepath Il percorso del file che sarà utilizzato per i futuri salvataggi.
      */
     public static void createNewLibrary(String filepath) {
         instance = new Library();

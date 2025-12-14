@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * @brief L'utente della biblioteca
+ * @brief Rappresenta un utente registrato del sistema biblioteca.
+ * La classe è comparabile per l'ordinamento per cognome e nome e implementa ValidUser 
+ * per la validazione dei dati anagrafici e della matricola.
+ * L'identificatore univoco è la matricola.
  */
 public class User implements Comparable<User>, Serializable, ValidUser {
     
@@ -17,8 +20,13 @@ public class User implements Comparable<User>, Serializable, ValidUser {
     private int loanCount;
 
     /**
-     * @brief Costruttore con validazione
-     * @throws InvalidUserException se i dati non rispettano il formato
+     * @brief Costruttore dell'utente che esegue la validazione di tutti i campi.
+     * * Vengono eseguite le validazioni tramite i metodi dell'interfaccia ValidUser: nome, cognome, matricola ed email.
+     * * @param name Il nome dell'utente.
+     * * @param surname Il cognome dell'utente.
+     * * @param code La matricola (10 cifre).
+     * * @param email L'indirizzo email.
+     * @throws InvalidUserException Se uno dei dati forniti non rispetta il formato di validazione.
      */
     public User(String name, String surname, String code, String email) throws InvalidUserException {
         

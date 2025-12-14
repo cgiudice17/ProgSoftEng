@@ -116,7 +116,7 @@ public class BookSectionController implements Initializable, ValidBook {
      * Invocato dal click sul pulsante "Aggiungi libro". Questo metodo raccoglie i dati 
      * dai campi di input, valida le informazioni e, se corrette, crea un nuovo 
      * oggetto Libro inserendolo nella lista osservabile.
-     * * @param event L'evento generato dal click sul pulsante.
+     * @param event L'evento generato dal click sul pulsante.
      */
     @FXML
     private void addBook(ActionEvent event) {

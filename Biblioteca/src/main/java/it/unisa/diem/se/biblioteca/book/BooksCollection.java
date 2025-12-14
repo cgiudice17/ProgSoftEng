@@ -21,7 +21,7 @@ import java.io.Serializable;
  * seguenti criteri: ISBN, Autore, Titolo e Anno di pubblicazione.
  * Inoltre gestisce il conteggio delle copie disponibili per ogni libro
  * Implementa l'interfaccia {@link it.unisa.diem.se.biblioteca.book.ValidBook ValidBook} per la validazione delle copie.
-*/
+ */
 public class BooksCollection implements ValidBook, Serializable {
     private static final long serialVersionUID = 1L;
     private Map<Book, Integer> books;

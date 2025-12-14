@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 /**
  * @brief Rappresenta un libro nel catalogo della biblioteca.
- *  La classe implementa le interfacce java.lang.Comparable  Comparable per l'ordinamento per titolo e 
- *  it.unisa.diem.se.biblioteca.book.ValidBook ValidBook per la validazione dei dati.
+ * La classe implementa le interfacce java.lang.Comparable  Comparable per l'ordinamento per titolo e 
+ * it.unisa.diem.se.biblioteca.book.ValidBook ValidBook per la validazione dei dati.
  */
 public class Book implements Comparable<Book>, ValidBook, Serializable {
     private static final long serialVersionUID = 1L;   
@@ -66,9 +66,9 @@ public class Book implements Comparable<Book>, ValidBook, Serializable {
     
     /**
      * @brief Genera un codice hash per il libro.
-     * * L'hash code si basa sul codice ISBN, in coerenza con il metodo equals(Object) equals.
-     * * Viene utilizzato java.util.Objects.hash(Object) per garantire un calcolo dell'hashcode robusto.
-     * * @return Il valore di hashcode generato dall'ISBN.
+     * L'hash code si basa sul codice ISBN, in coerenza con il metodo equals(Object) equals.
+     * Viene utilizzato java.util.Objects.hash(Object) per garantire un calcolo dell'hashcode robusto.
+     * @return Il valore di hashcode generato dall'ISBN.
      */
     @Override
     public int hashCode() {

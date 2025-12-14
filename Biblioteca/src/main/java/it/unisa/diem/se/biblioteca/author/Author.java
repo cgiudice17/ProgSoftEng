@@ -13,11 +13,11 @@ public class Author implements Serializable {
     private String name;
     private String surname;
     
-/**
- * @brief Costruisce un nuovo oggetto Autore
- * @param name  il nome dell'autore
- * @param surname il cognome autore
- */
+    /**
+     * @brief Costruisce un nuovo oggetto Autore
+     * @param name  il nome dell'autore
+     * @param surname il cognome autore
+     */
     public Author(String name, String surname) {
         this.name = name;
         this.surname = surname;
