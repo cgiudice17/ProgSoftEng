@@ -75,6 +75,11 @@ public class Book implements Comparable<Book>, ValidBook, Serializable {
     return java.util.Objects.hash(ISBN);
     }
     
+      /**
+     * @brief Confronta il libro con l'oggetto specificato.
+     * La verifica dell'uguaglianza è determinata dal codice ISBN. 
+     * @param o L'oggetto da confrontare con questo libro.
+     */
     @Override
     public boolean equals(Object o){
         if(o == null || !this.getClass().equals(o.getClass())) return false;
@@ -82,11 +87,12 @@ public class Book implements Comparable<Book>, ValidBook, Serializable {
         Book b = (Book) o;
         return this.ISBN.equals(b.ISBN);
     }
-    
+    /**
+     * @brief Restituisce una stringa del libro contenente il Titolo, l'Autore, ISBN e l'anno di publicazione
+    **/
     @Override
     public String toString() {
         return "Titolo: " + title + ", Autore: " + authors + ", ISBN: " + ISBN +", Anno: " + publishYear;
     }
 }
 
-// FAI ULTIMI 2. FALLI UGLUALI NELLE CLASSI SIMILI 
