@@ -69,7 +69,15 @@ public interface ValidBook {
     public default boolean validYear(int year){    
         return year <= LocalDate.now().getYear();
     }
-    
+
+    /**
+     * @brief Controlla se il numero di copie inserito come è valido.
+     * Viene utilizzato dal controller per validare l'input testuale dell'utente prima della conversione.
+     * Il numero deve contenere esclusivamente cifre numeriche (regex "^\d+$") 
+     * e rappresentare un valore intero non negativo.
+     * @param copies il numero di copie da controllare.
+     * @return true se il numero di copie è valido, false altrimenti
+     */
     public default boolean validCopies(String copies){
         if (copies == null) return false; 
         return copies.matches("^\\d+$") && Integer.parseInt(copies) >= 0;
@@ -81,4 +89,3 @@ public interface ValidBook {
 }
 
 
-//FSAI ULTIMO SIMILE A VALIDYEAR 
