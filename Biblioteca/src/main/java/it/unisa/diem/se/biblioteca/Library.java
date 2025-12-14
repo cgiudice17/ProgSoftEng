@@ -105,6 +105,7 @@ public class Library implements Serializable {
         }
         return instance;
     }
+
     /**
      * @brief Salva lo stato corrente dell'intera biblioteca su file.
      * Serializza l'istanza corrente (inclusi libri, utenti e prestiti) nel file 
@@ -123,6 +124,7 @@ public class Library implements Serializable {
             e.printStackTrace();
         }
     }
+
     /**
      * @brief Resetta l'istanza Singleton della Library.
      * Questo metodo è utile per il testing o per permettere il caricamento di una nuova 

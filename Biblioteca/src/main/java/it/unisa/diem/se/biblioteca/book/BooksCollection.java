@@ -113,7 +113,6 @@ public class BooksCollection implements ValidBook, Serializable {
         }
         return books.getOrDefault(b, 0);
     }
-
  
     /**
      * @brief Restituisce una stringa contenente i libri dell'intero catalogo
@@ -136,7 +135,6 @@ public class BooksCollection implements ValidBook, Serializable {
               .append(copie)
               .append("\n----------------------\n");
         }
-        
         return sb.toString();
     }
 }

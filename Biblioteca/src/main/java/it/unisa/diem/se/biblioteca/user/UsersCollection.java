@@ -73,7 +73,6 @@ public class UsersCollection implements Serializable {
         return this.codeUsers.get(code);
     }
 
-
     /**
      * @brief Genera una stringa contenente l'elenco completo di tutti gli utenti registrati.
      * @return Una stringa formattata con la lista degli utenti 
@@ -89,7 +88,6 @@ public class UsersCollection implements Serializable {
                 sb.append(u.toString()).append("\n");
             }
         }
-        
         return sb.toString();
     }
 }

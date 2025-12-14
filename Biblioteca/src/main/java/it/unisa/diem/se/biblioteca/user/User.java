@@ -103,13 +103,13 @@ public class User implements Comparable<User>, Serializable, ValidUser {
         User u = (User) o;
         return this.code.equals(u.code);
     }
+
     /**
      * @brief Restituisce una stringa dell'utente contenente il nome, il cognome, la matricola e l'email 
-    */
+     */
     @Override
     public String toString() {
         return "Utente: " + name + " " + surname + " | Matricola: " + code + " | Email: " + email;
     }
 }
 
-// FAI ULTIMi 2. FALLI UGUALI NELLE CLASSI SIMILI 

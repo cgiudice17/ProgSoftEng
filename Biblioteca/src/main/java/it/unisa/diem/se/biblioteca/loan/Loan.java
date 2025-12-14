@@ -88,9 +88,10 @@ public class Loan implements Comparable<Loan>, Serializable{
         Loan l = (Loan) o;
         return this.book.equals(l.getBook()) && this.user.equals(l.getUser());
     }
+
     /**
      * @brief Restituisce una stringa del prestito contenente il Utente, il Libro e la data per la restituzione
-    */
+     */
     @Override
     public String toString(){
         return "Prestito: Utente: " + user + ", Libro: " + book.getTitle() + ", Data: " + returnDate;
