@@ -103,7 +103,7 @@ public class UsersSectionController implements Initializable, ValidUser {
         StringBuilder sb = new StringBuilder();
         for (Loan l : activeLoans) {
             if (sb.length() > 0) {
-                sb.append(", ");
+                sb.append(",\n");
             }
             sb.append(l.getBook().getTitle()); 
         }

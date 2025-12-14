@@ -24,6 +24,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -169,7 +171,15 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         User u = users.getUserByCode(code);
         Book b = books.getBookByISBN(ISBN);
         LocalDate returnDate = this.datePicker.getValue();
-        loans.addLoan(new Loan(u, b, returnDate));
+        int v = loans.addLoan(new Loan(u, b, returnDate));
+        if (v==1){
+            showError("Errore prestiti", "Superato il numero massimo di prestiti", "Il numero massimo di prestiti attivi è: " + loans.getMaxLoans());
+            return;
+        }
+        if (v==2){
+            showError("Errore prestiti", "Libro già preso in prestito dall'utente", "Per favore seleziona un altro utente o libro");
+            return;
+        }
         loanList.setAll(loans.getLoans());
         
         this.loanStudentLabel.clear();
@@ -185,7 +195,10 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
      */
     @FXML
     private void returnLoan(ActionEvent event) {
+        Loan l = this.loanTable.getSelectionModel().getSelectedItem();
         
+        loanList.remove(l);
+        loans.removeLoan(l);
     }
 
     /**
@@ -208,9 +221,68 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
     
     @FXML
     private void searchLoan(ActionEvent event){
-        
-    }
+        loanList.setAll(loans.getLoans());
+
+        FilteredList<Loan> filteredData = new FilteredList<>(loanList, p -> true);
+
+        loanSearchLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+        filteredData.setPredicate(loan -> {
+ 
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+
+            
+            String lowerCaseFilter = newValue.toLowerCase();
+            
+            // Controllo sul nome
+            if (loan.getUser().getName().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
+            
+            // Controllo sul cognome
+            if (loan.getUser().getSurname().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
+            
+            // Controllo su matricola
+            if (loan.getUser().getCode().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
+            
+            // Controllo su Email
+            if (loan.getUser().getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
+
+            // Controllo sul titolo
+            if (loan.getBook().getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
+
+            // Controllo ISBN
+            if (loan.getBook().getISBN().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            }
+            
+            // Controllo per data
+            if (loan.getReturnDate().toString().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
+            
+  
+            return false; 
+            });
+        });
+
     
+        SortedList<Loan> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(loanTable.comparatorProperty());
+        loanTable.setItems(sortedData);  
+    }
+        
+
+
     private void showError(String titolo, String intestazione, String messaggio) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titolo);

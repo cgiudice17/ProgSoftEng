@@ -34,6 +34,9 @@ public class LoansCollection implements Serializable {
        if(l.getUser().getLoanCount() >= maxLoans){
            return 1;
        }
+       if(userLoans.containsKey(l.getUser())){
+           return 2;
+       }
        
        if(!userLoans.containsKey(l.getUser())){
            userLoans.put(l.getUser(), new ArrayList<>());
@@ -67,7 +70,7 @@ public class LoansCollection implements Serializable {
         }
     }
 
-        /**
+    /**
      * @brief Restituisce la lista dei prestiti associati a uno specifico utente.
      *
      * @param u L'utente di cui cercare i prestiti.
@@ -80,5 +83,14 @@ public class LoansCollection implements Serializable {
     
     public Set<Loan> getLoans(){
         return this.loans;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    
+    public int getMaxLoans(){
+        return maxLoans;
     }
 }
