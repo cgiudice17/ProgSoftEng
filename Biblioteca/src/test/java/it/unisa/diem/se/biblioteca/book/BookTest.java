@@ -152,7 +152,6 @@ public class BookTest {
         assertNotEquals(libro.hashCode(), libroDiverso.hashCode(), "L'HashCode di libri con ISBN diversi dovrebbe essere diverso (probabilistico).");
     }
 
-
     // 6. TEST TOSTRING 
 
     // Verifica che il metodo toString() produca una stringa non vuota e contenente i dati chiave del libro.

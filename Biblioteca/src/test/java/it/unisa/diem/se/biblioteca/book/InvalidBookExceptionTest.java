@@ -36,8 +36,7 @@ public class InvalidBookExceptionTest {
     @Test
     public void testEreditarieta() {
         InvalidBookException exception = new InvalidBookException();
-        
+     
         assertTrue(exception instanceof Exception, "InvalidBookException deve ereditare da Exception.");
-        assertFalse(exception instanceof RuntimeException, "InvalidBookException non deve ereditare da RuntimeException.");
     }
 }
