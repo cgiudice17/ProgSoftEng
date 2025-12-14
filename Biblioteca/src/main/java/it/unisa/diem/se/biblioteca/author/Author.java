@@ -42,18 +42,13 @@ public class Author implements Serializable {
     /**
      * @brief Genera un codice hash per l'autore.
      * L'hash è basato sulla combinazione di nome e cognome.
+     * Viene utilizzato {@link java.util.Objects#hash(Object...) Objects.hash()} per garantire un calcolo dell'hashcode robusto.
      */
     @Override
     public int hashCode(){
-        return Objects.hash(name, surname) * 31;
+        return java.utilObjects.hash(name, surname) * 31;
     }
     
-    /**
-     * @brief verifica l'uguaglianza tra 2 autori 
-     * Due autori sono considerati uguali se hanno lo stesso nome e lo stesso cognome 
-     * @param l'ogetto con cui confrontare l'autore 
-     * @return true se gli oggetti confrontati sono uguali, false altrimenti 
-     */
     @Override
     public boolean equals(Object o){
         if(o == null || o.getClass() != this.getClass()){
@@ -73,6 +68,6 @@ public class Author implements Serializable {
     }
 }
 
-// FAI ULTIMO
+// FAI ULTIMi 2. FALLI UGUALI NELLE CLASSI SIMILI 
 
 

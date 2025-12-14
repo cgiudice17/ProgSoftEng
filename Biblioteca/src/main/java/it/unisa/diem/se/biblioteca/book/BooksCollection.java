@@ -17,10 +17,11 @@ import java.io.Serializable;
 
  /**
  * @brief Gestisce l'intero catalogo dei libri della biblioteca.
- * Indicizza i libri tramite mappe e ne permettere le ricerche, e permettere ricerche basate sui 
- *seguenti criteri: ISBN, Autore, Titolo e Anno di pubblicazione.
+ * Indicizza i libri tramite mappe e ne permettere le ricerche basate sui 
+ * seguenti criteri: ISBN, Autore, Titolo e Anno di pubblicazione.
  * Inoltre gestisce il conteggio delle copie disponibili per ogni libro
- */
+ * Implementa l'interfaccia {@link it.unisa.diem.se.biblioteca.book.ValidBook ValidBook} per la validazione delle copie.
+*/
 public class BooksCollection implements ValidBook, Serializable {
     private static final long serialVersionUID = 1L;
     private Map<Book, Integer> books;
@@ -29,7 +30,6 @@ public class BooksCollection implements ValidBook, Serializable {
     /**
      * @brief Costruttore di default.
      * Inizializza la mappa principale per la gestione dei libri e degli indici
-     * @post Collezione inizializzata correttamente
      */
     public BooksCollection() {
         this.books = new TreeMap<>();    
@@ -38,12 +38,10 @@ public class BooksCollection implements ValidBook, Serializable {
     
      /**
      * @brief Aggiunge un nuovo libro al catalogo e aggiorna gli indici.
-     *
-     * @param b        Il libro da aggiungere.
-     * @param copies   Il numero di copie da aggiungere.
+     * Se il libro esiste già, il numero di copie viene semplicemente sovrascritto.
+     * @param b Il libro da aggiungere.
+     * @param copies Il numero di copie da aggiungere.
      * @throws NullPointerException Se il libro passato è null.
-     * @pre Il libro da aggiungere deve essere valido.
-     * @post Il libro è aggiunto correttamente alle collezioni.
      */
     public void addBook(Book b, int copies){
         if(b == null){
@@ -55,10 +53,8 @@ public class BooksCollection implements ValidBook, Serializable {
     
     /**
      * @brief Rimuove un libro dal catalogo e da tutti gli indici associsti 
-     * @param b    Il libro da rimuovere.
+     * @param b Il libro da rimuovere.
      * @throws NullPointerException Se il libro passato è null.
-     * @pre Il libro da rimuovere deve essere presente nelle collezioni.
-     * @post Il libro è rimosso da tutte le collezioni.
      */
     public void removeBook(Book b){
         if(b == null){
@@ -70,18 +66,16 @@ public class BooksCollection implements ValidBook, Serializable {
 
     /**
      * @brief Restituisce l'insieme di tutti i libri presenti nel catalogo
+     * L'ordine dei libri è dato dall'ordinamento naturale della chiave Book per titolo.
      * @return Set<Book> insieme di tutti i libri presenti nel catalogo
-     * @post Viene restituito l'insieme di tutti i libri presenti nel catalogo
      */
-    
     public Set<Book> getBooks(){
         return books.keySet();
     }
 
     /**
     * @brief Cerca e restituisce un libro dato il suo codice ISBN
-    *
-    * @param ISBN    Il codice ISBN del libro da cercare
+    * @param ISBN Il codice ISBN del libro da cercare
     * @return il libro del codice ISBN specificato
     */
     public Book getBookByISBN(String ISBN){
@@ -89,13 +83,13 @@ public class BooksCollection implements ValidBook, Serializable {
     }
     
     /**
-     * @throws it.unisa.diem.se.biblioteca.book.InvalidBookException
      * @brief Aggiorna il numero di copie disponibili per un libro già presente nel catalogo.
-     * Utilizza il metodo replace per sovrascrivere il valore associato alla chiave libro, permettendo di modificare la disponibilità in seguito a prestiti, restituzioni o nuovi acquisti.
-     * @param b         Il libro di cui si vuole modificare la disponibilità.
-     * @param copies    Il nuovo numero di copie da impostare.
-     * @pre Il libro deve essere già presente nella collezione 'books'.
-     * @post Il numero di copie del libro viene aggiornato al nuovo valore specificato.
+     * Utilizza il metodo replace per sovrascrivere il valore associato alla chiave libro, 
+     * permettendo di modificare la disponibilità in seguito a prestiti, restituzioni o nuovi acquisti.
+     * @param b Il libro di cui si vuole modificare la disponibilità.
+     * @param copies Il nuovo numero di copie da impostare.
+     * @throws NullPointerException Se il libro passato è {@code null}.
+     * @throws InvalidBookException Se il numero di copie specificato non è valido (ad esempio, minore o uguale a zero).
      */
     public void setCopies(Book b,int copies) throws InvalidBookException{
         if(b == null){
@@ -106,12 +100,7 @@ public class BooksCollection implements ValidBook, Serializable {
         }
         books.replace(b, books.get(b), copies);
     }
-     /**
-     * @brief Restituisce il numero di copie disponibili per un determinato libro
-     * @param b    Il libro a cui controllare le copie.
-     * @return Passa il numero di copie disponibili, oppure restituisce 0 se il libro non è presente
-     * @throws NullPointerException Se il libro passato è null.
-     */
+    
     public int getCopies(Book b) {
         if(b == null){
             throw new NullPointerException("Invalid Pointer to book");
@@ -119,11 +108,7 @@ public class BooksCollection implements ValidBook, Serializable {
         return books.getOrDefault(b, 0);
     }
 
-    /**
-     * @brief Restituisce una stringa contenente i libri dell'intero catalogo
-     * @return Ritorna una stringa contenente tutti i libri e il loro numero di copie
-     */
-   public String printAll() {
+    public String printAll() {
         if (books.isEmpty()) {
             return "Il catalogo è vuoto.";
         }
@@ -144,3 +129,6 @@ public class BooksCollection implements ValidBook, Serializable {
         return sb.toString();
     }
 }
+
+
+//FAI LE ULTIME 2 

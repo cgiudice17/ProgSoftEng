@@ -4,30 +4,43 @@ import it.unisa.diem.se.biblioteca.author.Author;
 import java.util.List;
 import java.io.Serializable;
 
+/**
+ * @brief Rappresenta un libro nel catalogo della biblioteca.
+ *  La classe implementa le interfacce java.lang.Comparable  Comparable per l'ordinamento per titolo e 
+ *  it.unisa.diem.se.biblioteca.book.ValidBook ValidBook per la validazione dei dati.
+ */
 public class Book implements Comparable<Book>, ValidBook, Serializable {
     private static final long serialVersionUID = 1L;   
     private String title;
     private List<Author> authors;
     private String ISBN;
     private int publishYear;
-    
+
+    /**
+     * @brief Costruisce un nuovo oggetto Book e ne valida i dati.
+     * Vengono eseguite le seguenti validazioni tramite i metodi dell'interfaccia ValidBook:
+     * 1. Validazione dell'ISBN.
+     * 2. Validazione di ogni Autore nella lista.
+     * 3. Validazione dell'anno di pubblicazione.
+     * @param title Il titolo del libro.
+     * @param authors La lista degli autori.
+     * @param ISBN Il codice ISBN univoco.
+     * @param publishYear L'anno di pubblicazione.
+     */
     public Book(String title, List<Author> authors, String ISBN, int publishYear) throws InvalidBookException {
         
         if (!validISBN(ISBN)){
             throw new InvalidBookException("Invalid ISBN");
-        } 
-
+        }
         for (Author a : authors){
             String nomeCompleto = a.getName() + " " + a.getSurname();
             if (!validAuthor(nomeCompleto)){ 
                 throw new InvalidBookException("Invalid Author: " + nomeCompleto);
             }
         }
-        
         if (!validYear(String.valueOf(publishYear))){
             throw new InvalidBookException("Invalid Year");
         }
-      
         this.title = title;
         this.authors = authors;
         this.ISBN = ISBN;
@@ -51,11 +64,15 @@ public class Book implements Comparable<Book>, ValidBook, Serializable {
         return this.title.compareTo(b.title);
     }
     
-
+    /**
+     * @brief Genera un codice hash per il libro.
+     * * L'hash code si basa sul codice ISBN, in coerenza con il metodo equals(Object) equals.
+     * * Viene utilizzato java.util.Objects.hash(Object...) Objects.hash()} per garantire un calcolo dell'hashcode robusto.
+     * * @return Il valore di hashcode generato dall'ISBN.
+     */
     @Override
     public int hashCode() {
-    // Si basa solo sull'ISBN, poiché Book.equals si basa solo su ISBN.
-        return this.ISBN.hashCode();
+    return java.util.Objects.hash(ISBN);
     }
     
     @Override
@@ -71,3 +88,5 @@ public class Book implements Comparable<Book>, ValidBook, Serializable {
         return "Titolo: " + title + ", Autore: " + authors + ", ISBN: " + ISBN +", Anno: " + publishYear;
     }
 }
+
+// FAI ULTIMI 2. FALLI UGLUALI NELLE CLASSI SIMILI 
