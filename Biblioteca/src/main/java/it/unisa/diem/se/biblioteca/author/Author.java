@@ -5,7 +5,8 @@ import java.io.Serializable;
 
 /**
  * @brief rappresenta un autore di un libro all'interno del sistema.
- * Questa classe serve a memorizzare i dati anagrafici dell'autore. Fondamentale per l'indicizzazione dei liobri e la gestione del catalo.
+ * Questa classe serve a memorizzare i dati anagrafici dell'autore.
+ * Fondamentale per l'indicizzazione dei libri, la ricerca e la gestione del catalo.
  */
 public class Author implements Serializable {
     private static final long serialVersionUID = 1L;    
@@ -16,7 +17,6 @@ public class Author implements Serializable {
  * @brief Costruisce un nuovo oggetto Autore
  * @param name  il nome dell'autore
  * @param surname il cognome autore
- * @post Autore inizializzato correttamente
  */
     public Author(String name, String surname) {
         this.name = name;
@@ -39,7 +39,10 @@ public class Author implements Serializable {
         this.surname = surname;
     }
     
-
+    /**
+     * @brief Genera un codice hash per l'autore.
+     * L'hash è basato sulla combinazione di nome e cognome.
+     */
     @Override
     public int hashCode(){
         return Objects.hash(name, surname) * 31;
@@ -64,17 +67,12 @@ public class Author implements Serializable {
         return this.name.equals(a.name) && this.surname.equals(a.surname); 
     }
 
-    /**
-     * @brief Resituisce una rappresentazione in formato stringa della classe 
-     * @return stringa contenente nome e cognome dell'autore
-     */
     @Override
     public String toString(){
         return "Nome: " + name + "\nCognome: " + surname;
     }
-    
 }
 
-
+// FAI ULTIMO
 
 

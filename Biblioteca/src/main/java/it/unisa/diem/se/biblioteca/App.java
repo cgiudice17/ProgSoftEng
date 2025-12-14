@@ -10,18 +10,17 @@ import java.io.IOException;
 
 /**
  * @brief JavaFX: classe principale dell'applicazione. 
- * Questa classe estende Application e gestisce il ciclo di vita dell'interfaccia grafica, 
+ * Questa classe estende javafx.application.Application; e gestisce il ciclo di vita dell'interfaccia grafica, 
  * l'inizializzazione dello stage e il caricamento dei file FXML e dei DATI.
  */
 public class App extends Application {
 
     private static Scene scene;
-    
-    // MODIFICA 1: Definiamo il nome del file dove salvare i dati
     private static final String DATA_FILE = "biblioteca.bin";
 
     /**
-     * @brief Metodo di avvio dell'applicazione JavaFX. Inizializza lo stage primario 
+     * @brief Metodo di avvio dell'applicazione JavaFX. 
+     * Inizializza lo stage primario e imposta la scena iniziale 
      * @param stage fornito dalla piattaforma JavaFX
      */
     @Override
@@ -33,7 +32,6 @@ public class App extends Application {
             System.out.println("File dati non trovato o errore di lettura. Creazione nuova libreria.");
             Library.createNewLibrary(DATA_FILE);
         }
-
         // Caricamento interfaccia 
         scene = new Scene(loadFXML("primary"), 640, 480);
         stage.setScene(scene);
@@ -56,7 +54,10 @@ public class App extends Application {
         }
     }
 
-
+    /**
+     * @brief Sostituisce la radice (root) della scena corrente con il contenuto di un nuovo file FXML.
+     * @param fxml il nome del file FXML da caricare 
+     */
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
@@ -72,3 +73,4 @@ public class App extends Application {
 }
 
 
+// FAI ULTIMI 2 METODI 
