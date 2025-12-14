@@ -32,7 +32,6 @@ public class LoanTest {
     }
 
     // 1. TEST COSTRUTTORE E GETTERS
-
     @Test
     public void testCostruttoreEGetters() {
         assertNotNull(prestito, "L'oggetto prestito non deve essere null.");
@@ -42,7 +41,6 @@ public class LoanTest {
     }
 
     // 2. TEST SETTERS
-
     @Test
     public void testSetters() throws Exception{
         LocalDate nuovaData = LocalDate.of(2030, 1, 1);
@@ -55,8 +53,7 @@ public class LoanTest {
         assertEquals(nuovoUtente, prestito.getUser(), "Il setter dell'utente non ha funzionato.");
     }
     
-    // 3. TEST COMPARE TO 
-
+    // 3. TEST COMPARE TO (BASATO SOLO SULLA DATA)
     @Test
     public void testCompareTo() {
         LocalDate ieri = LocalDate.now().minusDays(1);
@@ -77,20 +74,19 @@ public class LoanTest {
         LocalDate stessaData = dataRestituzione;
         Loan prestitoUguale = new Loan(utente, libro, stessaData);
         
-        // Confronto con se stesso e con prestito con stessa data
         assertEquals(0, prestito.compareTo(prestito), "Il confronto con se stesso deve restituire 0.");
         assertEquals(0, prestito.compareTo(prestitoUguale), "Il confronto tra prestiti con la stessa data deve restituire 0.");
     }
 
-    // 4. TEST EQUALS
-
+    // 4. TEST EQUALS (IGNORA LA DATA)
     @Test
     public void testEquals() {
         Loan copiaEsatta = new Loan(utente, libro, dataRestituzione);
         assertEquals(prestito, copiaEsatta, "Due prestiti con stessi campi devono essere uguali.");
 
-        Loan prestitoDiverso = new Loan(utente, libro, LocalDate.now());
-        assertNotEquals(prestito, prestitoDiverso, "Prestiti con date diverse non devono essere uguali.");
+        // ATTENZIONE: La data non influisce sull'uguaglianza.
+        Loan prestitoSoloDataDiversa = new Loan(utente, libro, LocalDate.now());
+        assertEquals(prestito, prestitoSoloDataDiversa, "Prestiti con data diversa MA stesso utente/libro DEVONO essere uguali.");
         
         // NUOVO: Test riflessività
         assertEquals(prestito, prestito, "Un oggetto deve essere uguale a se stesso.");
@@ -105,31 +101,32 @@ public class LoanTest {
         autoriDiversi.add(new Author("Italo", "Calvino"));
         Book libroDiverso = new Book("Il barone rampante", autoriDiversi, "9780000000001", 1957);
 
+        // La data diversa NON rende i prestiti diversi nella nuova logica
         Loan diversoSoloData = new Loan(utente, libro, dataDiversa);
+        assertEquals(prestito, diversoSoloData, "I prestiti sono uguali perché hanno lo stesso utente e lo stesso libro."); 
+
         Loan diversoSoloUtente = new Loan(utenteDiverso, libro, dataRestituzione);
         Loan diversoSoloLibro = new Loan(utente, libroDiverso, dataRestituzione);
 
-        assertNotEquals(prestito, diversoSoloData, "I prestiti devono essere diversi se la data è diversa.");
         assertNotEquals(prestito, diversoSoloUtente, "I prestiti devono essere diversi se l'utente è diverso.");
         assertNotEquals(prestito, diversoSoloLibro, "I prestiti devono essere diversi se il libro è diverso.");
         assertNotEquals(prestito, null, "Il confronto con null deve restituire false.");
         assertNotEquals(prestito, "Una stringa", "Il confronto con una classe diversa deve restituire false.");
     }
 
-    // 5. TEST HASHCODE (METODO AGGIUNTO PER COERENZA)
-
+    // 5. TEST HASHCODE (IGNORA LA DATA)
     @Test
     public void testHashCode() throws Exception {
         Loan copiaEsatta = new Loan(utente, libro, dataRestituzione);
         
-        // HashCode basato su utente, libro e data.
         assertEquals(prestito.hashCode(), copiaEsatta.hashCode(), "L'HashCode deve essere lo stesso per oggetti uguali.");
         
-        Loan prestitoDiverso = new Loan(utente, libro, dataRestituzione.plusDays(1));
-        assertNotEquals(prestito.hashCode(), prestitoDiverso.hashCode(), "L'HashCode deve essere diverso per prestiti diversi (data).");
+        // ATTENZIONE: L'HashCode deve essere lo stesso anche se la data è diversa.
+        Loan prestitoSoloDataDiversa = new Loan(utente, libro, dataRestituzione.plusDays(1));
+        assertEquals(prestito.hashCode(), prestitoSoloDataDiversa.hashCode(), "L'HashCode deve essere lo stesso anche per prestiti con data diversa.");
     }
+
     // 6. TEST TOSTRING
-    
     @Test
     public void testToString() {
         String s = prestito.toString();

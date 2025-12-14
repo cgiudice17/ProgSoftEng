@@ -16,17 +16,17 @@ public class LoansCollectionTest {
     private User altroUtente;
     private User user;
     private Book book;
+    private Book book2;
     private Loan loan;
 
     @BeforeEach
     public void setUp() throws Exception {
         collection = new LoansCollection();
         
-        // CORRETTO: Email valide per entrambi gli utenti
+        // La creazione di User e Book qui è sicura perché throws Exception è sul metodo setUp()
         user = new User("Mario", "Rossi", "0123456789", "m.rossi1@studenti.unisa.it");
         altroUtente = new User("Luigi", "Verdi", "9876543210", "l.verdi1@studenti.unisa.it");
         
-        // Assicuriamoci che gli utenti partano con 0 prestiti (per sicurezza)
         user.setLoanCount(0);
         altroUtente.setLoanCount(0);
         
@@ -34,13 +34,16 @@ public class LoansCollectionTest {
         authors.add(new Author("Autore", "Test"));
         book = new Book("Titolo Test", authors, "9781234567890", 2020);
         
+        List<Author> authors2 = new ArrayList<>();
+        authors2.add(new Author("Autore", "Due"));
+        book2 = new Book("Titolo Due", authors2, "9781111111111", 2021);
+        
         loan = new Loan(user, book, LocalDate.now().plusDays(30));
     }
 
     // 1. TEST AGGIUNTA PRESTITO
-
     @Test
-    public void testAddLoan() {
+    public void testAddLoan_Successo() {
         int result = collection.addLoan(loan);
         
         assertEquals(0, result, "Il risultato dell'aggiunta deve essere 0 (Successo)."); // 0 = Successo
@@ -49,6 +52,22 @@ public class LoansCollectionTest {
         assertEquals(1, user.getLoanCount(), "Il contatore prestiti dell'utente deve essere 1."); // Il contatore utente deve aumentare
     }
     
+    @Test
+    public void testAddLoan_Duplicato() {
+        collection.addLoan(loan);
+        
+        // Creo un nuovo Loan identico (stesso utente, stesso libro) ma con data diversa (che non conta per equals)
+        Loan loanDuplicato = new Loan(user, book, LocalDate.now().plusDays(60)); 
+        int result = collection.addLoan(loanDuplicato);
+        
+        // Ci aspettiamo 2 perché il prestito (Utente+Libro) è già presente
+        assertEquals(2, result, "L'aggiunta di un prestito duplicato (stesso Utente/Libro) deve restituire 2."); 
+        assertEquals(1, user.getLoanCount(), "Il contatore non deve aumentare dopo l'inserimento duplicato.");
+        
+        // La collezione globale contiene il prestito originale (il Set previene l'aggiunta del duplicato per equals)
+        assertEquals(1, collection.getLoans().size(), "La collezione globale non deve contenere duplicati (1 elemento).");
+    }
+
     @Test
     public void testAddNullLoan() {
         // Dato che addLoan chiama l.getUser(), un Loan nullo deve lanciare NullPointerException
@@ -60,26 +79,29 @@ public class LoansCollectionTest {
 
 
     // 2. TEST LIMITE PRESTITI (MAX 3)
-
     @Test
-    public void testMaxLoansLimit() {
+    public void testMaxLoansLimit() throws Exception { // <--- MODIFICA: Aggiunto throws Exception
+        // Aggiungo 3 prestiti unici (usando book, book2, e book3)
+        collection.addLoan(new Loan(user, book, LocalDate.now().plusDays(1))); // Count = 1
+        collection.addLoan(new Loan(user, book2, LocalDate.now().plusDays(2))); // Count = 2
         
-        collection.addLoan(new Loan(user, book, LocalDate.now().plusDays(1)));
-        collection.addLoan(new Loan(user, book, LocalDate.now().plusDays(2)));
-        collection.addLoan(new Loan(user, book, LocalDate.now().plusDays(3)));
+        // Creazione del terzo libro, ora gestita dall'eccezione
+        List<Author> authors3 = new ArrayList<>();
+        authors3.add(new Author("Autore", "Tre"));
+        Book book3 = new Book("Titolo Tre", authors3, "9782222222222", 2022);
+        collection.addLoan(new Loan(user, book3, LocalDate.now().plusDays(3))); // Count = 3
         
         assertEquals(3, user.getLoanCount(), "Il contatore deve essere 3 (limite massimo).");
 
-        Loan loanExtra = new Loan(user, book, LocalDate.now().plusDays(100));
+        Loan loanExtra = new Loan(user, book, LocalDate.now().plusDays(100)); // Duplicato di loan originale ma fuori limite
         int result = collection.addLoan(loanExtra);
         
         assertEquals(1, result, "L'aggiunta deve restituire 1 (Limite raggiunto)."); // 1 = Errore (Limite raggiunto)
         assertEquals(3, user.getLoanCount(), "Il contatore non deve aumentare oltre il limite."); 
-        assertFalse(collection.getLoans().contains(loanExtra), "Il prestito extra non deve essere aggiunto alla collezione globale.");
+        assertFalse(collection.getLoansByUser(user).contains(loanExtra), "Il prestito extra non deve essere aggiunto.");
     }
 
     // 3. TEST RIMOZIONE
-
     @Test
     public void testRemoveLoan() {
         collection.addLoan(loan);
@@ -94,7 +116,7 @@ public class LoansCollectionTest {
     
     @Test
     public void testRemoveNullLoan() {
-        // La tua implementazione ha un 'if (l == null) return;' quindi non lancia eccezioni.
+        // L'implementazione ha un 'if (l == null) return;' quindi non lancia eccezioni.
         assertDoesNotThrow(() -> 
             collection.removeLoan(null),
             "La rimozione di un prestito nullo non deve lanciare eccezioni."
@@ -103,8 +125,8 @@ public class LoansCollectionTest {
     
     @Test
     public void testRemoveLoan_PrestitiMultipli() {
-        // Aggiungo due prestiti
-        Loan loan2 = new Loan(user, book, LocalDate.now().plusDays(40));
+        // Aggiungo due prestiti diversi
+        Loan loan2 = new Loan(user, book2, LocalDate.now().plusDays(40));
         collection.addLoan(loan);
         collection.addLoan(loan2);
         assertEquals(2, user.getLoanCount(), "Il contatore deve essere 2.");
@@ -127,7 +149,6 @@ public class LoansCollectionTest {
     }
 
     // 5. TEST GET LOANS BY USER
-
     @Test
     public void testGetLoansByUser() {
         // Caso utente con prestiti
@@ -143,7 +164,6 @@ public class LoansCollectionTest {
     }
     
     // 6. TEST METODI ACCESSORI (getLoans)
-    
     @Test
     public void testGetLoans() {
         assertTrue(collection.getLoans().isEmpty(), "La collezione globale deve essere vuota inizialmente.");
@@ -155,5 +175,11 @@ public class LoansCollectionTest {
         assertEquals(2, collection.getLoans().size(), "La collezione globale deve contenere 2 prestiti.");
         assertTrue(collection.getLoans().contains(loan), "La collezione globale deve contenere il primo prestito.");
         assertTrue(collection.getLoans().contains(loan2), "La collezione globale deve contenere il secondo prestito.");
+    }
+    
+    // 7. TEST METODI ACCESSORI (getMaxLoans)
+    @Test
+    public void testGetMaxLoans() {
+        assertEquals(3, collection.getMaxLoans(), "Il limite massimo di prestiti deve essere 3.");
     }
 }
