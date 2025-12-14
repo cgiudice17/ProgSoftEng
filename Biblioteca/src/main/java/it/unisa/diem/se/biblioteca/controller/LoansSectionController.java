@@ -8,6 +8,7 @@ package it.unisa.diem.se.biblioteca.controller;
 import it.unisa.diem.se.biblioteca.Library;
 import it.unisa.diem.se.biblioteca.book.Book;
 import it.unisa.diem.se.biblioteca.book.BooksCollection;
+import it.unisa.diem.se.biblioteca.book.InvalidBookException;
 import it.unisa.diem.se.biblioteca.book.ValidBook;
 import it.unisa.diem.se.biblioteca.loan.Loan;
 import it.unisa.diem.se.biblioteca.loan.LoansCollection;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleObjectProperty;
@@ -161,6 +164,10 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
             return;
         }
         
+        if(books.getCopies(books.getBookByISBN(ISBN)) == 0){
+            showError("Errore libro", "Libro non ha copie disponibili al prestito", "Scegliere un altro libro o aggiungere coopie al libro selezionato");
+            return;
+        }
         
         
         User u = users.getUserByCode(code);
@@ -175,6 +182,7 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
             showError("Errore prestiti", "Libro già preso in prestito dall'utente", "Per favore seleziona un altro utente o libro");
             return;
         }
+        
         loanList.setAll(loans.getLoans());
         
         this.loanStudentLabel.clear();

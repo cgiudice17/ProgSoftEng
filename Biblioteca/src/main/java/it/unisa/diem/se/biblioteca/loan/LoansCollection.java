@@ -1,5 +1,7 @@
 package it.unisa.diem.se.biblioteca.loan;
 
+import it.unisa.diem.se.biblioteca.Library;
+import it.unisa.diem.se.biblioteca.book.InvalidBookException;
 import it.unisa.diem.se.biblioteca.user.User;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @brief Gestisce l'intera collezione di prestiti attivi all'interno della biblioteca.
@@ -61,9 +65,15 @@ public class LoansCollection implements Serializable {
         }
 
         userLoanList.add(l);
+        
         loans.add(l);
         
         l.getUser().setLoanCount(l.getUser().getLoanCount() + 1);
+        try {
+            Library.getInstance().getBooks().setCopies(l.getBook(), Library.getInstance().getBooks().getCopies(l.getBook())-1);
+        } catch (InvalidBookException ex) {
+            Logger.getLogger(LoansCollection.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return 0; 
     }
 
