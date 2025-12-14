@@ -2,6 +2,7 @@ package it.unisa.diem.se.biblioteca.loan;
 
 import it.unisa.diem.se.biblioteca.user.User;
 import it.unisa.diem.se.biblioteca.book.Book;
+import java.util.Objects;
 import java.time.LocalDate;
 import java.io.Serializable;
 
@@ -67,6 +68,14 @@ public class Loan implements Comparable<Loan>, Serializable{
      * @param o      L'oggetto con cui confrontare il prestito
      * @return ritorna true se i prestiti sono uguali, altrimenti false
      */
+
+
+     @Override
+    public int hashCode() {
+    // Si basa su User, Book e returnDate, poiché Loan.equals si basa su questi tre campi.
+        return Objects.hash(user, book, returnDate);
+    }
+
     @Override
     public boolean equals(Object o){
         if(o == null || !this.getClass().equals(o.getClass())) return false;

@@ -39,15 +39,7 @@ public class Author implements Serializable {
         this.surname = surname;
     }
     
-    /**
-     * @brief Resituisce una rappresentazione in formato stringa della classe 
-     * @return stringa contenente nome e cognome dell'autore
-     */
-    @Override
-    public String toString(){
-        return "Nome: " + name + "\nCognome: " + surname;
-    }
-    
+
     @Override
     public int hashCode(){
         return Objects.hash(name, surname) * 31;
@@ -71,6 +63,16 @@ public class Author implements Serializable {
         Author a = (Author) o;
         return this.name.equals(a.name) && this.surname.equals(a.surname); 
     }
+
+    /**
+     * @brief Resituisce una rappresentazione in formato stringa della classe 
+     * @return stringa contenente nome e cognome dell'autore
+     */
+    @Override
+    public String toString(){
+        return "Nome: " + name + "\nCognome: " + surname;
+    }
+    
 }
 
 

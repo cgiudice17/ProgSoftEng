@@ -30,9 +30,9 @@ public class BooksCollectionTest {
         collezione.addBook(libro, 5);
         
         // Verifichiamo presenza nel Set, numero copie e mappa ISBN
-        assertTrue(collezione.getBooks().contains(libro));
-        assertEquals(5, collezione.getCopies(libro));
-        assertEquals(libro, collezione.getBookByISBN("9781234567890"));
+        assertTrue(collezione.getBooks().contains(libro), "Il libro deve essere presente nella collezione globale (Set).");
+        assertEquals(5, collezione.getCopies(libro), "Il numero di copie deve corrispondere a quello aggiunto.");
+        assertEquals(libro, collezione.getBookByISBN("9781234567890"), "Il libro deve essere recuperabile tramite ISBN.");
     }
 
     @Test
@@ -41,13 +41,8 @@ public class BooksCollectionTest {
         collezione.removeBook(libro);
         
         // Verifichiamo che sia sparito da tutto
-        assertFalse(collezione.getBooks().contains(libro));
-        assertNull(collezione.getBookByISBN("9781234567890"));
-    }
-
-    @Test
-    public void testRemoveNullBook() {
-        assertThrows(NullPointerException.class, () -> collezione.removeBook(null));
+        assertFalse(collezione.getBooks().contains(libro), "Il libro deve essere rimosso dalla collezione globale.");
+        assertNull(collezione.getBookByISBN("9781234567890"), "Il libro non deve essere più recuperabile tramite ISBN.");
     }
 
     // 2. TEST GESTIONE COPIE
@@ -57,7 +52,7 @@ public class BooksCollectionTest {
         collezione.addBook(libro, 1);
         collezione.setCopies(libro, 10);
         
-        assertEquals(10, collezione.getCopies(libro));
+        assertEquals(10, collezione.getCopies(libro), "Il numero di copie deve essere aggiornato a 10.");
     }
 
     // 4. TEST ERRORI ED ECCEZIONI 
@@ -65,14 +60,16 @@ public class BooksCollectionTest {
     @Test
     public void testAggiuntaNull() {
         assertThrows(NullPointerException.class, () -> 
-            collezione.addBook(null, 5)
+            collezione.addBook(null, 5),
+            "L'aggiunta di un libro nullo deve lanciare NullPointerException."
         );
     }
 
     @Test
     public void testRimozioneNull() {
         assertThrows(NullPointerException.class, () -> 
-            collezione.removeBook(null)
+            collezione.removeBook(null),
+            "La rimozione di un libro nullo deve lanciare NullPointerException."
         );
     }
 
@@ -81,14 +78,16 @@ public class BooksCollectionTest {
         collezione.addBook(libro, 5);
         // Deve lanciare InvalidBookException (perché ValidBook rifiuta numeri <= 0)
         assertThrows(InvalidBookException.class, () -> 
-            collezione.setCopies(libro, -5)
+            collezione.setCopies(libro, -5),
+            "Il tentativo di impostare copie negative (-5) deve lanciare InvalidBookException."
         );
     }
     
     @Test
     public void testSetCopies_NullBook() {
         assertThrows(NullPointerException.class, () -> 
-            collezione.setCopies(null, 5)
+            collezione.setCopies(null, 5),
+            "Il tentativo di impostare copie per un libro nullo deve lanciare NullPointerException."
         );
     }
 
@@ -97,15 +96,15 @@ public class BooksCollectionTest {
     @Test
     public void testPrintAll() {
         // Caso 1: Vuoto
-        assertEquals("Il catalogo è vuoto.", collezione.printAll());
+        assertEquals("Il catalogo è vuoto.", collezione.printAll(), "La collezione vuota deve restituire il messaggio di catalogo vuoto.");
         
         // Caso 2: Pieno
         collezione.addBook(libro, 3);
         String risultato = collezione.printAll();
         
-        assertNotNull(risultato);
-        assertTrue(risultato.contains("Libro Test"));
-        assertTrue(risultato.contains("9781234567890"));
-        assertTrue(risultato.contains("Copie disponibili: 3"));
+        assertNotNull(risultato, "La stringa di stampa non deve essere null.");
+        assertTrue(risultato.contains("Libro Test"), "La stampa deve contenere il titolo del libro.");
+        assertTrue(risultato.contains("9781234567890"), "La stampa deve contenere l'ISBN del libro.");
+        assertTrue(risultato.contains("Copie disponibili: 3"), "La stampa deve indicare le copie disponibili.");
     }
 }

@@ -42,10 +42,10 @@ public class LibraryTest {
     public void testCreateNewLibrary() {
         Library lib = Library.getInstance();
         
-        assertNotNull(lib, "L'istanza non dovrebbe essere null");
-        assertNotNull(lib.getBooks(), "La lista libri deve esistere");
-        assertNotNull(lib.getUsers(), "La lista utenti deve esistere");
-        assertNotNull(lib.getLoans(), "La lista prestiti deve esistere");
+        assertNotNull(lib, "L'istanza non dovrebbe essere null dopo la creazione.");
+        assertNotNull(lib.getBooks(), "La collezione libri deve esistere ed essere inizializzata.");
+        assertNotNull(lib.getUsers(), "La collezione utenti deve esistere ed essere inizializzata.");
+        assertNotNull(lib.getLoans(), "La collezione prestiti deve esistere ed essere inizializzata.");
     }
 
     // 2. TEST SINGLETON PATTERN
@@ -55,7 +55,7 @@ public class LibraryTest {
         Library lib1 = Library.getInstance();
         Library lib2 = Library.getInstance();
 
-        assertSame(lib1, lib2, "Deve restituire sempre la stessa istanza");
+        assertSame(lib1, lib2, "Le due chiamate a getInstance() devono restituire la stessa istanza.");
     }
 
     // 3. TEST ECCEZIONE (Accesso senza inizializzazione)
@@ -66,7 +66,7 @@ public class LibraryTest {
 
         assertThrows(IllegalStateException.class, () -> {
             Library.getInstance();
-        });
+        }, "L'accesso a getInstance() senza aver prima chiamato createNewLibrary o loadFromFile deve lanciare IllegalStateException.");
     }
 
     // 4. TEST SALVATAGGIO E CARICAMENTO (File fisico)
@@ -77,12 +77,12 @@ public class LibraryTest {
         libOriginale.save();
 
         File f = new File(TEST_FILE);
-        assertTrue(f.exists(), "Il file dovrebbe essere stato creato");
+        assertTrue(f.exists(), "Il file di serializzazione dovrebbe essere stato creato dopo il salvataggio.");
 
         Library.resetInstance();
 
         Library.loadFromFile(TEST_FILE);
-        assertNotNull(Library.getInstance());
+        assertNotNull(Library.getInstance(), "L'istanza della libreria deve essere ricaricata correttamente dopo il load.");
     }
     
     // 5. TEST CARICAMENTO FILE INESISTENTE
@@ -91,7 +91,7 @@ public class LibraryTest {
     public void testLoadNonExistentFile() {
         assertThrows(IOException.class, () -> {
             Library.loadFromFile("file_inesistente_12345.bin");
-        });
+        }, "Il caricamento da un file inesistente deve lanciare IOException.");
     }
 
     // 6. TEST SETTERS (Nuovi Casi aggiunti)
@@ -111,9 +111,9 @@ public class LibraryTest {
         lib.setLoans(newLoans);
         
         // Verifichiamo che siano stati impostati correttamente
-        assertSame(newBooks, lib.getBooks());
-        assertSame(newUsers, lib.getUsers());
-        assertSame(newLoans, lib.getLoans());
+        assertSame(newBooks, lib.getBooks(), "Il setter per BooksCollection non ha funzionato correttamente.");
+        assertSame(newUsers, lib.getUsers(), "Il setter per UsersCollection non ha funzionato correttamente.");
+        assertSame(newLoans, lib.getLoans(), "Il setter per LoansCollection non ha funzionato correttamente.");
     }
 
     // 7. TEST PERSISTENZA DATI REALE (Nuovo Caso aggiunto)
@@ -128,7 +128,7 @@ public class LibraryTest {
         lib.getUsers().addUser(u);
         
         // Verifica pre-salvataggio
-        assertEquals(1, lib.getUsers().getUsers().size());
+        assertEquals(1, lib.getUsers().getUsers().size(), "Prima del salvataggio, deve esserci 1 utente.");
         
         // FASE B: Salvataggio
         lib.save();
@@ -141,7 +141,7 @@ public class LibraryTest {
         Library libCaricata = Library.getInstance();
         
         // Verifica post-caricamento: L'utente deve esserci!
-        assertNotNull(libCaricata.getUsers().getUserByCode("0123456789"));
-        assertEquals("Mario", libCaricata.getUsers().getUserByCode("0123456789").getName());
+        assertNotNull(libCaricata.getUsers().getUserByCode("0123456789"), "L'utente salvato deve essere ritrovato dopo il caricamento tramite matricola.");
+        assertEquals("Mario", libCaricata.getUsers().getUserByCode("0123456789").getName(), "Il nome dell'utente ricaricato deve corrispondere all'originale.");
     }
 }

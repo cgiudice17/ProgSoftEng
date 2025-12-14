@@ -11,8 +11,8 @@ public class InvalidBookExceptionTest {
     public void testCostruttoreVuoto() {
         InvalidBookException exception = new InvalidBookException();
         
-        assertNotNull(exception);
-        assertNull(exception.getMessage());
+        assertNotNull(exception, "L'oggetto eccezione non deve essere null.");
+        assertNull(exception.getMessage(), "Il messaggio dell'eccezione vuota deve essere null.");
     }
 
     @Test
@@ -21,7 +21,7 @@ public class InvalidBookExceptionTest {
         InvalidBookException exception = new InvalidBookException(msg);
         
         // Il messaggio deve essere memorizzato correttamente
-        assertEquals(msg, exception.getMessage());
+        assertEquals(msg, exception.getMessage(), "Il messaggio dell'eccezione deve corrispondere a quello fornito.");
     }
     
     // 2. TEST EREDITARIETÀ
@@ -30,6 +30,6 @@ public class InvalidBookExceptionTest {
     public void testEreditarieta() {
         InvalidBookException exception = new InvalidBookException();
         
-        assertTrue(exception instanceof Exception);
+        assertTrue(exception instanceof Exception, "InvalidBookException deve ereditare da Exception.");
     }
 }

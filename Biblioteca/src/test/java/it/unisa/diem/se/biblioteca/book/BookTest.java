@@ -15,7 +15,7 @@ public class BookTest {
     @BeforeEach
     public void setUp() throws Exception {
         listaAutori = new ArrayList<>();
-        listaAutori.add(new Author("Mario", "Rossi")); 
+        listaAutori.add(new Author("Mario", "Rossi"));    
         
         libro = new Book("Java Manual", listaAutori, "9781234567890", 2024);
     }
@@ -59,6 +59,7 @@ public class BookTest {
     @Test
     public void testCostruttore_AutoreInvalido() {
         List<Author> autoriSbagliati = new ArrayList<>();
+        // Assumiamo che "mario" non sia valido
         autoriSbagliati.add(new Author("mario", "rossi")); 
 
         assertThrows(InvalidBookException.class, () -> 
@@ -72,6 +73,13 @@ public class BookTest {
     public void testSetters() {
         libro.setTitle("Nuovo Titolo");
         assertEquals("Nuovo Titolo", libro.getTitle());
+        
+        // Rafforzamento: Test su lista autori e ISBN/Anno (se i setter esistono)
+        // Nota: Assumo che non ci siano setter per ISBN/Anno
+        List<Author> nuovaLista = new ArrayList<>();
+        nuovaLista.add(new Author("Aldo", "Bianchi"));
+        libro.setAuthors(nuovaLista);
+        assertEquals(nuovaLista, libro.getAuthors());
     }
 
     // 3. TEST COMPARE TO
@@ -98,21 +106,43 @@ public class BookTest {
         Book b1 = new Book("Algoritmi", listaAutori, "9781111111111", 2020);
         Book b3 = new Book("Algoritmi", listaAutori, "9783333333333", 2021); // ISBN/Anno diversi non contano
         assertTrue(b1.compareTo(b3) == 0, "Titoli uguali devono dare 0");
+        
+        // Rafforzamento
+        assertEquals(0, libro.compareTo(libro), "Il confronto con se stesso deve dare 0.");
     }
     // 4. TEST EQUALS
 
     @Test
     public void testEquals() throws InvalidBookException {
         // Stesso ISBN del libro nel setUp -> Devono essere uguali
-        Book libroCopia = new Book("Altro Titolo", listaAutori, "9781234567890", 2000);
-        assertEquals(libro, libroCopia);
+        Book libroCopia = new Book("Altro Titolo", listaAutori, "9781234567890", 2000); // Titolo/Anno/Autori diversi, stesso ISBN
+        assertEquals(libro, libroCopia, "Libri con lo stesso ISBN devono essere uguali.");
         
         // ISBN Diverso -> Devono essere diversi
         Book libroDiverso = new Book("Titolo", listaAutori, "9790000000000", 2020);
-        assertNotEquals(libro, libroDiverso);
+        assertNotEquals(libro, libroDiverso, "Libri con ISBN diversi non devono essere uguali.");
+        
+        // Rafforzamento: Riflessività, Null e Oggetti diversi
+        assertEquals(libro, libro, "Uguaglianza riflessiva.");
+        assertNotEquals(libro, null, "Confronto con null.");
+        assertNotEquals(libro, "Una Stringa", "Confronto con oggetti di classe diversa.");
+    }
+    
+    // 5. TEST HASHCODE 
+    @Test
+    public void testHashCode() throws InvalidBookException {
+        Book libroCopia = new Book("Altro Titolo", listaAutori, "9781234567890", 2000);
+        Book libroDiverso = new Book("Titolo", listaAutori, "9790000000000", 2020);
+
+        // Se due oggetti sono uguali (stesso ISBN), devono avere lo stesso HashCode
+        assertEquals(libro.hashCode(), libroCopia.hashCode(), "L'HashCode deve essere lo stesso per libri con lo stesso ISBN.");
+        
+        // HashCode diverso per oggetti diversi
+        assertNotEquals(libro.hashCode(), libroDiverso.hashCode(), "L'HashCode di libri con ISBN diversi dovrebbe essere diverso (probabilistico).");
     }
 
-    // 5. TEST TOSTRING
+
+    // 6. TEST TOSTRING 
 
     @Test
     public void testToString() {
@@ -122,5 +152,6 @@ public class BookTest {
         assertNotNull(s, "La stringa non deve essere null");
         assertTrue(s.contains("Java Manual"), "Deve contenere il titolo");
         assertTrue(s.contains("9781234567890"), "Deve contenere l'ISBN");
+        assertTrue(s.contains("2024"), "Deve contenere l'anno di pubblicazione");
     }
 }

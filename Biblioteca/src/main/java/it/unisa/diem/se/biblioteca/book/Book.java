@@ -51,6 +51,13 @@ public class Book implements Comparable<Book>, ValidBook, Serializable {
         return this.title.compareTo(b.title);
     }
     
+
+    @Override
+    public int hashCode() {
+    // Si basa solo sull'ISBN, poiché Book.equals si basa solo su ISBN.
+        return this.ISBN.hashCode();
+    }
+    
     @Override
     public boolean equals(Object o){
         if(o == null || !this.getClass().equals(o.getClass())) return false;
