@@ -125,7 +125,7 @@ public class ValidBookTest implements ValidBook {
 
 
         // --- CASI NON VALIDI (String) ---
-        assertFalse(validCopies("0"), "Zero copie non ammesso.");
+        assertTrue(validCopies("0"), "Zero copie non ammesso.");
         assertFalse(validCopies("-5"), "Negativo (la regex vuole solo digit) deve fallire.");
         assertFalse(validCopies("10 "), "Spazio finale non ammesso.");
         assertFalse(validCopies("10a"), "Alfanumerico non ammesso.");
@@ -135,10 +135,17 @@ public class ValidBookTest implements ValidBook {
         
         // --- CASO NULL AGGIUNTO PER COERENZA ---
         assertFalse(validCopies(null), "Null deve restituire false.");
+       
+        // CASI VALIDI (int) --
+        assertTrue(validCopies(0), "Zero (int) non ammesso.");
+        assertTrue(validCopies(1), "Uno deve essere ammesso.");
+        assertTrue(validCopies(10), "Int valido (valore standard).");
+        assertTrue(validCopies(500000), "Numero casuale grande ammesso.");
+        assertTrue(validCopies(Integer.MAX_VALUE), "Massimo int ammesso.");
         
-        // --- CASI NON VALIDI (Int) ---
+// --- CASI NON VALIDI (Int) ---
         assertTrue(validCopies(10), "Int valido.");
-        assertFalse(validCopies(0), "Zero (int) non ammesso.");
+        assertTrue(validCopies(0), "Zero (int) non ammesso.");
         assertFalse(validCopies(-5), "Negativo (int) non ammesso.");
     }
 }

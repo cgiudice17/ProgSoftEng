@@ -72,11 +72,11 @@ public interface ValidBook {
     
     public default boolean validCopies(String copies){
         if (copies == null) return false; 
-        return copies.matches("^\\d+$") && Integer.parseInt(copies) > 0;
+        return copies.matches("^\\d+$") && Integer.parseInt(copies) >= 0;
     }
     
     public default boolean validCopies(int copies){
-        return copies > 0;
+        return copies >=0;
     }
 }
 
