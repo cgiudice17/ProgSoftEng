@@ -89,6 +89,13 @@ public class User implements Comparable<User>, Serializable, ValidUser {
         return Objects.hash(code);
     }
     
+    /**
+     * @brief Confronta questo utente con l'oggetto specificato.
+     * L'identità dell'utente è determinata univocamente dalla sua matricola.
+     * Due utenti sono considerati uguali se possiedono la stessa matricola.
+     * @param o L'oggetto da confrontare con l'istanza corrente.
+     * @return true se l'oggetto passato è un Utente e ha lo stesso codice, false altrimenti.
+    */
     @Override
     public boolean equals(Object o) {
         if (o == null || !this.getClass().equals(o.getClass())) return false;
@@ -96,7 +103,9 @@ public class User implements Comparable<User>, Serializable, ValidUser {
         User u = (User) o;
         return this.code.equals(u.code);
     }
-
+    /**
+     * @brief Restituisce una stringa dell'utente contenente il nome, il cognome, la matricola e l'email 
+    */
     @Override
     public String toString() {
         return "Utente: " + name + " " + surname + " | Matricola: " + code + " | Email: " + email;
