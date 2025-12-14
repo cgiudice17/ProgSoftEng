@@ -49,7 +49,11 @@ public class LoansCollection implements Serializable {
            throw new NullPointerException("Il prestito non può essere null.");
        }
        if(l.getUser().getLoanCount() >= maxLoans){
-           return 1; // Limite raggiunto
+           return 1; 
+       }
+       
+       if(userLoans.containsKey(l.getUser()) && userLoans.get(l.getUser()).contains(l)){
+           return 2;
        }
        userLoans.computeIfAbsent(l.getUser(), k -> new ArrayList<>()).add(l);
        loans.add(l);

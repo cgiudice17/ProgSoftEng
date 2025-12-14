@@ -35,6 +35,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -100,40 +101,34 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         
         loanButton.disableProperty().bind(b);
         
+        loanDateClm.setCellFactory(column -> {
+            return new TableCell<Loan, LocalDate>() {
+                @Override
+                protected void updateItem(LocalDate item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle(""); // Pulisce lo stile
+                    } else {
+                        // Imposta il testo della data (puoi formattarlo se vuoi)
+                        setText(item.toString());
+
+                        // Logica per il colore
+                        if (item.isBefore(LocalDate.now())) {
+                            // Testo Rosso e in Grassetto se scaduto
+                            setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                        } else {
+                            // Stile standard (nero) altrimenti
+                            setStyle("-fx-text-fill: black;");
+                        }
+                    }
+                }
+            };
+        });
+        
     }   
     
-    
-    /**
-     * @brief Gestisce la selezione di uno studente per il prestito.
-     * Invocato quando l'utente scrive nel "LoanStudentLabel". 
-     * permette di identificare l'utente a cui associare il prestito tramite matricola o nome 
-     * @param event L'evento generato dalla scrittura nel campo di testo.
-     */
-    @FXML
-    private void selectStudent(ActionEvent event) {
-        
-    }
-    
-    
-    /**
-     * @brief Gestisce la selezione di libro per il prestito.
-     * Invocato quando l'utente scrive nel "LoanBookLabel". 
-     * Questo metodo aggiorna la vista per mostrare il libro di un dato prestito.
-     * @param event L'evento generato dalla scrittura nel campo di testo.
-     */
-    @FXML
-    private void selectBook(ActionEvent event) {
-    }
-
-    /**
-     * @brief Gestisce la selezione di una data di restituzione tramite il DatePicker.
-     * Invocato quando l'utente sceglie una data dal calendario. 
-     * Questo metodo aggiorna la vista per mostrare la scedenza di un dato prestito.
-     * @param event L'evento generato dalla selezione della data.
-     */
-    @FXML
-    private void selectDate(ActionEvent event) {
-    }
 
     /**
      * @brief Esegue l'operazione di registrazione del prestito.
@@ -184,7 +179,7 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         
         this.loanStudentLabel.clear();
         this.loanBookLabel.clear();
-        
+        this.datePicker.setValue(null);
     }
 
     /**

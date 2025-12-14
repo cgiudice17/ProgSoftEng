@@ -71,7 +71,7 @@ public class Loan implements Comparable<Loan>, Serializable{
     */
      @Override
     public int hashCode() {
-        return Objects.hash(user, book, returnDate);
+        return Objects.hash(user, book);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Loan implements Comparable<Loan>, Serializable{
         if(o == null || !this.getClass().equals(o.getClass())) return false;
         if(this == o ) return true;
         Loan l = (Loan) o;
-        return this.book.equals(l.getBook()) && this.returnDate.equals(l.getReturnDate()) && this.user.equals(l.getUser());
+        return this.book.equals(l.getBook()) && this.user.equals(l.getUser());
     }
 
     @Override

@@ -28,10 +28,7 @@ public class PrimaryController {
     private Button UsersButton;
     @FXML
     private Button LoansButton;
-    @FXML
-    private Button loadFileButton;
-    @FXML
-    private Button CreateNewButton;
+
 
     /**
      * @brief Apre la sezione dedicata alla gestione dei libri.
@@ -69,16 +66,6 @@ public class PrimaryController {
         this.changeScene("loansSection.fxml", event);
     }
     
-    @FXML
-    private void loadFile(ActionEvent event) throws IOException, ClassNotFoundException {
-        // MODIFICATO: Aggiunto throws ClassNotFoundException per gestire la deserializzazione
-        Library.loadFromFile("biblioteca.bin");
-    }
-    
-    @FXML
-    private void createNewLibrary(ActionEvent event) throws IOException {
-        Library.createNewLibrary("biblioteca.bin");
-    }
 
     /**
      * @brief Metodo helper per il csmbio della scena.

@@ -24,10 +24,10 @@
                      </font>
                   </Label>
                   
-                  <TextField fx:id="loanStudentLabel" onAction="#selectStudent" promptText="Matricola studente..." />
-                  <TextField fx:id="loanBookLabel" onAction="#selectBook" promptText="ISBN libro..." />
+                  <TextField fx:id="loanStudentLabel"  promptText="Matricola studente..." />
+                  <TextField fx:id="loanBookLabel"  promptText="ISBN libro..." />
                   
-                  <DatePicker fx:id="datePicker" maxWidth="Infinity" onAction="#selectDate" promptText="Data di restituzione..." />
+                  <DatePicker fx:id="datePicker" maxWidth="Infinity"  promptText="Data di restituzione..." />
                   
                   <Button fx:id="loanButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#addLoan" text="Registra prestito" />
                   
