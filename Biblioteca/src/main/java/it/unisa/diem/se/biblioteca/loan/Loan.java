@@ -73,7 +73,14 @@ public class Loan implements Comparable<Loan>, Serializable{
     public int hashCode() {
         return Objects.hash(user, book);
     }
-
+   
+    /**
+     * @brief Confronta questo prestito con l'oggetto specificato.
+     * Verifica l'uguaglianza basandosi sulla combinazione unica di Utente e Libro.
+     * Due prestiti sono considerati identici se si riferiscono allo stesso libro concesso allo stesso utente.
+     * @param o L'oggetto da confrontare con l'istanza corrente.
+     * @return true se l'oggetto passato è un Prestito e coincide per Utente e Libro, false altrimenti.
+     */
     @Override
     public boolean equals(Object o){
         if(o == null || !this.getClass().equals(o.getClass())) return false;
@@ -81,13 +88,12 @@ public class Loan implements Comparable<Loan>, Serializable{
         Loan l = (Loan) o;
         return this.book.equals(l.getBook()) && this.user.equals(l.getUser());
     }
-
+    /**
+     * @brief Restituisce una stringa del prestito contenente il Utente, il Libro e la data per la restituzione
+    */
     @Override
     public String toString(){
         return "Prestito: Utente: " + user + ", Libro: " + book.getTitle() + ", Data: " + returnDate;
     }
 }
 
-
-
-//FAI ULTIMI 2 
