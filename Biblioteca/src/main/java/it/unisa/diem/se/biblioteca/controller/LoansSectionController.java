@@ -184,7 +184,11 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         }
         
         loanList.setAll(loans.getLoans());
-        
+        try {
+            books.setCopies(b, books.getCopies(b)-1);
+        } catch (InvalidBookException ex) {
+            Logger.getLogger(LoansSectionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.loanStudentLabel.clear();
         this.loanBookLabel.clear();
         this.datePicker.setValue(null);
@@ -202,6 +206,11 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         
         loanList.remove(l);
         loans.removeLoan(l);
+        try {
+            books.setCopies(l.getBook(), books.getCopies(l.getBook())+1);
+        } catch (InvalidBookException ex) {
+            Logger.getLogger(LoansSectionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
