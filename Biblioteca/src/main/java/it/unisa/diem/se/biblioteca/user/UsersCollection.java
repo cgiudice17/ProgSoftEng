@@ -12,31 +12,35 @@ import java.util.TreeSet;
 import java.io.Serializable;
 
 /**
- * @brief Gestisce la collezione degli utenti della biblioteca
+ * @brief Gestisce la collezione di tutti gli utenti registrati nel sistema della biblioteca.
+ * Utilizza due strutture dati complementari: un TreeSet per l'ordinamento 
+ * e una HashMap per la ricerca veloce tramite matricola.
  */
 public class UsersCollection implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    
-    // TreeSet mantiene gli utenti ordinati (usando il compareTo di User)
-    private Set<User> users;
-    
-    // HashMap permette la ricerca veloce tramite matricola
+    private Set<User> users;  
     private Map<String, User> codeUsers;
     
     /**
      * @brief Costruttore di default
-     * @post Collezione inizializzata correttamente.
+     * Inizializza l'insieme ordinato TreeSet e la mappa HashMap
      */
     public UsersCollection() {
         this.users = new TreeSet<>();
         this.codeUsers = new HashMap<>();
     }
     
+    public Set<User> getUsers() {
+        return this.users;
+    }
+
     /**
      * @brief Aggiunge un utente alla collezione.
-     * @param u L'utente da aggiungere
-     * @throws NullPointerException se l'utente passato è null
+     * L'utente viene aggiunto sia al Set ordinato che alla Map indice. Se un utente con lo stesso 
+     * cognome/nome esiste già, viene gestito dal Set in base alla logica di compareTo.
+     * @param u L'utente da aggiungere.
+     * @throws NullPointerException Se l'utente passato è {@code null}.
      */
     public void addUser(User u) {
         if (u == null) {
@@ -47,18 +51,15 @@ public class UsersCollection implements Serializable {
     }
     
     /**
-     * @brief Rimuove un utente da tutte le collezioni.
-     * @param u L'utente da rimuovere
-     * @throws NullPointerException se l'utente passato è null
+     * @brief Rimuove un utente da tutte le collezioni interne (Set ordinato e Map indice).
+     * @param u L'utente da rimuovere.
+     * @throws NullPointerException Se l'utente passato è {@code null}.
      */
     public void removeUser(User u) {
         if (u == null) {
             throw new NullPointerException("Impossibile rimuovere un utente nullo.");
         }
         users.remove(u);
-        
-        // Rimuoviamo anche dalla mappa usando il codice
-        // Nota: u.getCode() è sicuro qui perché abbiamo controllato che u non sia null
         codeUsers.remove(u.getCode());
     }
     
@@ -72,19 +73,6 @@ public class UsersCollection implements Serializable {
         return this.codeUsers.get(code);
     }
     
-    /**
-     * @brief Restituisce l'intero set di utenti.
-     * @return Il Set degli utenti ordinati
-     */
-    public Set<User> getUsers() {
-        return this.users;
-    }
-    
-    /**
-     * @brief Restituisce una stringa contenente l'elenco di tutti gli utenti.
-     * Non è statico perché accede ai dati dell'istanza corrente.
-     * @return String formattata con l'elenco degli utenti
-     */
     public String printAll() {
         StringBuilder sb = new StringBuilder();
         sb.append("Elenco Utenti:\n");
@@ -100,3 +88,5 @@ public class UsersCollection implements Serializable {
         return sb.toString();
     }
 }
+
+//FAI ULTIMO 

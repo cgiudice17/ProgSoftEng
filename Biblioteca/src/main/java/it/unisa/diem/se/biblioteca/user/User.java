@@ -21,11 +21,11 @@ public class User implements Comparable<User>, Serializable, ValidUser {
 
     /**
      * @brief Costruttore dell'utente che esegue la validazione di tutti i campi.
-     * * Vengono eseguite le validazioni tramite i metodi dell'interfaccia ValidUser: nome, cognome, matricola ed email.
-     * * @param name Il nome dell'utente.
-     * * @param surname Il cognome dell'utente.
-     * * @param code La matricola (10 cifre).
-     * * @param email L'indirizzo email.
+     * Vengono eseguite le validazioni tramite i metodi dell'interfaccia ValidUser: nome, cognome, matricola ed email.
+     * @param name Il nome dell'utente.
+     * @param surname Il cognome dell'utente.
+     * @param code La matricola (10 cifre).
+     * @param email L'indirizzo email.
      * @throws InvalidUserException Se uno dei dati forniti non rispetta il formato di validazione.
      */
     public User(String name, String surname, String code, String email) throws InvalidUserException {
@@ -66,18 +66,24 @@ public class User implements Comparable<User>, Serializable, ValidUser {
     public void setLoanCount(int loanCount) { this.loanCount = loanCount; }
 
 
-
+    /**
+     * @brief Confronta due utenti per l'ordinamento.
+     * L'ordinamento primario è basato sul cognome; se i cognomi sono uguali, l'ordinamento secondario è basato sul nome.
+     * @param u L'oggetto tente} con cui confrontare.
+     * @return Un intero negativo, zero o positivo se l'utente corrente è rispettivamente 
+     * minore, uguale o maggiore dell'utente specificato nell'ordinamento.
+     */
     @Override
     public int compareTo(User u) {
         if(this.surname.equals(u.surname)) return this.name.compareTo(u.name);
         return this.surname.compareTo(u.surname);
     }
-
-    @Override
-    public String toString() {
-        return "Utente: " + name + " " + surname + " | Matricola: " + code + " | Email: " + email;
-    }
     
+    /**
+     * @brief Genera un codice hash per l'utente.
+     * L'hash è basato sulla matricola.
+     * Viene utilizzato java.util.Objects.hash(Object) per garantire un calcolo dell'hashcode robusto.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(code);
@@ -90,4 +96,11 @@ public class User implements Comparable<User>, Serializable, ValidUser {
         User u = (User) o;
         return this.code.equals(u.code);
     }
+
+    @Override
+    public String toString() {
+        return "Utente: " + name + " " + surname + " | Matricola: " + code + " | Email: " + email;
+    }
 }
+
+// FAI ULTIMi 2. FALLI UGUALI NELLE CLASSI SIMILI 
