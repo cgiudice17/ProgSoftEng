@@ -20,7 +20,7 @@ import java.io.Serializable;
  * Indicizza i libri tramite mappe e ne permettere le ricerche basate sui 
  * seguenti criteri: ISBN, Autore, Titolo e Anno di pubblicazione.
  * Inoltre gestisce il conteggio delle copie disponibili per ogni libro
- * Implementa l'interfaccia {@link it.unisa.diem.se.biblioteca.book.ValidBook ValidBook} per la validazione delle copie.
+ * Implementa l'interfaccia ValidBook per la validazione delle copie.
  */
 public class BooksCollection implements ValidBook, Serializable {
     private static final long serialVersionUID = 1L;
@@ -101,6 +101,12 @@ public class BooksCollection implements ValidBook, Serializable {
         books.replace(b, books.get(b), copies);
     }
     
+    /**
+     * @brief Restituisce il numero di copie disponibili per un determinato libro
+     * @param[in] b    Il libro a cui controllare le copie.
+     * @return Passa il numero di copie disponibili, oppure restituisce 0 se il libro non è presente
+     * @throws NullPointerException Se il libro passato è null.
+     */
     public int getCopies(Book b) {
         if(b == null){
             throw new NullPointerException("Invalid Pointer to book");
@@ -108,6 +114,11 @@ public class BooksCollection implements ValidBook, Serializable {
         return books.getOrDefault(b, 0);
     }
 
+ 
+    /**
+     * @brief Restituisce una stringa contenente i libri dell'intero catalogo
+     * @return Ritorna una stringa contenente tutti i libri e il loro numero di copie
+     */
     public String printAll() {
         if (books.isEmpty()) {
             return "Il catalogo è vuoto.";
@@ -131,4 +142,3 @@ public class BooksCollection implements ValidBook, Serializable {
 }
 
 
-//FAI LE ULTIME 2 
