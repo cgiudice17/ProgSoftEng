@@ -105,7 +105,12 @@ public class Library implements Serializable {
         }
         return instance;
     }
-
+    /**
+     * @brief Salva lo stato corrente dell'intera biblioteca su file.
+     * Serializza l'istanza corrente (inclusi libri, utenti e prestiti) nel file 
+     * specificato dal percorso 'currentFilePath'.
+     * Se il percorso non è impostato, segnala l'errore. Gestisce le eccezioni di I/O.
+     */
     public void save() {
         if (currentFilePath == null) {
             System.err.println("Errore: Nessun file specificato per il salvataggio.");
@@ -118,11 +123,12 @@ public class Library implements Serializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * @brief Resetta l'istanza Singleton della Library.
+     * Questo metodo è utile per il testing o per permettere il caricamento di una nuova 
+     * biblioteca senza dover riavviare l'applicazione.
+     */
     public static void resetInstance() {
         instance = null;
     }
 }
-
-
-// FAI GLI ULTIMI 2 
