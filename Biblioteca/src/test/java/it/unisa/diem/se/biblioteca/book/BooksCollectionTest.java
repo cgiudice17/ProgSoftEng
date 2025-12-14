@@ -7,12 +7,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/** 
+ *  Test di unità per la classe BooksCollection.
+ * Questa classe verifica la corretta gestione del catalogo dei libri, 
+ * inclusa l'aggiunta, la rimozione, la gestione delle copie e la ricerca per ISBN.
+ */
 public class BooksCollectionTest {
     
     private BooksCollection collezione;
     private Book libro;
     private List<Author> listaAutori;
 
+    // Metodo eseguito prima di ogni test.
+    // Inizializza una BooksCollection vuota e un oggetto Book valido per i test.
     @BeforeEach
     public void setUp() throws Exception {
         collezione = new BooksCollection();
@@ -25,28 +32,32 @@ public class BooksCollectionTest {
 
     // 1. TEST GESTIONE LIBRI (AGGIUNTA, RIMOZIONE, RICERCA)
 
+    /** 
+     * Verifica che l'aggiunta di un libro lo inserisca correttamente nel Set, nella mappa ISBN 
+     * e imposti il numero iniziale di copie.
+     */
     @Test
     public void testAggiuntaLibro() {
         collezione.addBook(libro, 5);
         
-        // Verifichiamo presenza nel Set, numero copie e mappa ISBN
         assertTrue(collezione.getBooks().contains(libro), "Il libro deve essere presente nella collezione globale (Set).");
         assertEquals(5, collezione.getCopies(libro), "Il numero di copie deve corrispondere a quello aggiunto.");
         assertEquals(libro, collezione.getBookByISBN("9781234567890"), "Il libro deve essere recuperabile tramite ISBN.");
     }
 
+    // Verifica che la rimozione di un libro lo elimini da tutte le strutture dati interne.
     @Test
     public void testRimozioneLibro() {
         collezione.addBook(libro, 3);
         collezione.removeBook(libro);
         
-        // Verifichiamo che sia sparito da tutto
         assertFalse(collezione.getBooks().contains(libro), "Il libro deve essere rimosso dalla collezione globale.");
         assertNull(collezione.getBookByISBN("9781234567890"), "Il libro non deve essere più recuperabile tramite ISBN.");
     }
 
     // 2. TEST GESTIONE COPIE
 
+    // Verifica che il metodo setCopies aggiorni correttamente il numero di copie di un libro esistente.
     @Test
     public void testAggiornamentoCopie() throws InvalidBookException {
         collezione.addBook(libro, 1);
@@ -57,6 +68,7 @@ public class BooksCollectionTest {
 
     // 4. TEST ERRORI ED ECCEZIONI 
 
+    // Verifica che l'aggiunta di un oggetto Book nullo causi una NullPointerException.
     @Test
     public void testAggiuntaNull() {
         assertThrows(NullPointerException.class, () -> 
@@ -65,6 +77,7 @@ public class BooksCollectionTest {
         );
     }
 
+    // Verifica che la rimozione di un oggetto Book nullo causi una NullPointerException.
     @Test
     public void testRimozioneNull() {
         assertThrows(NullPointerException.class, () -> 
@@ -73,16 +86,17 @@ public class BooksCollectionTest {
         );
     }
 
+    // Verifica che il tentativo di impostare un numero negativo di copie (non valido) lanci InvalidBookException.
     @Test
     public void testSetCopies_Negativo() {
         collezione.addBook(libro, 5);
-        // Deve lanciare InvalidBookException (perché ValidBook rifiuta numeri <= 0)
         assertThrows(InvalidBookException.class, () -> 
             collezione.setCopies(libro, -5),
             "Il tentativo di impostare copie negative (-5) deve lanciare InvalidBookException."
         );
     }
     
+    // Verifica che il tentativo di impostare copie per un libro non esistente/nullo lanci NullPointerException.
     @Test
     public void testSetCopies_NullBook() {
         assertThrows(NullPointerException.class, () -> 
@@ -93,12 +107,11 @@ public class BooksCollectionTest {
 
     // 3. TEST STAMPA (PRINT ALL)
 
+    // Verifica che il metodo printAll() restituisca la rappresentazione corretta del catalogo.
     @Test
     public void testPrintAll() {
-        // Caso 1: Vuoto
         assertEquals("Il catalogo è vuoto.", collezione.printAll(), "La collezione vuota deve restituire il messaggio di catalogo vuoto.");
         
-        // Caso 2: Pieno
         collezione.addBook(libro, 3);
         String risultato = collezione.printAll();
         
