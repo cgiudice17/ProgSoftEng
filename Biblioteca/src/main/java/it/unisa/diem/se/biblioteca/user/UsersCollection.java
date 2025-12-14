@@ -40,7 +40,7 @@ public class UsersCollection implements Serializable {
      * L'utente viene aggiunto sia al Set ordinato che alla Map indice. Se un utente con lo stesso 
      * cognome/nome esiste già, viene gestito dal Set in base alla logica di compareTo.
      * @param u L'utente da aggiungere.
-     * @throws NullPointerException Se l'utente passato è {@code null}.
+     * @throws NullPointerException Se l'utente passato è null.
      */
     public void addUser(User u) {
         if (u == null) {
@@ -53,7 +53,7 @@ public class UsersCollection implements Serializable {
     /**
      * @brief Rimuove un utente da tutte le collezioni interne (Set ordinato e Map indice).
      * @param u L'utente da rimuovere.
-     * @throws NullPointerException Se l'utente passato è {@code null}.
+     * @throws NullPointerException Se l'utente passato è  null.
      */
     public void removeUser(User u) {
         if (u == null) {
@@ -72,7 +72,12 @@ public class UsersCollection implements Serializable {
         if (code == null) return null;
         return this.codeUsers.get(code);
     }
-    
+
+
+    /**
+     * @brief Genera una stringa contenente l'elenco completo di tutti gli utenti registrati.
+     * @return Una stringa formattata con la lista degli utenti 
+     */
     public String printAll() {
         StringBuilder sb = new StringBuilder();
         sb.append("Elenco Utenti:\n");
@@ -88,5 +93,3 @@ public class UsersCollection implements Serializable {
         return sb.toString();
     }
 }
-
-//FAI ULTIMO 
