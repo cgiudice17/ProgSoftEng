@@ -150,16 +150,27 @@ public class BookSectionController implements Initializable, ValidBook {
             
             // Controllo preventivo per evitare crash se manca il cognome
             String[] nameParts = names[i].split(" ");
-            if (nameParts.length < 2) {
+            int l = nameParts.length;
+            if (l < 2) {
                 showError("Errore Formato Autore", "Formato non valido per: " + names[i], "Inserire 'Nome Cognome' separati da spazio.");
                 return;
             }
             
             String name = nameParts[0];
-            String surname = nameParts[1];
+            
+            for(int j=1; j<l-1; j++){
+                name += " " + nameParts[j];
+            }
+            
+            String surname = nameParts[l-1];
                     
             if (!this.validAuthor(name)){
                 showError("Errore Autore", "Nome autore non valido", "Il nome dell'autore '" + name + "' contiene caratteri non validi.");
+                return;
+            }
+            
+            if (!this.validAuthor(surname)){
+                showError("Errore Autore", "Cognome autore non valido", "Il cognome dell'autore '" + surname + "' contiene caratteri non validi.");
                 return;
             }
             authorsList.add(new Author(name , surname));
