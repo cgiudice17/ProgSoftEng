@@ -6,19 +6,21 @@ import java.util.Objects;
 import java.time.LocalDate;
 import java.io.Serializable;
 
+/**
+ * @brief Rappresenta un prestito attivo di un libro ad un utente.
+ * La classe è comparabile in base alla data di restituzione.
+ */
 public class Loan implements Comparable<Loan>, Serializable{
     private static final long serialVersionUID = 1L;
     private User user;
     private Book book;
     private LocalDate returnDate;
     
-     /**
+    /**
      * @brief Costruttore parametrico della classe Loan.
-     *
-     * @param user          L'utente che ha richiesto il prestito.
-     * @param book          Il libro oggetto del prestito.
-     * @param returnDate    La data prevista per la restituzione.
-     * @post Il prestito è inizializzato correttamente con i dati forniti.
+     * @param user L'utente che ha richiesto il prestito.
+     * @param book Il libro oggetto del prestito.
+     * @param returnDate La data prevista per la restituzione.
      */
     public Loan(User user, Book book, LocalDate returnDate){
         this.user = user;
@@ -50,29 +52,25 @@ public class Loan implements Comparable<Loan>, Serializable{
         this.returnDate = returnDate;
     }
     
-    
     /**
      * @brief Confronta due prestiti in base alla data di restituzione
-     * @param l       Il prestito da confrontare.
-     * @return Un intero negativo se l'ogetto chiamate viene prima cronologicamente dell'argomento, 0 se le date sono uguali, e un intero positivo se viene dopo
+     * I prestiti vengono ordinati cronologicamente in base alla data prevista di restituzione.
+     * @param l Il prestito da confrontare.
+     * @return Un intero negativo se l'ogetto chiamate viene prima cronologicamente dell'argomento,
+     * 0 se le date sono uguali, e un intero positivo se viene dopo
      */
     @Override
     public int compareTo(Loan l) {
         return this.returnDate.compareTo(l.returnDate);
     }
-    /**
-     * @brief Verifica l'uguaglianza tra questo prestito e un altro oggetto.
-     * Due prestiti sono considerati uguali se coinvolgono lo stesso utente,
-     * lo stesso libro e hanno la stessa data di restituzione prevista.
-     *
-     * @param o      L'oggetto con cui confrontare il prestito
-     * @return ritorna true se i prestiti sono uguali, altrimenti false
-     */
-
-
+    
+   /**
+    * @brief Genera un codice hash per il prestito.
+    * l'hash si basa sui 3 campi che definiscono l'unicità del prestito: utente, libro e data di restituzione 
+    * Uso di Objects.hash per un calcolo dell'hashcode robusto basato su tutti i campi di equals.   
+    */
      @Override
     public int hashCode() {
-    // Si basa su User, Book e returnDate, poiché Loan.equals si basa su questi tre campi.
         return Objects.hash(user, book, returnDate);
     }
 
@@ -83,12 +81,13 @@ public class Loan implements Comparable<Loan>, Serializable{
         Loan l = (Loan) o;
         return this.book.equals(l.getBook()) && this.returnDate.equals(l.getReturnDate()) && this.user.equals(l.getUser());
     }
-    /**
-     * @brief Restituisce una rappresentazione in formato stringa del prestito
-     *@return ritorna una stringa formattata con Utente, Titolo del Libro e Data di restituzione
-     **/
+
     @Override
     public String toString(){
         return "Prestito: Utente: " + user + ", Libro: " + book.getTitle() + ", Data: " + returnDate;
     }
 }
+
+
+
+//FAI ULTIMI 2 

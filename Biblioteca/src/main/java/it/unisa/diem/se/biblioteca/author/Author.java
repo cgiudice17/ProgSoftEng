@@ -42,11 +42,11 @@ public class Author implements Serializable {
     /**
      * @brief Genera un codice hash per l'autore.
      * L'hash è basato sulla combinazione di nome e cognome.
-     * Viene utilizzato {@link java.util.Objects#hash(Object...) Objects.hash()} per garantire un calcolo dell'hashcode robusto.
+     * Viene utilizzato java.util.Objects.hash(Object) per garantire un calcolo dell'hashcode robusto.
      */
     @Override
     public int hashCode(){
-        return java.utilObjects.hash(name, surname) * 31;
+        return java.util.Objects.hash(name, surname) * 31;
     }
     
     @Override

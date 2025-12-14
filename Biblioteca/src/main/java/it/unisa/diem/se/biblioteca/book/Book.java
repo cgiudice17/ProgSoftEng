@@ -67,7 +67,7 @@ public class Book implements Comparable<Book>, ValidBook, Serializable {
     /**
      * @brief Genera un codice hash per il libro.
      * * L'hash code si basa sul codice ISBN, in coerenza con il metodo equals(Object) equals.
-     * * Viene utilizzato java.util.Objects.hash(Object...) Objects.hash()} per garantire un calcolo dell'hashcode robusto.
+     * * Viene utilizzato java.util.Objects.hash(Object) per garantire un calcolo dell'hashcode robusto.
      * * @return Il valore di hashcode generato dall'ISBN.
      */
     @Override
