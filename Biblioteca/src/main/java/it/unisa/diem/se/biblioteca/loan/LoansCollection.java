@@ -47,16 +47,8 @@ public class LoansCollection implements Serializable {
      * @param l Il  prestito da aggiungere.
      * @return Ritorna 0 se l'inserimento ha avuto successo, 1 se l'utente ha raggiunto il limite massimo di prestiti, 
      * oppure 2 se il prestito (stesso utente/libro) è già presente.
-     * @throws NullPointerException Se il prestito passato è {@code null}.
-     */       
-   /**
-     * @brief Aggiunge un nuovo prestito alla collezione, verificando prima se l'utente ha raggiunto il limite massimo.
-     * Se il limite non è raggiunto, aggiunge il prestito all'insieme globale, alla lista dell'utente e incrementa il contatore dei prestiti dell'utente.
-     * @param l Il  prestito da aggiungere.
-     * @return Ritorna 0 se l'inserimento ha avuto successo, 1 se l'utente ha raggiunto il limite massimo di prestiti, 
-     * oppure 2 se il prestito (stesso utente/libro) è già presente.
-     * @throws NullPointerException Se il prestito passato è {@code null}.
-     */       
+     * @throws NullPointerException Se il prestito passato è null.
+     */           
     public int addLoan(Loan l){
         if (l == null) {
             throw new NullPointerException("Il prestito non può essere null.");
