@@ -71,6 +71,3 @@ public class App extends Application {
         launch();
     }
 }
-
-
-// FAI ULTIMI 2 METODI 
