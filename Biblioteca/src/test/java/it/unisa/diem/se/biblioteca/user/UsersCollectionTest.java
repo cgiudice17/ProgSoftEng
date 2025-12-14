@@ -6,6 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;
 
+/**
+ * Test di unità per la classe UsersCollection.
+ * Questa classe verifica la corretta gestione del registro degli utenti, 
+ * inclusa l'aggiunta, la rimozione, la ricerca per matricola e la garanzia dell'ordinamento 
+ * tramite TreeSet basato su Nome e Cognome.
+ */
 public class UsersCollectionTest {
 
     private UsersCollection collection;
@@ -13,11 +19,15 @@ public class UsersCollectionTest {
     private User altroUtente;
     private User utenteOrdinamento;
 
+    /**
+     * Metodo eseguito prima di ogni test.
+     * Inizializza la collezione e crea oggetti User validi con matricole diverse e nomi/cognomi per l'ordinamento.
+     */
     @BeforeEach
     public void setUp() throws Exception {
         collection = new UsersCollection();
         
-        // Setup Utenti (con email valide)
+        // Setup Utenti (con cognomi per testare l'ordinamento: Bianchi, Rossi, Verdi)
         user = new User("Mario", "Rossi", "0123456789", "m.rossi1@studenti.unisa.it"); // Rossi
         altroUtente = new User("Luigi", "Verdi", "9876543210", "l.verdi1@studenti.unisa.it"); // Verdi
         utenteOrdinamento = new User("Aldo", "Bianchi", "1111111111", "a.bianchi1@studenti.unisa.it"); // Bianchi
@@ -25,46 +35,41 @@ public class UsersCollectionTest {
 
     // 1. TEST AGGIUNTA E RICERCA
 
+    // Verifica la corretta aggiunta di un utente nel TreeSet e l'indicizzazione nella mappa per matricola.
     @Test
     public void testAddAndGetUser() {
         collection.addUser(user);
         
-        // Verifica presenza nel Set
         assertTrue(collection.getUsers().contains(user), "Il Set deve contenere l'utente appena aggiunto.");
-        
-        // Verifica recupero tramite codice (Map)
         assertEquals(user, collection.getUserByCode("0123456789"), "getUserByCode deve restituire l'utente corretto tramite matricola.");
-        
-        // Verifica dimensione
         assertEquals(1, collection.getUsers().size(), "La dimensione della collezione deve essere 1.");
     }
 
     // 2. TEST DUPLICATI
 
+    /**
+     * Verifica come la collezione gestisce utenti con Nome/Cognome uguali ma Matricola diversa.
+     * Poiché TreeSet usa compareTo (basato su Nome/Cognome), solo il primo elemento viene mantenuto.
+     */ 
     @Test
     public void testAddDuplicateUser() throws Exception {
-        // CREIAMO UN UTENTE LOGICAMENTE DIVERSO MA CON STESSO NOME/COGNOME
-        User userOriginale = user; // Mario Rossi, Matricola 0123456789
-        
-        // Utente duplicato nel TreeSet (stesso Nome/Cognome), ma con matricola diversa.
+        User userOriginale = user; 
         User duplicatoNomeCognome = new User("Mario", "Rossi", "9999999999", "m.rossi2@studenti.unisa.it");
         
         collection.addUser(userOriginale);
         collection.addUser(duplicatoNomeCognome);
         
-        // RISULTATO ATTESO DALLA TUA IMPLEMENTAZIONE (compareTo su Nome/Cognome):
-        assertEquals(1, collection.getUsers().size(), "Il TreeSet deve contenere 1 elemento perché gli utenti hanno lo stesso Nome/Cognome (comparati come duplicati).");
+        assertEquals(1, collection.getUsers().size(), "Il TreeSet deve contenere 1 elemento perché compareTo (Nome/Cognome) è zero, trattandoli come duplicati.");
 
-        // Per testare l'integrità del SET (TreeSet) con la logica compareTo (Nome/Cognome):
         User uDiversoMatricola = new User("Pippo", "Pluto", "0123456789", "p.pluto1@studenti.unisa.it");
         collection.addUser(uDiversoMatricola);
 
-        // Poiché "Pippo Pluto" ha un Nome/Cognome diverso da "Mario Rossi", compareTo != 0.
-        assertEquals(2, collection.getUsers().size(), "L'aggiunta di un utente con stessa matricola ma Nome/Cognome diverso DEVE risultare in 2 elementi nel TreeSet.");
+        assertEquals(2, collection.getUsers().size(), "L'aggiunta di un utente con Nome/Cognome diverso DEVE risultare in 2 elementi nel TreeSet.");
     }
 
     // 3. TEST RIMOZIONE
 
+    // Verifica la corretta rimozione di un utente sia dal TreeSet che dalla mappa di ricerca.
     @Test
     public void testRemoveUser() {
         collection.addUser(user);
@@ -72,35 +77,29 @@ public class UsersCollectionTest {
         
         collection.removeUser(user);
         
-        // 'user' non deve esserci più
         assertFalse(collection.getUsers().contains(user), "L'utente rimosso non deve essere nel Set.");
         assertNull(collection.getUserByCode("0123456789"), "L'utente rimosso non deve essere nella Map (ricerca per codice).");
-        
-        // 'altroUtente' deve ancora esserci
         assertTrue(collection.getUsers().contains(altroUtente), "L'altro utente non deve essere rimosso.");
         assertEquals(1, collection.getUsers().size(), "La dimensione deve essere 1 dopo una rimozione.");
     }
 
     // 4. TEST RICERCA
 
+    // Verifica la corretta funzionalità di ricerca per matricola (getUserByCode) per casi esistenti e inesistenti.
     @Test
     public void testGetUserByCode() {
         collection.addUser(user);
         collection.addUser(altroUtente);
 
-        // Codici esistenti
         assertEquals(user, collection.getUserByCode("0123456789"), "La ricerca deve trovare Mario Rossi.");
         assertEquals(altroUtente, collection.getUserByCode("9876543210"), "La ricerca deve trovare Luigi Verdi.");
-        
-        // Codice inesistente
         assertNull(collection.getUserByCode("0000000000"), "La ricerca per codice inesistente deve restituire null.");
-        
-        // Codice null
         assertNull(collection.getUserByCode(null), "La ricerca con codice null deve restituire null.");
     }
 
     // 5. TEST ECCEZIONI (Null handling)
 
+    // Verifica che l'aggiunta di un utente nullo lanci NullPointerException.
     @Test
     public void testAddNullUser() {
         assertThrows(NullPointerException.class, () -> 
@@ -109,6 +108,7 @@ public class UsersCollectionTest {
         );
     }
 
+    // Verifica che la rimozione di un utente nullo lanci NullPointerException.
     @Test
     public void testRemoveNullUser() {
         assertThrows(NullPointerException.class, () -> 
@@ -119,6 +119,7 @@ public class UsersCollectionTest {
 
     // 6. TEST ORDINAMENTO (TreeSet)
     
+    // Verifica che il TreeSet ordini gli utenti correttamente in base al cognome e poi al nome.
     @Test
     public void testOrdering() {
         collection.addUser(user); // Rossi
@@ -128,16 +129,12 @@ public class UsersCollectionTest {
         // Il TreeSet deve ordinare per cognome (Bianchi, Rossi, Verdi)
         Iterator<User> iterator = collection.getUsers().iterator();
         
-        // 1. Bianchi
         assertEquals(utenteOrdinamento, iterator.next(), "Il primo utente deve essere Bianchi (ordine alfabetico per cognome).");
-        
-        // 2. Rossi
         assertEquals(user, iterator.next(), "Il secondo utente deve essere Rossi.");
-        
-        // 3. Verdi
         assertEquals(altroUtente, iterator.next(), "Il terzo utente deve essere Verdi.");
     }
     
+    // Verifica l'ordinamento secondario per nome quando i cognomi sono uguali.
     @Test
     public void testOrdering_StessoCognome() throws Exception {
         User u1 = new User("Aldo", "Rossi", "0000000001", "a.rossi1@studenti.unisa.it");
@@ -146,18 +143,15 @@ public class UsersCollectionTest {
         collection.addUser(u2); // Carlo Rossi
         collection.addUser(u1); // Aldo Rossi
         
-        // Se il cognome è uguale, deve ordinare per nome (Aldo, Carlo)
         Iterator<User> iterator = collection.getUsers().iterator();
         
-        // 1. Aldo
         assertEquals(u1, iterator.next(), "Il primo utente deve essere Aldo (ordine alfabetico per nome).");
-        
-        // 2. Carlo
         assertEquals(u2, iterator.next(), "Il secondo utente deve essere Carlo.");
     }
 
     // 7. TEST PRINT ALL
     
+    // Verifica che il metodo printAll() restituisca una stringa formattata contenente tutti gli utenti.
     @Test
     public void testPrintAll() {
         collection.addUser(user);
@@ -172,6 +166,7 @@ public class UsersCollectionTest {
         assertTrue(output.contains("Elenco Utenti:\n"), "La stringa deve iniziare con l'intestazione.");
     }
     
+    // Verifica che printAll() restituisca il messaggio corretto se la collezione è vuota.
     @Test
     public void testPrintAll_CollezioneVuota() {
         String output = collection.printAll();
@@ -179,5 +174,4 @@ public class UsersCollectionTest {
         assertNotNull(output, "La stringa printAll non deve essere null anche se vuota.");
         assertTrue(output.contains("Nessun utente registrato."), "Deve essere mostrato il messaggio per collezione vuota.");
     }
-
 }
