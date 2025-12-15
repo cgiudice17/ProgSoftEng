@@ -64,12 +64,12 @@ public class Loan implements Comparable<Loan>, Serializable{
         return this.returnDate.compareTo(l.returnDate);
     }
     
-   /**
-    * @brief Genera un codice hash per il prestito.
-    * l'hash si basa sui 3 campi che definiscono l'unicità del prestito: utente, libro e data di restituzione 
-    * Uso di Objects.hash per un calcolo dell'hashcode robusto basato su tutti i campi di equals.   
-    */
-     @Override
+    /**
+     * @brief Genera un codice hash per il prestito.
+     * l'hash si basa sui 3 campi che definiscono l'unicità del prestito: utente, libro e data di restituzione 
+     * Uso di Objects.hash per un calcolo dell'hashcode robusto basato su tutti i campi di equals.   
+     */
+    @Override
     public int hashCode() {
         return Objects.hash(user, book);
     }

@@ -23,7 +23,8 @@ public class LoanTest {
     private Book libro;
     private LocalDate dataRestituzione;
 
-    /** Metodo eseguito prima di ogni test.
+    /** 
+     * Metodo eseguito prima di ogni test.
      * Inizializza un utente, un libro e un oggetto Loan valido con una data futura.
      */
     @BeforeEach

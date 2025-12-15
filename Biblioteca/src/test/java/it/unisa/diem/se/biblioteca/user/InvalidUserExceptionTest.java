@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *  Test di unità per la classe InvalidUserException.
+ * Test di unità per la classe InvalidUserException.
  * Questa classe verifica che i costruttori dell'eccezione personalizzata funzionino correttamente 
  * e che la classe estenda la classe base {@link Exception} (eccezione checked).
  */

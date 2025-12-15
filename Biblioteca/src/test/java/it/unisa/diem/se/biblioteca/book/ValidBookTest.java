@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/* Test di unità per l'interfaccia ValidBook.
+/**
+ * Test di unità per l'interfaccia ValidBook.
  * Contiene tutti i casi possibili per validare i dati di un libro (ISBN, Autore, Anno, Copie) 
  * secondo le regole definite nei metodi di default dell'interfaccia.
  */

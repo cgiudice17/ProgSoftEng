@@ -61,7 +61,7 @@ public class BookTest {
         );
     }
 
-    // Verifica che un anno molto vecchio (come 0) non causi InvalidBookException (se la logica lo permette).
+    // Verifica che un anno molto vecchio (come 0) non causi InvalidBookExceptio.
     @Test
     public void testCostruttore_AnnoZero() {
         assertDoesNotThrow(() ->

@@ -41,7 +41,7 @@ public class LoansCollection implements Serializable {
         return maxLoans;
     }
       
-   /**
+    /**
      * @brief Aggiunge un nuovo prestito alla collezione, verificando prima se l'utente ha raggiunto il limite massimo.
      * Se il limite non è raggiunto, aggiunge il prestito all'insieme globale, alla lista dell'utente e incrementa il contatore dei prestiti dell'utente.
      * @param l Il  prestito da aggiungere.

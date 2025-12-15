@@ -145,7 +145,7 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
      * @brief Esegue l'operazione di registrazione del prestito.
      * Invocato dal click sul pulsante "Registra prestito".
      * Il metodo valida la matricola utente e l'ISBN libro, verifica che ci siano copie disponibili,
-     * , verifica il limite di prestiti per l'utente infine registra il nuovo prestito nel sistema.
+     * verifica il limite di prestiti per l'utente infine registra il nuovo prestito nel sistema.
      * @param event L'evento generato dal click sul pulsante.
      */
     @FXML

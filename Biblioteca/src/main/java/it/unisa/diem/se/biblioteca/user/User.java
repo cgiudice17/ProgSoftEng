@@ -50,21 +50,44 @@ public class User implements Comparable<User>, Serializable, ValidUser {
         this.loanCount = 0;
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() { 
+        return name; 
+    }
 
-    public String getSurname() { return surname; }
-    public void setSurname(String surname) { this.surname = surname; }
+    public void setName(String name) { 
+        this.name = name; 
+    }
 
-    public String getCode() { return code; }
-    public void setCode(String code) { this.code = code; }
+    public String getSurname() { 
+        return surname; 
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setSurname(String surname) { 
+        this.surname = surname; 
+    }
 
-    public int getLoanCount() { return loanCount; }
-    public void setLoanCount(int loanCount) { this.loanCount = loanCount; }
+    public String getCode() { 
+        return code; 
+    }
+    public void setCode(String code) { 
+        this.code = code; 
+    }
 
+    public String getEmail() { 
+        return email; 
+    }
+
+    public void setEmail(String email) { 
+        this.email = email; 
+    }
+
+    public int getLoanCount() { 
+        return loanCount; 
+    }
+
+    public void setLoanCount(int loanCount) { 
+        this.loanCount = loanCount; 
+    }
 
     /**
      * @brief Confronta due utenti per l'ordinamento.
@@ -95,7 +118,7 @@ public class User implements Comparable<User>, Serializable, ValidUser {
      * Due utenti sono considerati uguali se possiedono la stessa matricola.
      * @param o L'oggetto da confrontare con l'istanza corrente.
      * @return true se l'oggetto passato è un Utente e ha lo stesso codice, false altrimenti.
-    */
+     */
     @Override
     public boolean equals(Object o) {
         if (o == null || !this.getClass().equals(o.getClass())) return false;
