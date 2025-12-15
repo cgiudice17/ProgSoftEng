@@ -45,7 +45,7 @@ import javafx.scene.control.Alert.AlertType;
  * @brief Controller per la gestione della sezioe libri (catalogo)
  * Gestisce l'inserimento, la modifica e la rimozione dei libri, si occupa inoltre della gestione delle copie disponibili 
  * Implementa l'interfaccia ValidBook per la validazione dei dati di input.
-*/
+ */
 public class BookSectionController implements Initializable, ValidBook {
 
     @FXML

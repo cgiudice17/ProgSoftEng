@@ -15,7 +15,7 @@ import java.util.TreeSet;
 
 import java.io.Serializable;
 
- /**
+/**
  * @brief Gestisce l'intero catalogo dei libri della biblioteca.
  * Indicizza i libri tramite mappe e ne permettere le ricerche basate sui 
  * seguenti criteri: ISBN, Autore, Titolo e Anno di pubblicazione.
@@ -36,7 +36,7 @@ public class BooksCollection implements ValidBook, Serializable {
         this.booksISBN = new HashMap<>();
     }
     
-     /**
+    /**
      * @brief Aggiunge un nuovo libro al catalogo e aggiorna gli indici.
      * Se il libro esiste già, il numero di copie viene semplicemente sovrascritto.
      * @param b Il libro da aggiungere.
@@ -73,7 +73,7 @@ public class BooksCollection implements ValidBook, Serializable {
         return books.keySet();
     }
 
-    /**
+   /**
     * @brief Cerca e restituisce un libro dato il suo codice ISBN
     * @param ISBN Il codice ISBN del libro da cercare
     * @return il libro del codice ISBN specificato
@@ -103,7 +103,7 @@ public class BooksCollection implements ValidBook, Serializable {
     
     /**
      * @brief Restituisce il numero di copie disponibili per un determinato libro
-     * @param[in] b    Il libro a cui controllare le copie.
+     * @param b Il libro a cui controllare le copie.
      * @return Passa il numero di copie disponibili, oppure restituisce 0 se il libro non è presente
      * @throws NullPointerException Se il libro passato è null.
      */

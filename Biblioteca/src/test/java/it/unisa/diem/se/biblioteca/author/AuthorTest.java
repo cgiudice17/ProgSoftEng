@@ -51,7 +51,6 @@ public class AuthorTest {
         Author autoreDiversoNome = new Author("Luigi", "Rossi");
         Author autoreDiversoCognome = new Author("Mario", "Verdi");
 
-
         assertEquals(autore, autore, "Uguaglianza riflessiva: un oggetto deve essere uguale a se stesso.");
         assertEquals(autore, stessoAutore, "Due autori con nome e cognome identici devono essere uguali.");
         

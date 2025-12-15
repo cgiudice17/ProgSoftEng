@@ -38,7 +38,6 @@ public class App extends Application {
         stage.show();
     }
     
-    
     /**
      * @brief Metodo chiamato automaticamente quando l'applicazione viene chiusa (stop).
      * Qui eseguiamo il salvataggio dei dati su file.
@@ -62,6 +61,11 @@ public class App extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
+    /**
+     * @brief Carica un file FXML e restituisce il nodo radice (Parent) della scena associata.
+     * Questo metodo è un helper statico per caricare file FXML a partire dal percorso base della classe App.
+     * @param fxml Il nome del file FXML da caricare (escludendo l'estensione ".fxml" e il percorso base).
+     */
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();

@@ -43,7 +43,7 @@ import javafx.stage.Stage;
  * @brief Controller per la gestione della sezione utenti. 
  * Gestisce la visualizzazione, l'inserimento, la modifica e la rimozione degli utenti
  * del sistema, verificando la validità dei dati di input e visualizzando i  prestiti attivi per ciascun utente.
- * Implementa l'interfaccia {@link ValidUser} per la validazione
+ * Implementa l'interfaccia ValidUser per la validazione
  */
 public class UsersSectionController implements Initializable, ValidUser {
 
@@ -80,7 +80,7 @@ public class UsersSectionController implements Initializable, ValidUser {
     private UsersCollection users = Library.getInstance().getUsers();
     private LoansCollection loans = Library.getInstance().getLoans();
 
-  /**
+    /**
      * @brief Inizializza la classe del controller e configura la TableView.
      * Imposta la lista osservabile per la tabella, definisce le factory per le celle, 
      * collega le colonne alle proprietà dell'oggetto e configura l'editing in linea.
@@ -136,7 +136,7 @@ public class UsersSectionController implements Initializable, ValidUser {
 
     /**
      * @brief Gestisce l'aggiunta di un nuovo utente al sistema.
-     * * Invocato dal click sul pulsante "Aggiungi utente". Il metodo esegue una validazione completa 
+     * Invocato dal click sul pulsante "Aggiungi utente". Il metodo esegue una validazione completa 
      * di tutti i campi, verifica l'esistenza di duplicati (matricola) e, in caso di successo, 
      * crea e registra il nuovo User nella  UsersCollection.
      * @param event L'evento generato dal click sul pulsante.

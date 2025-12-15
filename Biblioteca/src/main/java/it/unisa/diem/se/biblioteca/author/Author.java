@@ -48,6 +48,7 @@ public class Author implements Serializable {
     public int hashCode(){
         return java.util.Objects.hash(name, surname) * 31;
     }
+
     /**
      * @brief Confronta questo autore con l'oggetto specificato.
      * La verifica dell'uguaglianza e data dal confronto delle stringhe name e surname.
@@ -65,6 +66,7 @@ public class Author implements Serializable {
         Author a = (Author) o;
         return this.name.equals(a.name) && this.surname.equals(a.surname); 
     }
+
     /**
      * @brief Restituisce una stringa dell'autore contenente il nome e il cognome su due righe separate.
      */

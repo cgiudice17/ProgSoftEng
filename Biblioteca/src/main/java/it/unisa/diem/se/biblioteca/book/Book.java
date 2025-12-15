@@ -47,18 +47,43 @@ public class Book implements Comparable<Book>, ValidBook, Serializable {
         this.publishYear = publishYear;
     }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public String getTitle() { 
+        return title;
+    }
 
-    public List<Author> getAuthors() { return authors; }
-    public void setAuthors(List<Author> authors) { this.authors = authors; }
+    public void setTitle(String title) { 
+        this.title = title; 
+    }
 
-    public String getISBN() { return ISBN; }
-    public void setISBN(String ISBN) { this.ISBN = ISBN; }
+    public List<Author> getAuthors() { 
+        return authors; 
+    }
+    public void setAuthors(List<Author> authors) { 
+        this.authors = authors; 
+    }
 
-    public int getPublishYear() { return publishYear; }
-    public void setPublishYear(int publishYear) { this.publishYear = publishYear; }
+    public String getISBN() { 
+        return ISBN; 
+    }
+    public void setISBN(String ISBN) { 
+        this.ISBN = ISBN; 
+    }
+
+    public int getPublishYear() { 
+        return publishYear; 
+    }
+
+    public void setPublishYear(int publishYear) { 
+        this.publishYear = publishYear; 
+    }
     
+    /**
+     * @brief Confronta questo libro con l'oggetto specificato per l'ordinamento.
+     * L'ordinamento è basato alfabeticamente sul titolo del libro, in accordo con il requisito UI-1.
+     * @param b Il libro da confrontare.
+     * @return Un valore negativo, zero o un valore positivo se il titolo di questo libro è
+     * alfabeticamente minore, uguale o maggiore del titolo del libro specificato.
+     */
     @Override
     public int compareTo(Book b){
         return this.title.compareTo(b.title);
