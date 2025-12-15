@@ -16,25 +16,38 @@
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             
-            <VBox alignment="CENTER" prefHeight="220.0" style="-fx-background-color: #2A2E37;">
+            <VBox alignment="CENTER" prefHeight="213.0" prefWidth="900.0" style="-fx-background-color: #2A2E37;">
                <children>
-                  <Label text="Biblioteca Digitale" textFill="WHITE">
-                     <font>
-                        <Font name="Segoe UI Bold" size="36.0" />
-                     </font>
-                  </Label>
-                  <Label text="Pannello di Amministrazione" textFill="#bdc3c7">
-                     <font>
-                        <Font name="Segoe UI" size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="162.0" prefWidth="900.0" spacing="150.0" VBox.vgrow="ALWAYS">
+                     <padding>
+                        <Insets bottom="50.0" left="20.0" right="20.0" />
+                     </padding>
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="40.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@logo_standard.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="Biblioteca Digitale" textFill="WHITE">
+                           <font>
+                              <Font name="Segoe UI Bold" size="36.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="25.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
                <effect>
                   <DropShadow color="#00000066" height="20.0" radius="9.5" width="20.0" />
                </effect>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </VBox>
 
             <HBox alignment="CENTER" spacing="40.0" VBox.vgrow="ALWAYS">
@@ -71,21 +84,6 @@
                <padding>
                   <Insets bottom="30.0" left="20.0" right="20.0" top="20.0" />
                </padding>
-            </HBox>
-            <HBox alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="230.0" prefHeight="162.0" prefWidth="900.0" spacing="40.0">
-               <padding>
-                  <Insets bottom="50.0" left="20.0" right="20.0" />
-               </padding>
-               <children>
-                  <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@logo_standard.png" />
-                     </image>
-                  </ImageView>
-               </children>
             </HBox>
          </children>
       </VBox>
