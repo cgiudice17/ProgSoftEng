@@ -322,9 +322,6 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         alert.setHeaderText(intestazione);
         alert.setContentText(messaggio);
 
-        // Imposta l'owner (il proprietario) dell'alert recuperando lo Stage dalla tabella.
-        // Questo garantisce che l'alert sia modale rispetto alla finestra corrente
-        // e non causi problemi se l'applicazione è a tutto schermo.
         if (loanTable.getScene() != null && loanTable.getScene().getWindow() != null) {
             Stage stage = (Stage) loanTable.getScene().getWindow();
             alert.initOwner(stage);

@@ -341,9 +341,6 @@ public class UsersSectionController implements Initializable, ValidUser {
         alert.setHeaderText(intestazione);
         alert.setContentText(messaggio);
 
-        // Imposta l'owner (il proprietario) dell'alert recuperando lo Stage dalla tabella.
-        // Questo garantisce che l'alert sia modale rispetto alla finestra corrente
-        // e non causi problemi se l'applicazione è a tutto schermo.
         if (usersTable.getScene() != null && usersTable.getScene().getWindow() != null) {
             Stage stage = (Stage) usersTable.getScene().getWindow();
             alert.initOwner(stage);
