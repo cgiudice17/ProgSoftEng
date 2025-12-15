@@ -33,7 +33,7 @@ public class App extends Application {
             Library.createNewLibrary(DATA_FILE);
         }
         // Caricamento interfaccia 
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("primary"), 660, 500);
         stage.setScene(scene);
         stage.show();
     }

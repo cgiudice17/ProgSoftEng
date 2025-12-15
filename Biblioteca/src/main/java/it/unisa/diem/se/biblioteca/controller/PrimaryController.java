@@ -78,12 +78,14 @@ public class PrimaryController {
 
         // Recupera lo stage corrente utilizzando un elemento noto (BookButton)
         Stage stage = (Stage) BookButton.getScene().getWindow();
+        double prevWidth = stage.getWidth();
+        double prevHeight = stage.getHeight();
         
         // Imposta la nuova scena e ridimensiona
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setWidth(1000);  
-        stage.setHeight(800); 
+        stage.setWidth(prevWidth);  
+        stage.setHeight(prevHeight); 
         stage.centerOnScreen();
         stage.show();
     }

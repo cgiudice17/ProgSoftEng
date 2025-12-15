@@ -223,10 +223,12 @@ public class UsersSectionController implements Initializable, ValidUser {
         Parent root = loader.load();
 
         Stage stage = (Stage) goBackButton.getScene().getWindow();
+        double prevWidth = stage.getWidth();
+        double prevHeight = stage.getHeight();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setWidth(800);  
-        stage.setHeight(550); 
+        stage.setWidth(prevWidth);  
+        stage.setHeight(prevHeight);
         stage.show();
     }
 
