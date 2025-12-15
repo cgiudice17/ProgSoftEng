@@ -1,37 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.se.biblioteca.controller.PrimaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.se.biblioteca.controller.PrimaryController">
    <children>
-      <VBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             
-            <Label text="Gestione Biblioteca">
-               <font>
-                  <Font name="System Bold Italic" size="36.0" />
-               </font>
-            </Label>
-            
-            <Label text="Seleziona una sezione" textFill="#757575">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            
-            <HBox alignment="CENTER" spacing="40.0">
+            <VBox alignment="CENTER" prefHeight="220.0" style="-fx-background-color: #2A2E37;">
                <children>
-                  <Button fx:id="BookButton" mnemonicParsing="false" onAction="#OpenBookSection" prefHeight="50.0" prefWidth="150.0" text="Sezione Libri" />
-                  <Button fx:id="UsersButton" mnemonicParsing="false" onAction="#OpenUsersSection" prefHeight="50.0" prefWidth="150.0" text="Sezione Utenti" />
-                  <Button fx:id="LoansButton" mnemonicParsing="false" onAction="#OpenLoansSection" prefHeight="50.0" prefWidth="150.0" text="Sezione Prestiti" />
+                  <Label text="Biblioteca Digitale" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label text="Pannello di Amministrazione" textFill="#bdc3c7">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
                </children>
+               <effect>
+                  <DropShadow color="#00000066" height="20.0" radius="9.5" width="20.0" />
+               </effect>
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="40.0" VBox.vgrow="ALWAYS">
+               <children>
+                  
+                  <Button fx:id="BookButton" mnemonicParsing="false" onAction="#OpenBookSection" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-cursor: hand;" text="Gestione Libri" textFill="#2c3e50">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                     <effect>
+                        <DropShadow color="#0000001a" radius="10.0" width="21.0" />
+                     </effect>
+                  </Button>
+
+                  <Button fx:id="UsersButton" mnemonicParsing="false" onAction="#OpenUsersSection" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-cursor: hand;" text="Gestione Utenti" textFill="#2c3e50">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                     <effect>
+                        <DropShadow color="#0000001a" radius="10.0" width="21.0" />
+                     </effect>
+                  </Button>
+
+                  <Button fx:id="LoansButton" mnemonicParsing="false" onAction="#OpenLoansSection" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-cursor: hand;" text="Prestiti" textFill="#2c3e50">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                     <effect>
+                        <DropShadow color="#0000001a" radius="10.0" width="21.0" />
+                     </effect>
+                  </Button>
+
+               </children>
+               <padding>
+                  <Insets bottom="50.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
             </HBox>
-            
          </children>
       </VBox>
    </children>
