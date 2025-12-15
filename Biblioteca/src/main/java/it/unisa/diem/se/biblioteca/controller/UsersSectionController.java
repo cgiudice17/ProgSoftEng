@@ -34,6 +34,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -338,6 +340,15 @@ public class UsersSectionController implements Initializable, ValidUser {
         alert.setTitle(titolo);
         alert.setHeaderText(intestazione);
         alert.setContentText(messaggio);
+
+        // Imposta l'owner (il proprietario) dell'alert recuperando lo Stage dalla tabella.
+        // Questo garantisce che l'alert sia modale rispetto alla finestra corrente
+        // e non causi problemi se l'applicazione è a tutto schermo.
+        if (usersTable.getScene() != null && usersTable.getScene().getWindow() != null) {
+            Stage stage = (Stage) usersTable.getScene().getWindow();
+            alert.initOwner(stage);
+        }
+
         alert.showAndWait();
     }
 }

@@ -41,6 +41,8 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 
 /**
  * @brief Controller per la gestione della sezioe libri (catalogo)
@@ -368,10 +370,19 @@ public class BookSectionController implements Initializable, ValidBook {
      * @param messaggio Il messaggio di errore dettagliato.
      */
     private void showError(String titolo, String intestazione, String messaggio) {
-        Alert alert = new Alert(AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titolo);
         alert.setHeaderText(intestazione);
         alert.setContentText(messaggio);
+
+        // Imposta l'owner (il proprietario) dell'alert recuperando lo Stage dalla tabella.
+        // Questo garantisce che l'alert sia modale rispetto alla finestra corrente
+        // e non causi problemi se l'applicazione è a tutto schermo.
+        if (bookTable.getScene() != null && bookTable.getScene().getWindow() != null) {
+            Stage stage = (Stage) bookTable.getScene().getWindow();
+            alert.initOwner(stage);
+        }
+
         alert.showAndWait();
     }
 }

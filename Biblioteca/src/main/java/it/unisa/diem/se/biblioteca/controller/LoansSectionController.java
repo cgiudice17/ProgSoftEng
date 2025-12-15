@@ -38,7 +38,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -319,6 +321,15 @@ public class LoansSectionController implements Initializable, ValidUser, ValidBo
         alert.setTitle(titolo);
         alert.setHeaderText(intestazione);
         alert.setContentText(messaggio);
+
+        // Imposta l'owner (il proprietario) dell'alert recuperando lo Stage dalla tabella.
+        // Questo garantisce che l'alert sia modale rispetto alla finestra corrente
+        // e non causi problemi se l'applicazione è a tutto schermo.
+        if (loanTable.getScene() != null && loanTable.getScene().getWindow() != null) {
+            Stage stage = (Stage) loanTable.getScene().getWindow();
+            alert.initOwner(stage);
+        }
+
         alert.showAndWait();
     }
 }
