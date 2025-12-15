@@ -29,6 +29,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -245,14 +246,8 @@ public class BookSectionController implements Initializable, ValidBook {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unisa/diem/se/biblioteca/primary.fxml"));
         Parent root = loader.load();
 
-        Stage stage = (Stage) goBackButton.getScene().getWindow();
-        double prevWidth = stage.getWidth();
-        double prevHeight = stage.getHeight();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setWidth(prevWidth);  
-        stage.setHeight(prevHeight); 
-        stage.show();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.getScene().setRoot(root);
     }
 
     /**

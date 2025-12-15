@@ -76,17 +76,7 @@ public class PrimaryController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(percorsoCompleto));
         Parent root = loader.load();
 
-        // Recupera lo stage corrente utilizzando un elemento noto (BookButton)
-        Stage stage = (Stage) BookButton.getScene().getWindow();
-        double prevWidth = stage.getWidth();
-        double prevHeight = stage.getHeight();
-        
-        // Imposta la nuova scena e ridimensiona
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setWidth(prevWidth);  
-        stage.setHeight(prevHeight); 
-        stage.centerOnScreen();
-        stage.show();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.getScene().setRoot(root);
     }
 }
