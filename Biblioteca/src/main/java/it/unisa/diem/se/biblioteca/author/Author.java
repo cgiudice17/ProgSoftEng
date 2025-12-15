@@ -72,7 +72,7 @@ public class Author implements Serializable {
      */
     @Override
     public String toString(){
-        return "Nome: " + name + "\nCognome: " + surname;
+        return name + " " + surname;
     }
 }
 
